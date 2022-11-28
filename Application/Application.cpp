@@ -1,9 +1,18 @@
 
-#include <iostream>
+#include <Core/Engine.h>
 
 int main(int argc, char* argv[])
-{	
-	std::cout << "Hello world" << std::endl;
-	
+{
+	try
+	{
+		Aminophenol::Engine engine{};
+	}
+	catch (const std::exception& e)
+	{
+		Aminophenol::Logger::log(Aminophenol::LogLevel::Critical, e.what());
+
+		return EXIT_FAILURE;
+	}
+
 	return EXIT_SUCCESS;
 }
