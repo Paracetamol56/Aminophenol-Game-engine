@@ -17,8 +17,12 @@ namespace Aminophenol
 	private:
 
 		VkInstance m_instance;
-
-		std::vector<const char*> getRequiredExtensions();
+#ifdef _DEBUG
+		VkDebugUtilsMessengerEXT m_debugMessenger;
+#endif // _DEBUG
+		
+		bool checkExtentionSupport(const std::vector<const char*>& requiredExtensions);
+		bool checkLayerSupport(const std::vector<const char*>& requiredLayers);
 
 	};
 
