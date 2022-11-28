@@ -5,7 +5,11 @@
 namespace Aminophenol {
 	
 	Engine::Engine()
+#ifdef _DEBUG
 		: m_logger{ new Logger(LogLevel::Trace) }
+#else
+		: m_logger{ new Logger(LogLevel::Error) }
+#endif // _DEBUG
 	{
 		Logger::log(LogLevel::Trace, "Initializing engine...");
 
@@ -43,6 +47,7 @@ namespace Aminophenol {
 	void Engine::initVulkan()
 	{
 		m_instance = new Instance("Aminophenol app");
+		m_physicalDevice = new PhysicalDevice(m_instance);
 	}
 
 } // namespace Aminophenol

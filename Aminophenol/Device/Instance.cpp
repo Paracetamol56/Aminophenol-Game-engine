@@ -112,6 +112,11 @@ namespace Aminophenol
 
 		Logger::log(LogLevel::Trace, "Vulkan instance destroyed");
 	}
+
+	VkInstance Instance::getInstance()
+	{
+		return m_instance;
+	}
 	
 	bool Instance::checkExtentionSupport(const std::vector<const char*>& requiredExtensions)
 	{

@@ -6,6 +6,7 @@
 
 #include "Logging/Logger.h"
 #include "Device/Instance.h"
+#include "Device/PhysicalDevice.h"
 
 namespace Aminophenol
 {
@@ -23,8 +24,9 @@ namespace Aminophenol
 		const int _HEIGHT = 480;
 
 		Logger* m_logger = nullptr;
-		Instance* m_instance = nullptr;
 		GLFWwindow* m_window = nullptr;
+		Instance* m_instance = nullptr;
+		PhysicalDevice* m_physicalDevice = nullptr;
 
 		void initGlfwWindow();
 		void initVulkan();

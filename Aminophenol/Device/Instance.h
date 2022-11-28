@@ -14,6 +14,8 @@ namespace Aminophenol
 		Instance(std::string appName = "Aminophenol");
 		~Instance();
 
+		VkInstance getInstance();
+
 	private:
 
 		VkInstance m_instance;

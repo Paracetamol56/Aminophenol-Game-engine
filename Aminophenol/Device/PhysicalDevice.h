@@ -4,6 +4,8 @@
 
 #include "pch.h"
 
+#include "Device/Instance.h"
+
 namespace Aminophenol
 {
 
@@ -11,10 +13,17 @@ namespace Aminophenol
 	{
 	public:
 
-		PhysicalDevice();
+		PhysicalDevice(Instance* instance);
 		~PhysicalDevice();
 
 	private:
+
+		VkPhysicalDevice* m_physicalDevice;
+
+		void pickPhysicalDevice(Instance* instance);
+		void logPhysicalDeviceProperties(VkPhysicalDeviceProperties& deviceProperties);
+		bool checkDeviceExtensionSupport(VkPhysicalDevice& device, const std::vector<const char*>& requiredExtensions);
+		int rateDeviceSuitability(VkPhysicalDevice device, const std::vector<const char*>& requiredExtensions);
 
 	};
 
