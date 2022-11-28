@@ -10,6 +10,7 @@ namespace Aminophenol {
 		Logger::log(LogLevel::Trace, "Initializing engine...");
 
 		initGlfwWindow();
+		initVulkan();
 
 		Logger::log(LogLevel::Trace, "Engine initialized.");
 	}
@@ -22,6 +23,8 @@ namespace Aminophenol {
 		glfwDestroyWindow(m_window);
 		glfwTerminate();
 		
+		delete m_instance;
+
 		Logger::log(LogLevel::Trace, "Engine destroyed.");
 		
 		delete m_logger;
@@ -35,6 +38,11 @@ namespace Aminophenol {
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
 		m_window = glfwCreateWindow(_WIDTH, _HEIGHT, "Aminophenol", nullptr, nullptr);
+	}
+
+	void Engine::initVulkan()
+	{
+		m_instance = new Instance("Aminophenol app");
 	}
 
 } // namespace Aminophenol

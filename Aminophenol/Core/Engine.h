@@ -5,6 +5,7 @@
 #include "pch.h"
 
 #include "Logging/Logger.h"
+#include "Device/Instance.h"
 
 namespace Aminophenol
 {
@@ -22,9 +23,11 @@ namespace Aminophenol
 		const int _HEIGHT = 480;
 
 		Logger* m_logger = nullptr;
+		Instance* m_instance = nullptr;
 		GLFWwindow* m_window = nullptr;
 
 		void initGlfwWindow();
+		void initVulkan();
 
 	};
 
