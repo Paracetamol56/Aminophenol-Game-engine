@@ -27,6 +27,8 @@ namespace Aminophenol {
 		glfwDestroyWindow(m_window);
 		glfwTerminate();
 		
+		delete m_logicalDevice;
+		delete m_physicalDevice;
 		delete m_instance;
 
 		Logger::log(LogLevel::Trace, "Engine destroyed.");
@@ -48,6 +50,7 @@ namespace Aminophenol {
 	{
 		m_instance = new Instance("Aminophenol app");
 		m_physicalDevice = new PhysicalDevice(m_instance);
+		m_logicalDevice = new LogicalDevice(m_instance, m_physicalDevice);
 	}
 
 } // namespace Aminophenol

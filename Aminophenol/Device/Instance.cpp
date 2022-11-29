@@ -43,27 +43,15 @@ namespace Aminophenol
 		appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
 		appInfo.apiVersion = version;
 
-		// Get the required extentions
-		uint32_t glfwExtensionCount = 0;
-		const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-
-		std::vector<const char*> requiredExtensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
-		
-#ifdef _DEBUG
-		requiredExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-#endif
-		
+		// Check if all required extensions are available
+		std::vector<const char*> requiredExtensions = getRequiredExtensions();
 		if (!checkExtentionSupport(requiredExtensions))
 		{
 			throw std::runtime_error("All required extentions are not supported!");
 		}
-
-		// Get the required layers
-		std::vector<const char*> requiredLayers;
-#ifdef _DEBUG
-		requiredLayers.push_back("VK_LAYER_KHRONOS_validation");
-#endif // _DEBUG
 		
+		// Check if all required layers are available
+		std::vector<const char*> requiredLayers = getRequiredLayers();
 		if (!checkLayerSupport(requiredLayers))
 		{
 			throw std::runtime_error("All required layers are not supported!");
@@ -116,6 +104,31 @@ namespace Aminophenol
 	VkInstance Instance::getInstance()
 	{
 		return m_instance;
+	}
+
+	std::vector<const char*> Aminophenol::Instance::getRequiredExtensions()
+	{
+		uint32_t glfwExtensionCount = 0;
+		const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+
+		std::vector<const char*> requiredExtensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+
+#ifdef _DEBUG
+		requiredExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+#endif
+
+		return requiredExtensions;
+	}
+
+	std::vector<const char*> Instance::getRequiredLayers()
+	{
+		std::vector<const char*> requiredLayers;
+		
+#ifdef _DEBUG
+		requiredLayers.push_back("VK_LAYER_KHRONOS_validation");
+#endif // _DEBUG
+		
+		return requiredLayers;
 	}
 	
 	bool Instance::checkExtentionSupport(const std::vector<const char*>& requiredExtensions)

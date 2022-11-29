@@ -6,7 +6,7 @@
 namespace Aminophenol
 {
 
-	bool PhysicalDevice::QueueFamilyIndices::isComplete()
+	bool QueueFamilyIndices::isComplete()
 	{
 		return graphicsFamily.has_value() && presentFamily.has_value();
 	}
@@ -31,9 +31,80 @@ namespace Aminophenol
 	{
 		Logger::log(LogLevel::Trace, "Destroying physical device...");
 
-		// Nothing to do here
+		// Destroy the physical device
 
 		Logger::log(LogLevel::Trace, "Physical device destroyed.");
+	}
+
+	VkPhysicalDevice PhysicalDevice::getPhysicalDevice() const
+	{
+		return m_physicalDevice;
+	}
+
+	QueueFamilyIndices PhysicalDevice::findQueueFamilies() const
+	{
+		QueueFamilyIndices indices;
+
+		uint32_t queueFamilyPropertiesCount = 0;
+		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyPropertiesCount, nullptr);
+		std::vector<VkQueueFamilyProperties> queueFamiliesProperties(queueFamilyPropertiesCount);
+		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyPropertiesCount, queueFamiliesProperties.data());
+
+		Logger::log(LogLevel::Info, "%d available queue families on the device.", queueFamiliesProperties.size());
+
+		int i = 0;
+		for (const VkQueueFamilyProperties& queueFamilyProperty : queueFamiliesProperties)
+		{
+			const char* queueFamilyFlags = "";
+			if (queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT)
+			{
+				queueFamilyFlags = "Graphics";
+			}
+			else if (queueFamilyProperty.queueFlags & VK_QUEUE_COMPUTE_BIT)
+			{
+				queueFamilyFlags = "Compute";
+			}
+			else if (queueFamilyProperty.queueFlags & VK_QUEUE_TRANSFER_BIT)
+			{
+				queueFamilyFlags = "Transfer";
+			}
+			else if (queueFamilyProperty.queueFlags & VK_QUEUE_SPARSE_BINDING_BIT)
+			{
+				queueFamilyFlags = "Sparse Binding";
+			}
+			else if (queueFamilyProperty.queueFlags & VK_QUEUE_PROTECTED_BIT)
+			{
+				queueFamilyFlags = "Protected";
+			}
+			else if (queueFamilyProperty.queueFlags == 0)
+			{
+				queueFamilyFlags = "Unknown";
+			}
+
+			Logger::log(
+				LogLevel::Info,
+				"Queue family %d: \n\tqueue count: %d\n\tflags: %s",
+				i,
+				queueFamilyProperty.queueCount,
+				queueFamilyFlags
+			);
+
+			if (queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT)
+			{
+				indices.graphicsFamily = i;
+				indices.presentFamily = i;
+			}
+
+			if (indices.isComplete())
+			{
+				Logger::log(LogLevel::Info, "The queue family %d is complete.", i);
+				break;
+			}
+
+			i++;
+		}
+
+		return indices;
 	}
 
 	VkPhysicalDevice PhysicalDevice::pickPhysicalDevice(Instance* instance)
@@ -189,72 +260,6 @@ namespace Aminophenol
 		Logger::log(LogLevel::Info, "The device \"%s\" has a score of %d.", deviceProperties.deviceName, score);
 
 		return score;
-	}
-
-	PhysicalDevice::QueueFamilyIndices PhysicalDevice::findQueueFamilies()
-	{
-		QueueFamilyIndices indices;
-
-		uint32_t queueFamilyPropertiesCount = 0;
-		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyPropertiesCount, nullptr);
-		std::vector<VkQueueFamilyProperties> queueFamiliesProperties(queueFamilyPropertiesCount);
-		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyPropertiesCount, queueFamiliesProperties.data());
-
-		Logger::log(LogLevel::Info, "%d available queue families on the device.", queueFamiliesProperties.size());
-
-		int i = 0;
-		for (const VkQueueFamilyProperties& queueFamilyProperty : queueFamiliesProperties)
-		{
-			const char* queueFamilyFlags = "";
-			if (queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT)
-			{
-				queueFamilyFlags = "Graphics";
-			}
-			else if (queueFamilyProperty.queueFlags & VK_QUEUE_COMPUTE_BIT)
-			{
-				queueFamilyFlags = "Compute";
-			}
-			else if (queueFamilyProperty.queueFlags & VK_QUEUE_TRANSFER_BIT)
-			{
-				queueFamilyFlags = "Transfer";
-			}
-			else if (queueFamilyProperty.queueFlags & VK_QUEUE_SPARSE_BINDING_BIT)
-			{
-				queueFamilyFlags = "Sparse Binding";
-			}
-			else if (queueFamilyProperty.queueFlags & VK_QUEUE_PROTECTED_BIT)
-			{
-				queueFamilyFlags = "Protected";
-			}
-			else if (queueFamilyProperty.queueFlags == 0)
-			{
-				queueFamilyFlags = "Unknown";
-			}
-
-			Logger::log(
-				LogLevel::Info,
-				"Queue family %d: \n\tqueue count: %d\n\tflags: %s",
-				i,
-				queueFamilyProperty.queueCount,
-				queueFamilyFlags
-			);
-
-			if (queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT)
-			{
-				indices.graphicsFamily = i;
-				indices.presentFamily = i;
-			}
-
-			if (indices.isComplete())
-			{
-				Logger::log(LogLevel::Info, "The queue family %d is complete.", i);
-				break;
-			}
-
-			i++;
-		}
-		
-		return indices;
 	}
 
 } // namespace Aminophenol

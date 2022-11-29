@@ -4,6 +4,8 @@
 
 #include "pch.h"
 
+#include "Device/PhysicalDevice.h"
+
 namespace Aminophenol
 {
 
@@ -11,10 +13,12 @@ namespace Aminophenol
 	{
 	public:
 
-		LogicalDevice();
+		LogicalDevice(Instance* instance, PhysicalDevice* physicalDevice);
 		~LogicalDevice();
 
 	private:
+
+		VkDevice m_device;
 
 	};
 

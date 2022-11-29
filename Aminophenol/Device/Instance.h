@@ -15,6 +15,8 @@ namespace Aminophenol
 		~Instance();
 
 		VkInstance getInstance();
+		std::vector<const char*> getRequiredExtensions();
+		std::vector<const char*> getRequiredLayers();
 
 	private:
 
@@ -22,6 +24,7 @@ namespace Aminophenol
 #ifdef _DEBUG
 		VkDebugUtilsMessengerEXT m_debugMessenger;
 #endif // _DEBUG
+		
 		
 		bool checkExtentionSupport(const std::vector<const char*>& requiredExtensions);
 		bool checkLayerSupport(const std::vector<const char*>& requiredLayers);
