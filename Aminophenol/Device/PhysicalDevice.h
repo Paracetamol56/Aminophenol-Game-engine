@@ -18,9 +18,18 @@ namespace Aminophenol
 
 	private:
 
-		VkPhysicalDevice* m_physicalDevice;
+		struct QueueFamilyIndices
+		{
+			std::optional<uint32_t> graphicsFamily;
+			std::optional<uint32_t> presentFamily;
 
-		void pickPhysicalDevice(Instance* instance);
+			bool isComplete();
+		};
+		
+		VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;
+
+		VkPhysicalDevice pickPhysicalDevice(Instance* instance);
+		QueueFamilyIndices findQueueFamilies();
 		void logPhysicalDeviceProperties(VkPhysicalDeviceProperties& deviceProperties);
 		bool checkDeviceExtensionSupport(VkPhysicalDevice& device, const std::vector<const char*>& requiredExtensions);
 		int rateDeviceSuitability(VkPhysicalDevice device, const std::vector<const char*>& requiredExtensions);

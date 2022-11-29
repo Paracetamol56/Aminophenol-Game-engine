@@ -19,6 +19,7 @@
 #include <string>
 #include <chrono>
 #include <memory>
+#include <optional>
 
 // Vulkan headers
 #include <vulkan/vulkan.hpp>
