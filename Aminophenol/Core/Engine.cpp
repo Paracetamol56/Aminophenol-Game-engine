@@ -26,14 +26,14 @@ namespace Aminophenol {
 		// Destroy the window
 		glfwDestroyWindow(m_window);
 		glfwTerminate();
-		
-		delete m_logicalDevice;
-		delete m_physicalDevice;
-		delete m_instance;
+
+		m_logicalDevice.reset();
+		m_physicalDevice.reset();
+		m_instance.reset();
 
 		Logger::log(LogLevel::Trace, "Engine destroyed.");
-		
-		delete m_logger;
+
+		m_logger.reset();
 	}
 
 	void Engine::initGlfwWindow()
@@ -48,9 +48,9 @@ namespace Aminophenol {
 
 	void Engine::initVulkan()
 	{
-		m_instance = new Instance("Aminophenol app");
-		m_physicalDevice = new PhysicalDevice(m_instance);
-		m_logicalDevice = new LogicalDevice(m_instance, m_physicalDevice);
+		m_instance = std::make_unique<Instance>("Aminophenol app");
+		m_physicalDevice = std::make_unique<PhysicalDevice>(*m_instance);
+		m_logicalDevice = std::make_unique<LogicalDevice>(*m_instance, *m_physicalDevice);
 	}
 
 } // namespace Aminophenol

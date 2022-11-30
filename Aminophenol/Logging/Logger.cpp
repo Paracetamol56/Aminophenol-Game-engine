@@ -27,6 +27,7 @@ namespace Aminophenol
 		{
 			std::string logLevel = "";
 			std::string color = "";
+			std::string timestamp = "";
 			switch (level)
 			{
 			case LogLevel::Trace:
@@ -50,8 +51,13 @@ namespace Aminophenol
 				color = "\033[1;35m";
 				break;
 			}
-			
-			std::cout << "[" << color << logLevel << "\033[0m" << "] ";
+
+			// Get timestamp
+			SYSTEMTIME st;
+			GetLocalTime(&st);
+			timestamp = std::to_string(st.wHour) + ":" + std::to_string(st.wMinute) + ":" + std::to_string(st.wSecond) + "." + std::to_string(st.wMilliseconds);
+
+			std::cout << "[\033[1;37m" << timestamp << "\033[0m] [" << color << logLevel << "\033[0m" << "] ";
 			
 			va_list args;
 			va_start(args, message);

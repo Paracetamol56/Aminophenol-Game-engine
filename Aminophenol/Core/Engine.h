@@ -24,11 +24,11 @@ namespace Aminophenol
 		const int _WIDTH = 640;
 		const int _HEIGHT = 480;
 
-		Logger* m_logger = nullptr;
-		GLFWwindow* m_window = nullptr;
-		Instance* m_instance = nullptr;
-		PhysicalDevice* m_physicalDevice = nullptr;
-		LogicalDevice* m_logicalDevice = nullptr;
+		GLFWwindow* m_window{ nullptr };
+		std::unique_ptr<Logger> m_logger{ nullptr };
+		std::unique_ptr<Instance> m_instance{ nullptr };
+		std::unique_ptr<PhysicalDevice> m_physicalDevice{ nullptr };
+		std::unique_ptr<LogicalDevice> m_logicalDevice{ nullptr };
 
 		void initGlfwWindow();
 		void initVulkan();

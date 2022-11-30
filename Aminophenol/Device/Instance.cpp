@@ -101,12 +101,12 @@ namespace Aminophenol
 		Logger::log(LogLevel::Trace, "Vulkan instance destroyed");
 	}
 
-	VkInstance Instance::getInstance()
+	Instance::operator const VkInstance& () const
 	{
 		return m_instance;
 	}
 
-	std::vector<const char*> Aminophenol::Instance::getRequiredExtensions()
+	std::vector<const char*> Instance::getRequiredExtensions() const
 	{
 		uint32_t glfwExtensionCount = 0;
 		const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
@@ -120,7 +120,7 @@ namespace Aminophenol
 		return requiredExtensions;
 	}
 
-	std::vector<const char*> Instance::getRequiredLayers()
+	std::vector<const char*> Instance::getRequiredLayers() const
 	{
 		std::vector<const char*> requiredLayers;
 		

@@ -14,9 +14,10 @@ namespace Aminophenol
 		Instance(std::string appName = "Aminophenol");
 		~Instance();
 
-		VkInstance getInstance();
-		std::vector<const char*> getRequiredExtensions();
-		std::vector<const char*> getRequiredLayers();
+		operator const VkInstance&() const;
+
+		std::vector<const char*> getRequiredExtensions() const;
+		std::vector<const char*> getRequiredLayers() const;
 
 	private:
 

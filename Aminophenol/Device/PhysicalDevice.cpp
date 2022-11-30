@@ -6,23 +6,13 @@
 namespace Aminophenol
 {
 
-	bool QueueFamilyIndices::isComplete()
+	PhysicalDevice::PhysicalDevice(const Instance& instance)
+		: m_instance(instance)
 	{
-		return graphicsFamily.has_value() && presentFamily.has_value();
-	}
-
-	PhysicalDevice::PhysicalDevice(Instance* instance)
-	{
-		if (instance == nullptr)
-		{
-			Logger::log(LogLevel::Error, "Failed to create physical device: instance is null.");
-			return;
-		}
 		
 		Logger::log(LogLevel::Trace, "Initializing physical device...");
 		
-		m_physicalDevice = pickPhysicalDevice(instance);
-		findQueueFamilies();
+		m_physicalDevice = pickPhysicalDevice();
 		
 		Logger::log(LogLevel::Trace, "Physical device initialized.");
 	}
@@ -36,88 +26,22 @@ namespace Aminophenol
 		Logger::log(LogLevel::Trace, "Physical device destroyed.");
 	}
 
-	VkPhysicalDevice PhysicalDevice::getPhysicalDevice() const
+	PhysicalDevice::operator const VkPhysicalDevice& () const
 	{
 		return m_physicalDevice;
 	}
 
-	QueueFamilyIndices PhysicalDevice::findQueueFamilies() const
-	{
-		QueueFamilyIndices indices;
-
-		uint32_t queueFamilyPropertiesCount = 0;
-		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyPropertiesCount, nullptr);
-		std::vector<VkQueueFamilyProperties> queueFamiliesProperties(queueFamilyPropertiesCount);
-		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyPropertiesCount, queueFamiliesProperties.data());
-
-		Logger::log(LogLevel::Info, "%d available queue families on the device.", queueFamiliesProperties.size());
-
-		int i = 0;
-		for (const VkQueueFamilyProperties& queueFamilyProperty : queueFamiliesProperties)
-		{
-			const char* queueFamilyFlags = "";
-			if (queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT)
-			{
-				queueFamilyFlags = "Graphics";
-			}
-			else if (queueFamilyProperty.queueFlags & VK_QUEUE_COMPUTE_BIT)
-			{
-				queueFamilyFlags = "Compute";
-			}
-			else if (queueFamilyProperty.queueFlags & VK_QUEUE_TRANSFER_BIT)
-			{
-				queueFamilyFlags = "Transfer";
-			}
-			else if (queueFamilyProperty.queueFlags & VK_QUEUE_SPARSE_BINDING_BIT)
-			{
-				queueFamilyFlags = "Sparse Binding";
-			}
-			else if (queueFamilyProperty.queueFlags & VK_QUEUE_PROTECTED_BIT)
-			{
-				queueFamilyFlags = "Protected";
-			}
-			else if (queueFamilyProperty.queueFlags == 0)
-			{
-				queueFamilyFlags = "Unknown";
-			}
-
-			Logger::log(
-				LogLevel::Info,
-				"Queue family %d: \n\tqueue count: %d\n\tflags: %s",
-				i,
-				queueFamilyProperty.queueCount,
-				queueFamilyFlags
-			);
-
-			if (queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT)
-			{
-				indices.graphicsFamily = i;
-				indices.presentFamily = i;
-			}
-
-			if (indices.isComplete())
-			{
-				Logger::log(LogLevel::Info, "The queue family %d is complete.", i);
-				break;
-			}
-
-			i++;
-		}
-
-		return indices;
-	}
-
-	VkPhysicalDevice PhysicalDevice::pickPhysicalDevice(Instance* instance)
+	VkPhysicalDevice PhysicalDevice::pickPhysicalDevice()
 	{
 		// Get all physical devices
 		uint32_t deviceCount = 0;
-		vkEnumeratePhysicalDevices(instance->getInstance(), &deviceCount, nullptr);
+		vkEnumeratePhysicalDevices(m_instance, &deviceCount, nullptr);
 		if (deviceCount < 1)
 		{
 			throw std::runtime_error("Failed to find GPUs with Vulkan support!");
 		}
 		std::vector<VkPhysicalDevice> devices(deviceCount);
-		vkEnumeratePhysicalDevices(instance->getInstance(), &deviceCount, devices.data());
+		vkEnumeratePhysicalDevices(m_instance, &deviceCount, devices.data());
 		
 		// Get all required extensions
 		std::vector<const char*> requiredExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
@@ -191,12 +115,14 @@ namespace Aminophenol
 		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 		std::vector<VkExtensionProperties> availableExtensions(extensionCount);
 		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
-
+		
+		/*
 		// Log the available extentions
 		for (const auto& extension : availableExtensions)
 		{
 			Logger::log(LogLevel::Info, "Available device extension: %s", extension.extensionName);
 		}
+		*/
 
 		// Check if all required extentions are available
 		for (const char* extension : requiredExtensions)
