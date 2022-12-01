@@ -46,7 +46,10 @@ namespace Aminophenol
 			queueCreateInfo.pQueuePriorities = &queuePriority;
 			queueCreateInfos.push_back(queueCreateInfo);
 		}
-		// Optional
+		else
+		{
+			m_computeFamilyIndex = m_graphicsFamilyIndex;
+		}
 
 		// Transfer queue create info
 		if (m_supportedQueues & VK_QUEUE_TRANSFER_BIT && m_transferFamilyIndex != m_graphicsFamilyIndex && m_transferFamilyIndex != m_computeFamilyIndex)
@@ -60,7 +63,10 @@ namespace Aminophenol
 			queueCreateInfo.pQueuePriorities = &queuePriority;
 			queueCreateInfos.push_back(queueCreateInfo);
 		}
-		// Optional
+		else
+		{
+			m_transferFamilyIndex = m_graphicsFamilyIndex;
+		}
 		
 		// Documentation: https://registry.khronos.org/vulkan/specs/1.3/html/chap32.html#VkPhysicalDeviceFeatures
 		VkPhysicalDeviceFeatures deviceFeatures{};
@@ -86,6 +92,12 @@ namespace Aminophenol
 			throw std::runtime_error("Failed to create logical device!");
 		}
 
+		// Get queues
+		vkGetDeviceQueue(m_device, m_graphicsFamilyIndex, 0, &m_graphicsQueue);
+		vkGetDeviceQueue(m_device, m_presentFamilyIndex, 0, &m_presentQueue);
+		vkGetDeviceQueue(m_device, m_computeFamilyIndex, 0, &m_computeQueue);
+		vkGetDeviceQueue(m_device, m_transferFamilyIndex, 0, &m_transferQueue);
+
 		Logger::log(LogLevel::Trace, "Logical device initialized");
 	}
 
@@ -101,6 +113,46 @@ namespace Aminophenol
 	LogicalDevice::operator const VkDevice& () const
 	{
 		return m_device;
+	}
+
+	const uint32_t LogicalDevice::getGraphicsQueueFamilyIndex() const
+	{
+		return m_graphicsFamilyIndex;
+	}
+
+	const uint32_t LogicalDevice::getPresentQueueFamilyIndex() const
+	{
+		return m_computeFamilyIndex;
+	}
+
+	const uint32_t LogicalDevice::getComputeQueueFamilyIndex() const
+	{
+		return m_computeFamilyIndex;
+	}
+	
+	const uint32_t LogicalDevice::getTransferQueueFamilyIndex() const
+	{
+		return m_transferFamilyIndex;
+	}
+
+	const VkQueue& LogicalDevice::getGraphicsQueue() const
+	{
+		return m_graphicsQueue;
+	}
+
+	const VkQueue& LogicalDevice::getPresentQueue() const
+	{
+		return m_presentQueue;
+	}
+	
+	const VkQueue& LogicalDevice::getComputeQueue() const
+	{
+		return m_computeQueue;
+	}
+	
+	const VkQueue& LogicalDevice::getTransferQueue() const
+	{
+		return m_transferQueue;
 	}
 
 	void Aminophenol::LogicalDevice::findQueueFamilyIndices()
@@ -125,13 +177,10 @@ namespace Aminophenol
 			}
 
 			// Check if the queue family supports presentation
-			// VkBool32 presentationSupport = false;
-			// vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, i, m_instance.getSurface(), &presentationSupport);
-			// if (presentationSupport)
-			// {
-			// 	m_presentationFamilyIndex = i;
-			// 	m_supportedQueues |= VK_QUEUE_GRAPHICS_BIT;
-			// }
+			if (queueFamilyProperty.queueCount > 0)
+			{
+				m_presentFamilyIndex = i;
+			}
 			
 			// Check if the queue family supports compute
 			if (queueFamilyProperty.queueFlags & VK_QUEUE_COMPUTE_BIT)
@@ -145,6 +194,12 @@ namespace Aminophenol
 			{
 				m_transferFamilyIndex = i;
 				m_supportedQueues |= VK_QUEUE_TRANSFER_BIT;
+			}
+			
+			// Break if all queues are found
+			if (m_supportedQueues == (VK_QUEUE_GRAPHICS_BIT | VK_QUEUE_COMPUTE_BIT | VK_QUEUE_TRANSFER_BIT))
+			{
+				break;
 			}
 		}
 	}

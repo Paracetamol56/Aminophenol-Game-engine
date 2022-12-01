@@ -8,6 +8,7 @@
 #include "Device/Instance.h"
 #include "Device/PhysicalDevice.h"
 #include "Device/LogicalDevice.h"
+#include "Device/Surface.h"
 
 namespace Aminophenol
 {
@@ -29,6 +30,7 @@ namespace Aminophenol
 		std::unique_ptr<Instance> m_instance{ nullptr };
 		std::unique_ptr<PhysicalDevice> m_physicalDevice{ nullptr };
 		std::unique_ptr<LogicalDevice> m_logicalDevice{ nullptr };
+		std::unique_ptr<Surface> m_surface{ nullptr };
 
 		void initGlfwWindow();
 		void initVulkan();

@@ -27,6 +27,7 @@ namespace Aminophenol {
 		glfwDestroyWindow(m_window);
 		glfwTerminate();
 
+		m_surface.reset();
 		m_logicalDevice.reset();
 		m_physicalDevice.reset();
 		m_instance.reset();
@@ -51,6 +52,7 @@ namespace Aminophenol {
 		m_instance = std::make_unique<Instance>("Aminophenol app");
 		m_physicalDevice = std::make_unique<PhysicalDevice>(*m_instance);
 		m_logicalDevice = std::make_unique<LogicalDevice>(*m_instance, *m_physicalDevice);
+		m_surface = std::make_unique<Surface>(*m_instance, m_window, *m_logicalDevice, *m_physicalDevice);
 	}
 
 } // namespace Aminophenol
