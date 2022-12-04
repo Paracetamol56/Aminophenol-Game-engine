@@ -18,6 +18,7 @@ namespace Aminophenol {
 		m_physicalDevice = std::make_unique<PhysicalDevice>(*m_instance);
 		m_logicalDevice = std::make_unique<LogicalDevice>(*m_instance, *m_physicalDevice);
 		m_surface = std::make_unique<Surface>(*m_instance, *m_window, *m_logicalDevice, *m_physicalDevice);
+		m_swapchain = std::make_unique<Swapchain>(*m_logicalDevice, *m_physicalDevice, *m_surface, m_window->getExtent());
 
 		Logger::log(LogLevel::Trace, "Engine initialized.");
 	}
@@ -28,8 +29,7 @@ namespace Aminophenol {
 
 		// Destroy the window
 		m_window.reset();
-		glfwTerminate();
-
+		m_swapchain.reset();
 		m_surface.reset();
 		m_logicalDevice.reset();
 		m_physicalDevice.reset();
@@ -38,24 +38,6 @@ namespace Aminophenol {
 		Logger::log(LogLevel::Trace, "Engine destroyed.");
 
 		m_logger.reset();
-	}
-
-	void Engine::initGlfwWindow()
-	{
-		glfwInit();
-
-		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-
-		m_window = glfwCreateWindow(_WIDTH, _HEIGHT, "Aminophenol", nullptr, nullptr);
-	}
-
-	void Engine::initVulkan()
-	{
-		m_instance = std::make_unique<Instance>("Aminophenol app");
-		m_physicalDevice = std::make_unique<PhysicalDevice>(*m_instance);
-		m_logicalDevice = std::make_unique<LogicalDevice>(*m_instance, *m_physicalDevice);
-		m_surface = std::make_unique<Surface>(*m_instance, m_window, *m_logicalDevice, *m_physicalDevice);
 	}
 
 } // namespace Aminophenol

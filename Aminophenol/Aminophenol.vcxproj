@@ -158,6 +158,7 @@
     <ClInclude Include="Logging\Logger.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Device\Surface.h" />
+    <ClInclude Include="Device\Swapchain.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +175,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Device\Surface.cpp" />
+    <ClCompile Include="Device\Swapchain.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

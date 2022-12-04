@@ -72,7 +72,7 @@ namespace Aminophenol
 		VkPhysicalDeviceFeatures deviceFeatures{};
 		deviceFeatures.samplerAnisotropy = VK_TRUE;
 		
-		std::vector<const char*> extensions; // Empty for now
+		std::vector<const char*> extensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 		std::vector<const char*> layers = m_instance.getRequiredLayers();
 		
 		// Documentation: https://registry.khronos.org/vulkan/specs/1.3/html/chap5.html#VkDeviceCreateInfo
