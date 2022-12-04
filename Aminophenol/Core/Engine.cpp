@@ -13,8 +13,11 @@ namespace Aminophenol {
 	{
 		Logger::log(LogLevel::Trace, "Initializing engine...");
 
-		initGlfwWindow();
-		initVulkan();
+		m_window = std::make_unique<Window>(_WIDTH, _HEIGHT, "Aminophenol");
+		m_instance = std::make_unique<Instance>("Aminophenol app");
+		m_physicalDevice = std::make_unique<PhysicalDevice>(*m_instance);
+		m_logicalDevice = std::make_unique<LogicalDevice>(*m_instance, *m_physicalDevice);
+		m_surface = std::make_unique<Surface>(*m_instance, *m_window, *m_logicalDevice, *m_physicalDevice);
 
 		Logger::log(LogLevel::Trace, "Engine initialized.");
 	}
@@ -24,7 +27,7 @@ namespace Aminophenol {
 		Logger::log(LogLevel::Trace, "Destroying engine...");
 
 		// Destroy the window
-		glfwDestroyWindow(m_window);
+		m_window.reset();
 		glfwTerminate();
 
 		m_surface.reset();

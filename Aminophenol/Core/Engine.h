@@ -4,6 +4,7 @@
 
 #include "pch.h"
 
+#include "Window/Window.h"
 #include "Logging/Logger.h"
 #include "Device/Instance.h"
 #include "Device/PhysicalDevice.h"
@@ -25,7 +26,7 @@ namespace Aminophenol
 		const int _WIDTH = 640;
 		const int _HEIGHT = 480;
 
-		GLFWwindow* m_window{ nullptr };
+		std::unique_ptr<Window> m_window{ nullptr };
 		std::unique_ptr<Logger> m_logger{ nullptr };
 		std::unique_ptr<Instance> m_instance{ nullptr };
 		std::unique_ptr<PhysicalDevice> m_physicalDevice{ nullptr };

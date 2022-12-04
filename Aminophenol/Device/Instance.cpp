@@ -92,6 +92,8 @@ namespace Aminophenol
 
 	Instance::~Instance()
 	{
+		Logger::log(LogLevel::Trace, "Destroying Vulkan instance...");
+
 #ifdef _DEBUG
 		DestroyDebugUtilsMessengerEXT(m_instance, m_debugMessenger, nullptr);
 #endif // _DEBUG
