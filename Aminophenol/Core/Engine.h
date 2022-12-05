@@ -6,11 +6,11 @@
 
 #include "Window/Window.h"
 #include "Logging/Logger.h"
-#include "Device/Instance.h"
-#include "Device/PhysicalDevice.h"
-#include "Device/LogicalDevice.h"
-#include "Device/Surface.h"
-#include "Device/Swapchain.h"
+#include "Rendering/Instance.h"
+#include "Rendering/PhysicalDevice.h"
+#include "Rendering/LogicalDevice.h"
+#include "Rendering/Surface.h"
+#include "Rendering/Swapchain.h"
 
 namespace Aminophenol
 {

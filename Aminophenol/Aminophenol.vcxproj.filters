@@ -27,22 +27,22 @@
     <ClInclude Include="Logging\Logger.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Device\Instance.h">
+    <ClInclude Include="Rendering\Instance.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Device\LogicalDevice.h">
+    <ClInclude Include="Rendering\LogicalDevice.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Device\PhysicalDevice.h">
+    <ClInclude Include="Rendering\PhysicalDevice.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Logging\DebugCallback.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Device\Surface.h">
+    <ClInclude Include="Rendering\Surface.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Device\Swapchain.h">
+    <ClInclude Include="Rendering\Swapchain.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Window\Window.h">
@@ -59,26 +59,35 @@
     <ClCompile Include="Logging\Logger.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Device\Instance.cpp">
+    <ClCompile Include="Rendering\Instance.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Device\LogicalDevice.cpp">
+    <ClCompile Include="Rendering\LogicalDevice.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Device\PhysicalDevice.cpp">
+    <ClCompile Include="Rendering\PhysicalDevice.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Logging\DebugCallback.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Device\Surface.cpp">
+    <ClCompile Include="Rendering\Surface.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Device\Swapchain.cpp">
+    <ClCompile Include="Rendering\Swapchain.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Window\Window.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="Shaders\shader.frag.frag" />
+    <None Include="Shaders\shader.vert" />
+    <None Include="Shaders\compile.bat">
+      <Filter>Fichiers sources</Filter>
+    </None>
+    <None Include="Shaders\shader.frag" />
   </ItemGroup>
 </Project>

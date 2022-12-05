@@ -4,10 +4,10 @@
 
 #include "pch.h"
 
-#include "Device/Instance.h"
+#include "Rendering/Instance.h"
 #include "Window/Window.h"
-#include "Device/LogicalDevice.h"
-#include "Device/PhysicalDevice.h"
+#include "Rendering/LogicalDevice.h"
+#include "Rendering/PhysicalDevice.h"
 
 namespace Aminophenol
 {

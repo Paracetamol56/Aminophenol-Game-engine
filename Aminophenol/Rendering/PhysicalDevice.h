@@ -4,7 +4,7 @@
 
 #include "pch.h"
 
-#include "Device/Instance.h"
+#include "Rendering/Instance.h"
 
 namespace Aminophenol
 {

@@ -4,9 +4,9 @@
 
 #include "pch.h"
 
-#include "Device/LogicalDevice.h"
-#include "Device/PhysicalDevice.h"
-#include "Device/Surface.h"
+#include "Rendering/LogicalDevice.h"
+#include "Rendering/PhysicalDevice.h"
+#include "Rendering/Surface.h"
 
 namespace Aminophenol {
 
