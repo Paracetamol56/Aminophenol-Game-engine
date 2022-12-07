@@ -19,6 +19,9 @@ namespace Aminophenol {
 
 		operator const VkSwapchainKHR& () const;
 
+		const VkExtent2D& getExtent() const;
+		const VkFormat& getFormat() const;
+
 	private:
 		
 		VkSwapchainKHR m_swapchain{ VK_NULL_HANDLE };

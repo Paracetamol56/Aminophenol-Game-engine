@@ -48,6 +48,16 @@ namespace Aminophenol {
 		return m_swapchain;
 	}
 
+	const VkExtent2D& Swapchain::getExtent() const
+	{
+		return m_extent;
+	}
+
+	const VkFormat& Swapchain::getFormat() const
+	{
+		return m_surfaceFormat.format;
+	}
+
 	void Swapchain::getSwapchainDetails()
 	{
 		// Get surface capabilities

@@ -13,6 +13,7 @@ namespace Aminophenol {
 	{
 		Logger::log(LogLevel::Trace, "Initializing engine...");
 
+		// Device
 		m_window = std::make_unique<Window>(_WIDTH, _HEIGHT, "Aminophenol");
 		m_instance = std::make_unique<Instance>("Aminophenol app");
 		m_physicalDevice = std::make_unique<PhysicalDevice>(*m_instance);
@@ -20,6 +21,12 @@ namespace Aminophenol {
 		m_surface = std::make_unique<Surface>(*m_instance, *m_window, *m_logicalDevice, *m_physicalDevice);
 		m_swapchain = std::make_unique<Swapchain>(*m_logicalDevice, *m_physicalDevice, *m_surface, m_window->getExtent());
 
+		// Pipeline
+		m_pipeline = std::make_unique<Pipeline>(
+			*m_logicalDevice, m_swapchain->getExtent(), m_swapchain->getFormat(),
+			"../Aminophenol/Shaders/shader.vert.spv", "../Aminophenol/Shaders/shader.frag.spv"
+		);
+		
 		Logger::log(LogLevel::Trace, "Engine initialized.");
 	}
 
@@ -27,8 +34,13 @@ namespace Aminophenol {
 	{
 		Logger::log(LogLevel::Trace, "Destroying engine...");
 
+		// Destroy the pipeline
+		m_pipeline.reset();
+		
 		// Destroy the window
 		m_window.reset();
+
+		// Destroy the device (not literally)
 		m_swapchain.reset();
 		m_surface.reset();
 		m_logicalDevice.reset();

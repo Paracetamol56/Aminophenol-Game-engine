@@ -19,7 +19,8 @@
 #include <string>
 #include <chrono>
 #include <memory>
-#include <optional>
+#include <filesystem>
+#include <fstream>
 
 // Vulkan headers
 #include <vulkan/vulkan.hpp>

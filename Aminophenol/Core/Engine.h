@@ -11,6 +11,7 @@
 #include "Rendering/LogicalDevice.h"
 #include "Rendering/Surface.h"
 #include "Rendering/Swapchain.h"
+#include "Rendering/Pipeline/Pipeline.h"
 
 namespace Aminophenol
 {
@@ -34,6 +35,8 @@ namespace Aminophenol
 		std::unique_ptr<LogicalDevice> m_logicalDevice{ nullptr };
 		std::unique_ptr<Surface> m_surface{ nullptr };
 		std::unique_ptr<Swapchain> m_swapchain{ nullptr };
+
+		std::unique_ptr<Pipeline> m_pipeline{ nullptr };
 
 	};
 
