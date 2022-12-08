@@ -5,6 +5,7 @@
 #include "pch.h"
 
 #include "Rendering/LogicalDevice.h"
+#include "Rendering/Swapchain/RenderPass.h"
 
 namespace Aminophenol {
 
@@ -23,7 +24,7 @@ namespace Aminophenol {
 
 		VkPipeline m_graphicsPipeline;
 		VkPipelineLayout m_pipelineLayout;
-		VkRenderPass m_renderPass;
+		std::unique_ptr<RenderPass> m_renderPass;
 		VkShaderModule m_vertShaderModule;
 		VkShaderModule m_fragShaderModule;
 		

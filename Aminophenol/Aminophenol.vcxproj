@@ -160,6 +160,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Rendering\Surface.h" />
     <ClInclude Include="Rendering\Swapchain.h" />
+    <ClInclude Include="Rendering\Swapchain\RenderPass.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +179,7 @@
     </ClCompile>
     <ClCompile Include="Rendering\Surface.cpp" />
     <ClCompile Include="Rendering\Swapchain.cpp" />
+    <ClCompile Include="Rendering\Swapchain\RenderPass.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
