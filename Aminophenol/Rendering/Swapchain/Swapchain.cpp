@@ -48,6 +48,16 @@ namespace Aminophenol {
 		return m_swapchain;
 	}
 
+	const std::vector<VkImage>& Swapchain::getImages() const
+	{
+		return m_images;
+	}
+
+	const std::vector<VkImageView>& Swapchain::getImageViews() const
+	{
+		return m_imageViews;
+	}
+
 	const VkExtent2D& Swapchain::getExtent() const
 	{
 		return m_extent;

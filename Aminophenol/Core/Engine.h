@@ -10,7 +10,7 @@
 #include "Rendering/PhysicalDevice.h"
 #include "Rendering/LogicalDevice.h"
 #include "Rendering/Surface.h"
-#include "Rendering/Swapchain.h"
+#include "Rendering/Swapchain/Swapchain.h"
 #include "Rendering/Pipeline/Pipeline.h"
 
 namespace Aminophenol

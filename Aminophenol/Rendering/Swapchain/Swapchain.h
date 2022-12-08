@@ -10,7 +10,7 @@
 
 namespace Aminophenol {
 
-	class Swapchain
+	class AMINOPHENOL_API Swapchain
 	{
 	public:
 			
@@ -19,6 +19,8 @@ namespace Aminophenol {
 
 		operator const VkSwapchainKHR& () const;
 
+		const std::vector<VkImage>& getImages() const;
+		const std::vector<VkImageView>& getImageViews() const;
 		const VkExtent2D& getExtent() const;
 		const VkFormat& getFormat() const;
 

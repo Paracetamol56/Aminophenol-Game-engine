@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Core\Engine.h" />
+    <ClInclude Include="Rendering\Swapchain\FrameBuffers.h" />
     <ClInclude Include="Rendering\Pipeline\Pipeline.h" />
     <ClInclude Include="Rendering\Instance.h" />
     <ClInclude Include="Rendering\LogicalDevice.h" />
@@ -159,12 +160,13 @@
     <ClInclude Include="Logging\Logger.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Rendering\Surface.h" />
-    <ClInclude Include="Rendering\Swapchain.h" />
+    <ClInclude Include="Rendering\Swapchain\Swapchain.h" />
     <ClInclude Include="Rendering\Swapchain\RenderPass.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Engine.cpp" />
+    <ClCompile Include="Rendering\Swapchain\FrameBuffers.cpp" />
     <ClCompile Include="Rendering\Pipeline\Pipeline.cpp" />
     <ClCompile Include="Rendering\Instance.cpp" />
     <ClCompile Include="Rendering\LogicalDevice.cpp" />
@@ -178,7 +180,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Rendering\Surface.cpp" />
-    <ClCompile Include="Rendering\Swapchain.cpp" />
+    <ClCompile Include="Rendering\Swapchain\Swapchain.cpp" />
     <ClCompile Include="Rendering\Swapchain\RenderPass.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
