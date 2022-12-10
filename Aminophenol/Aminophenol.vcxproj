@@ -187,7 +187,6 @@
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="Shaders\compile.bat" />
     <None Include="Shaders\shader.frag" />
     <None Include="Shaders\shader.frag.frag" />

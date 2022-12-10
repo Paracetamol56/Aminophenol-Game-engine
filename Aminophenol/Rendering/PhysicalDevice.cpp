@@ -67,7 +67,7 @@ namespace Aminophenol
 		// Log the device name
 		VkPhysicalDeviceProperties deviceProperties;
 		vkGetPhysicalDeviceProperties(bestDevice, &deviceProperties);
-		Logger::log(LogLevel::Info, "Picked the physical device \"%s\" with a score of %d.", deviceProperties.deviceName, bestScore);
+		Logger::log(LogLevel::Trace, "Picked the physical device \"%s\" with a score of %d.", deviceProperties.deviceName, bestScore);
 
 		return bestDevice;
 	}
@@ -99,7 +99,7 @@ namespace Aminophenol
 			break;
 		}
 
-		Logger::log(LogLevel::Info, "Available device: \n\tdevice name: %s\n\tdevice type: %s\n\tdriver version: %d.%d.%d",
+		Logger::log(LogLevel::Trace, "Available device: \"%s\", type: \"%s\", driver version: %d.%d.%d",
 			deviceProperties.deviceName,
 			deviceType,
 			VK_API_VERSION_MAJOR(deviceProperties.driverVersion),
@@ -120,14 +120,14 @@ namespace Aminophenol
 		// Log the available extentions
 		for (const auto& extension : availableExtensions)
 		{
-			Logger::log(LogLevel::Info, "Available device extension: %s", extension.extensionName);
+			Logger::log(LogLevel::Trace, "Available device extension: %s", extension.extensionName);
 		}
 		*/
 
 		// Check if all required extentions are available
 		for (const char* extension : requiredExtensions)
 		{
-			Logger::log(LogLevel::Info, "Required device extension: %s", extension);
+			Logger::log(LogLevel::Trace, "Required device extension: %s", extension);
 
 			bool found{ false };
 			for (const VkExtensionProperties& availableExtension : availableExtensions)
@@ -141,7 +141,7 @@ namespace Aminophenol
 
 			if (!found)
 			{
-				Logger::log(LogLevel::Error, "Required device extension not found: %s", extension);
+				Logger::log(LogLevel::Trace, "Required device extension not found: %s", extension);
 				return false;
 			}
 		}
@@ -162,14 +162,14 @@ namespace Aminophenol
 
 		// Application can't function without geometry shaders
 		if (!deviceFeatures.geometryShader) {
-			Logger::log(LogLevel::Info, "The device \"%s\" does not support geometry shaders.", deviceProperties.deviceName);
+			Logger::log(LogLevel::Trace, "The device \"%s\" does not support geometry shaders.", deviceProperties.deviceName);
 			return -1;
 		}
 
 		// Check if all required extentions are available
 		if (!checkDeviceExtensionSupport(device, requiredExtensions))
 		{
-			Logger::log(LogLevel::Info, "The device \"%s\" does not support all required extensions.", deviceProperties.deviceName);
+			Logger::log(LogLevel::Trace, "The device \"%s\" does not support all required extensions.", deviceProperties.deviceName);
 			return -1;
 		}
 		
@@ -183,7 +183,7 @@ namespace Aminophenol
 		// Maximum possible size of textures affects graphics quality
 		score += deviceProperties.limits.maxImageDimension2D;
 
-		Logger::log(LogLevel::Info, "The device \"%s\" has a score of %d.", deviceProperties.deviceName, score);
+		Logger::log(LogLevel::Trace, "The device \"%s\" has a score of %d.", deviceProperties.deviceName, score);
 
 		return score;
 	}

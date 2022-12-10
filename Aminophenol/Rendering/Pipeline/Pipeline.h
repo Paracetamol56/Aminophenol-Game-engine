@@ -19,6 +19,9 @@ namespace Aminophenol {
 		);
 		~Pipeline();
 
+		operator const VkPipeline& () const;
+		
+		const RenderPass& getRenderPass() const;
 
 	private:
 

@@ -12,6 +12,7 @@
 #include "Rendering/Surface.h"
 #include "Rendering/Swapchain/Swapchain.h"
 #include "Rendering/Pipeline/Pipeline.h"
+#include "Rendering/Renderer.h"
 
 namespace Aminophenol
 {
@@ -37,6 +38,7 @@ namespace Aminophenol
 		std::unique_ptr<Swapchain> m_swapchain{ nullptr };
 
 		std::unique_ptr<Pipeline> m_pipeline{ nullptr };
+		std::unique_ptr<Renderer> m_renderer{ nullptr };
 
 	};
 

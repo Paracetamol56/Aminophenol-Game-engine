@@ -144,13 +144,13 @@ namespace Aminophenol
 		// Log the available extentions
 		for (const auto& extension : availableExtensions)
 		{
-			Logger::log(LogLevel::Info, "Available extension: %s", extension.extensionName);
+			Logger::log(LogLevel::Trace, "Available extension: %s", extension.extensionName);
 		}
 
 		// Check if all required extentions are available
 		for (const char* extension : requiredExtensions)
 		{
-			Logger::log(LogLevel::Info, "Required extension: %s", extension);
+			Logger::log(LogLevel::Trace, "Required extension: %s", extension);
 
 			bool found{ false };
 			for (const VkExtensionProperties& availableExtension : availableExtensions)
@@ -183,13 +183,13 @@ namespace Aminophenol
 		// Log the available layers
 		for (const VkLayerProperties& layer : availableLayers)
 		{
-			Logger::log(LogLevel::Info, "Available layer: %s", layer.layerName);
+			Logger::log(LogLevel::Trace, "Available layer: %s", layer.layerName);
 		}
 		
 		// Check if all required layers are available
 		for (const char* layer : requiredLayers)
 		{
-			Logger::log(LogLevel::Info, "Required layer: %s", layer);
+			Logger::log(LogLevel::Trace, "Required layer: %s", layer);
 
 			bool found{ false };
 			for (const VkLayerProperties& availableLayer : availableLayers)

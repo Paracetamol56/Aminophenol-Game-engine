@@ -2,6 +2,8 @@
 #include "pch.h"
 #include "FrameBuffers.h"
 
+#include "Logging/Logger.h"
+
 namespace Aminophenol {
 
 	FrameBuffers::FrameBuffers(const LogicalDevice& logicalDevice, const Swapchain& swapchain, const RenderPass& renderPass)
@@ -14,6 +16,8 @@ namespace Aminophenol {
 
 		for (size_t i = 0; i < m_attachments.size(); i++)
 		{
+			Logger::log(LogLevel::Trace, "Creating FrameBuffer %d", i);
+
 			VkImageView attachments[] = { m_attachments[i] };
 
 			VkFramebufferCreateInfo framebufferInfo{};
@@ -29,12 +33,14 @@ namespace Aminophenol {
 			{
 				throw std::runtime_error("failed to create framebuffer!");
 			}
+
+			Logger::log(LogLevel::Trace, "Successfully created FrameBuffer %d", i);
 		}
 	}
 
 	FrameBuffers::~FrameBuffers()
 	{
-		for (auto framebuffer : m_frameBuffers)
+		for (VkFramebuffer& framebuffer : m_frameBuffers)
 		{
 			vkDestroyFramebuffer(m_logicalDevice, framebuffer, nullptr);
 		}

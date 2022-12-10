@@ -12,7 +12,7 @@
 namespace Aminophenol
 {
 
-	class Surface
+	class AMINOPHENOL_API Surface
 	{
 
 	public:

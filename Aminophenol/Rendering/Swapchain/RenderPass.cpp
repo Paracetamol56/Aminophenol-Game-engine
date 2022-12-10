@@ -2,11 +2,15 @@
 #include "pch.h"
 #include "Rendering/Swapchain/RenderPass.h"
 
+#include "Logging/Logger.h"
+
 namespace Aminophenol {
 
 	RenderPass::RenderPass(const LogicalDevice& logicalDevice, const VkFormat& format)
 		: m_logicalDevice(logicalDevice)
 	{
+		Logger::log(LogLevel::Trace, "Creating RenderPass");
+
 		VkAttachmentDescription colorAttachment{};
 		colorAttachment.format = format;
 		colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
@@ -47,6 +51,8 @@ namespace Aminophenol {
 		{
 			throw std::runtime_error("failed to create render pass!");
 		}
+
+		Logger::log(LogLevel::Trace, "Successfully created RenderPass");
 	}
 	
 	RenderPass::~RenderPass()

@@ -54,6 +54,16 @@ namespace Aminophenol {
 
 		Logger::log(LogLevel::Trace, "Pipeline destroyed.");
 	}
+
+	Pipeline::operator const VkPipeline& () const
+	{
+		return m_graphicsPipeline;
+	}
+
+	const RenderPass& Pipeline::getRenderPass() const
+	{
+		return *m_renderPass;
+	}
 	
 	void Pipeline::createGraphicsPipeline()
 	{
