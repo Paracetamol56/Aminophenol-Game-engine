@@ -29,7 +29,6 @@ namespace Aminophenol {
 			*m_logicalDevice, m_swapchain->getExtent(), m_swapchain->getFormat(),
 			"../Aminophenol/Shaders/shader.vert.spv", "../Aminophenol/Shaders/shader.frag.spv"
 		);
-		m_renderer = std::make_unique<Renderer>(*m_logicalDevice, *m_swapchain, m_pipeline->getRenderPass(), *m_commandPool);
 		
 		Logger::log(LogLevel::Trace, "Engine initialized.");
 	}
@@ -58,6 +57,22 @@ namespace Aminophenol {
 		Logger::log(LogLevel::Trace, "Engine destroyed.");
 
 		m_logger.reset();
+	}
+
+	AMINOPHENOL_API void Engine::run()
+	{
+		Logger::log(LogLevel::Info, "Running engine...");
+
+		m_renderer = std::make_unique<Renderer>(*m_logicalDevice, *m_swapchain, *m_pipeline, *m_commandPool);
+
+		while (!m_window->shouldClose())
+		{
+			glfwPollEvents();
+
+			m_renderer->render();
+		}
+
+		Logger::log(LogLevel::Info, "Engine stopped.");
 	}
 
 } // namespace Aminophenol

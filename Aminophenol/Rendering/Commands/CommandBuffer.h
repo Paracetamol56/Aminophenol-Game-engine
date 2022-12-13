@@ -17,6 +17,8 @@ namespace Aminophenol {
 		~CommandBuffer();
 
 		operator const VkCommandBuffer& () const;
+
+		const VkCommandBuffer& getCommandBuffer() const;
 		
 	private:
 		

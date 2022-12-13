@@ -18,6 +18,8 @@ namespace Aminophenol
 
 		operator const VkDevice& () const;
 
+		const VkDevice& getDevice() const;
+
 		const uint32_t getGraphicsQueueFamilyIndex() const;
 		const uint32_t getPresentQueueFamilyIndex() const;
 		const uint32_t getComputeQueueFamilyIndex() const;

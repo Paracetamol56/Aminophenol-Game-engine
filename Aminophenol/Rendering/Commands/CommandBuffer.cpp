@@ -32,5 +32,10 @@ namespace Aminophenol {
 		return m_commandBuffer;
 	}
 
+	const VkCommandBuffer& CommandBuffer::getCommandBuffer() const
+	{
+		return m_commandBuffer;
+	}
+
 } // namespace Aminophenol
 

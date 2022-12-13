@@ -115,6 +115,11 @@ namespace Aminophenol
 		return m_device;
 	}
 
+	const VkDevice& LogicalDevice::getDevice() const
+	{
+		return m_device;
+	}
+
 	const uint32_t LogicalDevice::getGraphicsQueueFamilyIndex() const
 	{
 		return m_graphicsFamilyIndex;

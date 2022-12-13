@@ -16,6 +16,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
+#include <array>
 #include <string>
 #include <chrono>
 #include <memory>

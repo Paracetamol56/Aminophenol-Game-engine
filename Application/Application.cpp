@@ -6,6 +6,7 @@ int main(int argc, char* argv[])
 	try
 	{
 		Aminophenol::Engine engine{};
+		engine.run();
 	}
 	catch (const std::exception& e)
 	{

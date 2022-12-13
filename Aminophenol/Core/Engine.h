@@ -25,6 +25,8 @@ namespace Aminophenol
 		Engine();
 		~Engine();
 
+		void run();
+
 	private:
 
 		const int _WIDTH = 640;
