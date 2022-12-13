@@ -7,7 +7,8 @@
 #include "Rendering/LogicalDevice.h"
 #include "Rendering/Swapchain/Swapchain.h"
 #include "Rendering/Swapchain/RenderPass.h"
-#include "Rendering/Swapchain/FrameBuffers.h"
+#include "Rendering/Commands/CommandPool.h"
+#include "Rendering/Commands/CommandBuffer.h"
 
 namespace Aminophenol {
 
@@ -15,18 +16,29 @@ namespace Aminophenol {
 	{
 	public:
 
-		Renderer(const LogicalDevice& logicalDevice, const Swapchain& swapchain, const RenderPass& renderPass);
+		Renderer(const LogicalDevice& logicalDevice, const Swapchain& swapchain, const RenderPass& renderPass, const CommandPool& commandPool);
 		~Renderer();
 
-		void render();
+		const std::vector<VkFramebuffer>& getFrameBuffers() const;
 
 	private:
 
+		// Buffers
+		std::vector<VkFramebuffer> m_frameBuffers{};
+		std::vector<std::unique_ptr<CommandBuffer>> m_commandBuffers{};
+		std::unique_ptr<CommandBuffer> m_globalCommandBuffer;
+		
+		// Syncronization
+		std::vector<VkSemaphore> m_imageAvailableSemaphores{};
+		std::vector<VkSemaphore> m_renderFinishedSemaphores{};
+		std::vector<VkFence> m_inFlightFences{};
+
+		// References
 		const LogicalDevice& m_logicalDevice;
 		const Swapchain& m_swapchain;
 		const RenderPass& m_renderPass;
-
-		FrameBuffers m_frameBuffers;
+		const CommandPool& m_commandPool;
+		const std::vector<VkImageView> m_attachments;
 
 	};
 

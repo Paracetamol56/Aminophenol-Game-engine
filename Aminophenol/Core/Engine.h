@@ -13,6 +13,7 @@
 #include "Rendering/Swapchain/Swapchain.h"
 #include "Rendering/Pipeline/Pipeline.h"
 #include "Rendering/Renderer.h"
+#include "Rendering/Commands/CommandPool.h"
 
 namespace Aminophenol
 {
@@ -39,6 +40,7 @@ namespace Aminophenol
 
 		std::unique_ptr<Pipeline> m_pipeline{ nullptr };
 		std::unique_ptr<Renderer> m_renderer{ nullptr };
+		std::unique_ptr<CommandPool> m_commandPool{ nullptr };
 
 	};
 

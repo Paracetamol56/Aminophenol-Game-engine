@@ -149,9 +149,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Rendering\Commands\CommandBuffer.h" />
+    <ClInclude Include="Rendering\Commands\CommandPool.h" />
     <ClInclude Include="Core\Engine.h" />
     <ClInclude Include="Rendering\Renderer.h" />
-    <ClInclude Include="Rendering\Swapchain\FrameBuffers.h" />
     <ClInclude Include="Rendering\Pipeline\Pipeline.h" />
     <ClInclude Include="Rendering\Instance.h" />
     <ClInclude Include="Rendering\LogicalDevice.h" />
@@ -166,9 +167,10 @@
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Rendering\Commands\CommandBuffer.cpp" />
+    <ClCompile Include="Rendering\Commands\CommandPool.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Rendering\Renderer.cpp" />
-    <ClCompile Include="Rendering\Swapchain\FrameBuffers.cpp" />
     <ClCompile Include="Rendering\Pipeline\Pipeline.cpp" />
     <ClCompile Include="Rendering\Instance.cpp" />
     <ClCompile Include="Rendering\LogicalDevice.cpp" />
