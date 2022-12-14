@@ -41,7 +41,6 @@ namespace Aminophenol {
 		m_commandPool.reset();
 		
 		// Destroy the pipeline
-		m_renderer.reset();
 		m_pipeline.reset();
 		
 		// Destroy the window
@@ -71,6 +70,8 @@ namespace Aminophenol {
 
 			m_renderer->render();
 		}
+
+		m_renderer.reset();
 
 		Logger::log(LogLevel::Info, "Engine stopped.");
 	}

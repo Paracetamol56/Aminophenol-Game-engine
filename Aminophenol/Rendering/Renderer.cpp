@@ -106,8 +106,6 @@ namespace Aminophenol {
 			Logger::log(LogLevel::Error, "Failed to acquire swapchain image!");
 		}
 
-		Logger::log(LogLevel::Trace, "Acquired image %d", imageIndex);
-
 		vkResetCommandBuffer(m_commandBuffers[imageIndex]->getCommandBuffer(), 0);
 		
 		recordDrawCommand(imageIndex);
@@ -183,6 +181,8 @@ namespace Aminophenol {
 		vkCmdBindPipeline(m_commandBuffers[imageIndex]->getCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline);
 
 		vkCmdDraw(m_commandBuffers[imageIndex]->getCommandBuffer(), 3, 1, 0, 0);
+
+		vkCmdEndRenderPass(m_commandBuffers[imageIndex]->getCommandBuffer());
 				
 		if (vkEndCommandBuffer(m_commandBuffers[imageIndex]->getCommandBuffer()) != VK_SUCCESS)
 		{
