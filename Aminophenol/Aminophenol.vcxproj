@@ -164,6 +164,7 @@
     <ClInclude Include="Rendering\Surface.h" />
     <ClInclude Include="Rendering\Swapchain\Swapchain.h" />
     <ClInclude Include="Rendering\Swapchain\RenderPass.h" />
+    <ClInclude Include="Maths\Vector2.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
