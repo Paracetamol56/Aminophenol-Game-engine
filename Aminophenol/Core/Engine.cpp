@@ -4,76 +4,57 @@
 
 namespace Aminophenol {
 	
-	Engine::Engine()
-#ifdef _DEBUG
-		: m_logger{ new Logger(LogLevel::Trace) }
-#else
-		: m_logger{ new Logger(LogLevel::Error) }
-#endif // _DEBUG
+	Engine::Engine(std::string appName)
+		: m_appName{ appName }
 	{
-		Logger::log(LogLevel::Trace, "Initializing engine...");
-
-		// Device
-		m_window = std::make_unique<Window>(_WIDTH, _HEIGHT, "Aminophenol");
-		m_instance = std::make_unique<Instance>("Aminophenol app");
-		m_physicalDevice = std::make_unique<PhysicalDevice>(*m_instance);
-		m_logicalDevice = std::make_unique<LogicalDevice>(*m_instance, *m_physicalDevice);
-		m_surface = std::make_unique<Surface>(*m_instance, *m_window, *m_logicalDevice, *m_physicalDevice);
-		m_swapchain = std::make_unique<Swapchain>(*m_logicalDevice, *m_physicalDevice, *m_surface, m_window->getExtent());
-
-		// Commands
-		m_commandPool = std::make_unique<CommandPool>(*m_logicalDevice, m_logicalDevice->getGraphicsQueueFamilyIndex());
+#ifdef _DEBUG
+		m_logger = std::make_unique<Logger>(LogLevel::Trace);
+#else
+		m_logger = std::make_unique<Logger>(LogLevel::Error);
+#endif // _DEBUG
 		
-		// Pipeline
-		m_pipeline = std::make_unique<Pipeline>(
-			*m_logicalDevice, m_swapchain->getExtent(), m_swapchain->getFormat(),
-			"../Aminophenol/Shaders/shader.vert.spv", "../Aminophenol/Shaders/shader.frag.spv"
-		);
-		
-		Logger::log(LogLevel::Trace, "Engine initialized.");
+		m_window = std::make_unique<Window>(_WIDTH, _HEIGHT, m_appName.c_str());
+		Logger::log(LogLevel::Trace, "Window initialized.");
+
+		m_renderingEngine = std::make_unique<RenderingEngine>(*m_window, m_appName);
+		Logger::log(LogLevel::Trace, "Rendering engine initialized.");
 	}
 
 	Engine::~Engine()
 	{
-		Logger::log(LogLevel::Trace, "Destroying engine...");
-
-		// Commands
-		m_commandPool.reset();
+		m_renderingEngine.reset();
+		Logger::log(LogLevel::Trace, "Rendering engine destroyed.");
 		
-		// Destroy the pipeline
-		m_pipeline.reset();
-		
-		// Destroy the window
 		m_window.reset();
-
-		// Destroy the device (not literally)
-		m_swapchain.reset();
-		m_surface.reset();
-		m_logicalDevice.reset();
-		m_physicalDevice.reset();
-		m_instance.reset();
-
-		Logger::log(LogLevel::Trace, "Engine destroyed.");
+		Logger::log(LogLevel::Trace, "Window destroyed.");
 
 		m_logger.reset();
 	}
 
-	AMINOPHENOL_API void Engine::run()
+	void Engine::run()
 	{
-		Logger::log(LogLevel::Info, "Running engine...");
+		Logger::log(LogLevel::Trace, "Running %s...", m_appName.c_str());
 
-		m_renderer = std::make_unique<Renderer>(*m_logicalDevice, *m_swapchain, *m_pipeline, *m_commandPool);
+		 while (!m_window->shouldClose())
+		 {
+		 	glfwPollEvents();
+		 	m_renderingEngine->update();
+		 }
+	}
 
-		while (!m_window->shouldClose())
-		{
-			glfwPollEvents();
+	std::string Engine::getAppName() const
+	{
+		return m_appName;
+	}
 
-			m_renderer->render();
-		}
-
-		m_renderer.reset();
-
-		Logger::log(LogLevel::Info, "Engine stopped.");
+	Window& Engine::getWindow() const
+	{
+		return *m_window;
+	}
+	
+	RenderingEngine& Engine::getRenderingEngine() const
+	{
+		return *m_renderingEngine;
 	}
 
 } // namespace Aminophenol

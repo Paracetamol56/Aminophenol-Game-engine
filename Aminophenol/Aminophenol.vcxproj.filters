@@ -27,19 +27,19 @@
     <ClInclude Include="Logging\Logger.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\Instance.h">
+    <ClInclude Include="Rendering\Device\Instance.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\LogicalDevice.h">
+    <ClInclude Include="Rendering\Device\LogicalDevice.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\PhysicalDevice.h">
+    <ClInclude Include="Rendering\Device\PhysicalDevice.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Logging\DebugCallback.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\Surface.h">
+    <ClInclude Include="Rendering\Device\Surface.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Rendering\Swapchain\Swapchain.h">
@@ -54,13 +54,19 @@
     <ClInclude Include="Rendering\Swapchain\RenderPass.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\Renderer.h">
+    <ClInclude Include="Rendering\RenderingEngine.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Rendering\Commands\CommandPool.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Rendering\Commands\CommandBuffer.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\Renderer\Renderer.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\Renderer\RenderStage.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -74,19 +80,19 @@
     <ClCompile Include="Logging\Logger.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\Instance.cpp">
+    <ClCompile Include="Rendering\Device\Instance.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\LogicalDevice.cpp">
+    <ClCompile Include="Rendering\Device\LogicalDevice.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\PhysicalDevice.cpp">
+    <ClCompile Include="Rendering\Device\PhysicalDevice.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Logging\DebugCallback.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\Surface.cpp">
+    <ClCompile Include="Rendering\Device\Surface.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\Swapchain\Swapchain.cpp">
@@ -101,13 +107,19 @@
     <ClCompile Include="Rendering\Swapchain\RenderPass.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\Renderer.cpp">
+    <ClCompile Include="Rendering\RenderingEngine.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\Commands\CommandPool.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\Commands\CommandBuffer.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\Renderer\Renderer.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\Renderer\RenderStage.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

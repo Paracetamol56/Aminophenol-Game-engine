@@ -3,7 +3,7 @@
 #define COMMAND_POOL_H
 
 #include "pch.h"
-#include "Rendering/LogicalDevice.h"
+#include "Rendering/Device/LogicalDevice.h"
 
 namespace Aminophenol {
 
@@ -11,7 +11,7 @@ namespace Aminophenol {
 	{
 	public:
 
-		CommandPool(const LogicalDevice& logicalDevice, const uint32_t& queueFamilyIndex);
+		CommandPool(const LogicalDevice& logicalDevice);
 		~CommandPool();
 
 		operator const VkCommandPool& () const;

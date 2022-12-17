@@ -6,14 +6,7 @@
 
 #include "Window/Window.h"
 #include "Logging/Logger.h"
-#include "Rendering/Instance.h"
-#include "Rendering/PhysicalDevice.h"
-#include "Rendering/LogicalDevice.h"
-#include "Rendering/Surface.h"
-#include "Rendering/Swapchain/Swapchain.h"
-#include "Rendering/Pipeline/Pipeline.h"
-#include "Rendering/Renderer.h"
-#include "Rendering/Commands/CommandPool.h"
+#include "Rendering/RenderingEngine.h"
 
 namespace Aminophenol
 {
@@ -22,27 +15,24 @@ namespace Aminophenol
 	{
 	public:
 
-		Engine();
+		Engine(std::string appName = "Aminophenol");
 		~Engine();
 
 		void run();
 
+		std::string getAppName() const;
+		Window& getWindow() const;
+		RenderingEngine& getRenderingEngine() const;
+
 	private:
 
-		const int _WIDTH = 640;
-		const int _HEIGHT = 480;
+		const std::string m_appName;
+		const int _WIDTH{ 640 };
+		const int _HEIGHT{ 480 };
 
-		std::unique_ptr<Window> m_window{ nullptr };
-		std::unique_ptr<Logger> m_logger{ nullptr };
-		std::unique_ptr<Instance> m_instance{ nullptr };
-		std::unique_ptr<PhysicalDevice> m_physicalDevice{ nullptr };
-		std::unique_ptr<LogicalDevice> m_logicalDevice{ nullptr };
-		std::unique_ptr<Surface> m_surface{ nullptr };
-		std::unique_ptr<Swapchain> m_swapchain{ nullptr };
-
-		std::unique_ptr<Pipeline> m_pipeline{ nullptr };
-		std::unique_ptr<Renderer> m_renderer{ nullptr };
-		std::unique_ptr<CommandPool> m_commandPool{ nullptr };
+		std::unique_ptr<Window> m_window;
+		std::unique_ptr<Logger> m_logger;
+		std::unique_ptr<RenderingEngine> m_renderingEngine;
 
 	};
 

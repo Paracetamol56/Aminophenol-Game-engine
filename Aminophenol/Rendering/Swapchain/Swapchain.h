@@ -4,9 +4,9 @@
 
 #include "pch.h"
 
-#include "Rendering/LogicalDevice.h"
-#include "Rendering/PhysicalDevice.h"
-#include "Rendering/Surface.h"
+#include "Rendering/Device/LogicalDevice.h"
+#include "Rendering/Device/PhysicalDevice.h"
+#include "Rendering/Device/Surface.h"
 
 namespace Aminophenol {
 
@@ -32,7 +32,7 @@ namespace Aminophenol {
 
 		const LogicalDevice& m_logicalDevice;
 		const PhysicalDevice& m_physicalDevice;
-		const VkExtent2D& m_extent;
+		const VkExtent2D m_extent;
 		const Surface& m_surface;
 		const Swapchain* m_oldSwapchain;
 

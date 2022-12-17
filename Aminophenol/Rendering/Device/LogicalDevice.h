@@ -4,7 +4,7 @@
 
 #include "pch.h"
 
-#include "Rendering/PhysicalDevice.h"
+#include "Rendering/Device/PhysicalDevice.h"
 
 namespace Aminophenol
 {
