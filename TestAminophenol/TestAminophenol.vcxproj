@@ -160,6 +160,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Maths\TestMatrix3.cpp" />
+    <ClCompile Include="Maths\TestMatrix4.cpp" />
+    <ClCompile Include="Maths\TestQuaternion.cpp" />
+    <ClCompile Include="Maths\TestTransform2.cpp" />
+    <ClCompile Include="Maths\TestTransform3.cpp" />
     <ClCompile Include="Maths\TestVector3.cpp" />
     <ClCompile Include="Maths\TestVector4.cpp" />
     <ClCompile Include="pch.cpp">

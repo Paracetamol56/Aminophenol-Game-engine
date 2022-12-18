@@ -149,7 +149,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Maths\Color.h" />
     <ClInclude Include="Maths\Vector2.h" />
+    <ClInclude Include="Maths\Matrix3.h" />
+    <ClInclude Include="Maths\Matrix4.h" />
+    <ClInclude Include="Maths\Quaternion.h" />
     <ClInclude Include="Rendering\Renderer\Renderer.h" />
     <ClInclude Include="Maths\Vector3.h" />
     <ClInclude Include="Maths\Vector4.h" />
@@ -168,9 +172,15 @@
     <ClInclude Include="Rendering\Device\Surface.h" />
     <ClInclude Include="Rendering\Swapchain\Swapchain.h" />
     <ClInclude Include="Rendering\Swapchain\RenderPass.h" />
+    <ClInclude Include="Maths\Transform2.h" />
+    <ClInclude Include="Maths\Transform3.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Maths\Color.cpp" />
+    <ClCompile Include="Maths\Matrix3.cpp" />
+    <ClCompile Include="Maths\Matrix4.cpp" />
+    <ClCompile Include="Maths\Quaternion.cpp" />
     <ClCompile Include="Maths\Vector2.cpp" />
     <ClCompile Include="Maths\Vector3.cpp" />
     <ClCompile Include="Maths\Vector4.cpp" />
@@ -194,6 +204,8 @@
     <ClCompile Include="Rendering\Swapchain\Swapchain.cpp" />
     <ClCompile Include="Rendering\Swapchain\RenderPass.cpp" />
     <ClCompile Include="Rendering\Renderer\RenderStage.cpp" />
+    <ClCompile Include="Maths\Transform2.cpp" />
+    <ClCompile Include="Maths\Transform3.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
