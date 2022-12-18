@@ -5,8 +5,11 @@ int main(int argc, char* argv[])
 {
 	try
 	{
-		Aminophenol::Engine engine{};
-		engine.run();
+		Aminophenol::Engine* engine = new Aminophenol::Engine{ "Aminophenol application" };
+
+		engine->run();
+		
+		delete engine;
 	}
 	catch (const std::exception& e)
 	{

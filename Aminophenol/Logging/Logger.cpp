@@ -13,12 +13,12 @@ namespace Aminophenol
 	{
 		s_minLogLevel = level;
 
-		std::cout << "\033[1;33m---------------- STARTING LOGGING SESSION ----------------\033[0m" << std::endl;
+		std::cout << "\033[1;36m---------------- STARTING LOGGING SESSION ----------------\033[0m" << std::endl;
 	}
 
 	Logger::~Logger()
 	{
-		std::cout << "\033[1;33m----------------- ENDING LOGGING SESSION -----------------\033[0m" << std::endl;
+		std::cout << "\033[1;36m----------------- ENDING LOGGING SESSION -----------------\033[0m" << std::endl;
 	}
 
 	void Logger::log(LogLevel level, const char* message, ...)
