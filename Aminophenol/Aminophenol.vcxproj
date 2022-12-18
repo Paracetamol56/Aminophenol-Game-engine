@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Maths\Vector2.h" />
     <ClInclude Include="Rendering\Renderer\Renderer.h" />
     <ClInclude Include="Maths\Vector3.h" />
     <ClInclude Include="Maths\Vector4.h" />
@@ -170,6 +171,9 @@
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Maths\Vector2.cpp" />
+    <ClCompile Include="Maths\Vector3.cpp" />
+    <ClCompile Include="Maths\Vector4.cpp" />
     <ClCompile Include="Rendering\Commands\CommandBuffer.cpp" />
     <ClCompile Include="Rendering\Commands\CommandPool.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
