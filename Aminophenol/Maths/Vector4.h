@@ -7,6 +7,12 @@
 namespace Aminophenol::Maths
 {
 
+	template <typename T>
+	class Vector2;
+	
+	template <typename T>
+	class Vector3;
+
 	template<typename T>
 	class AMINOPHENOL_API Vector4
 	{
@@ -58,6 +64,23 @@ namespace Aminophenol::Maths
 		/// <param name="other">The vector to copy.</param>
 		template<typename U>
 		Vector4(const Vector4<U>& other);
+
+		/// <summary>
+		/// Constructor from a Vector2.
+		/// </summary>
+		/// <param name="other">The vector to copy.</param>
+		/// <param name="zValue">The z value to initialize the vector to.</param>
+		/// <param name="wValue">The w value to initialize the vector to.</param>
+		template<typename U>
+		Vector4(const Vector2<U>& other, const T& zValue = 0, const T& wValue = 0);
+
+		/// <summary>
+		/// Constructor from a Vector3.
+		/// </summary>
+		/// <param name="other">The vector to copy.</param>
+		/// <param name="wValue">The w value to initialize the vector to.</param>
+		template<typename U>
+		Vector4(const Vector3<U>& other, const T& wValue = 0);
 
 		/// <summary>
 		/// Move constructor.
@@ -372,6 +395,26 @@ namespace Aminophenol::Maths
 		, y(static_cast<T>(other.y))
 		, z(static_cast<T>(other.z))
 		, w(static_cast<T>(other.w))
+	{}
+
+	// Constructor from a Vector2
+	template<typename T>
+	template<typename U>
+	Vector4<T>::Vector4(const Vector2<U>& other, const T& zValue, const T& wValue)
+		: x(static_cast<T>(other.x))
+		, y(static_cast<T>(other.y))
+		, z(static_cast<T>(zValue))
+		, w(static_cast<T>(wValue))
+	{}
+	
+	// Constructor from a Vector3
+	template<typename T>
+	template<typename U>
+	Vector4<T>::Vector4(const Vector3<U>& other, const T& wValue)
+		: x(static_cast<T>(other.x))
+		, y(static_cast<T>(other.y))
+		, z(static_cast<T>(other.z))
+		, w(static_cast<T>(wValue))
 	{}
 
 	// Move constructor

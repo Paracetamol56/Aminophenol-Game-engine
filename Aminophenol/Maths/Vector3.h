@@ -4,8 +4,17 @@
 
 #include "pch.h"
 
+#include "Vector2.h"
+#include "Vector4.h"
+
 namespace Aminophenol::Maths
 {
+
+	template<typename T>
+	class Vector2;
+
+	template<typename T>
+	class Vector4;
 
 	template<typename T>
 	class AMINOPHENOL_API Vector3
@@ -57,6 +66,21 @@ namespace Aminophenol::Maths
 		template<typename U>
 		Vector3(const Vector3<U>& other);
 
+		/// <summary>
+		/// Constructor from a Vector2.
+		/// </summary>
+		/// <param name="other">The vector to copy.</param>
+		/// <param name="zValue">The z value to initialize the vector to.</param>
+		template<typename U>
+		Vector3(const Vector2<U>& other, const T& zValue = 0);
+
+		/// <summary>
+		/// Constructor from a Vector4.
+		/// </summary>
+		/// <param name="other">The vector to copy.</param>
+		template<typename U>
+		Vector3(const Vector4<U>& other);
+		
 		/// <summary>
 		/// Move constructor.
 		/// </summary>
@@ -393,6 +417,24 @@ namespace Aminophenol::Maths
 		: x(static_cast<T>(other.x))
 		, y(static_cast<T>(other.y))
 		, z(static_cast<T>(other.z))
+	{}
+
+	// Constructor from a Vector2
+	template<typename T>
+	template<typename U>
+	Vector3<T>::Vector3(const Vector2<U>& other, const T& zValue)
+		: x(static_cast<T>(other.x))
+		, y(static_cast<T>(other.y))
+		, z(zValue)
+	{}
+
+	// Constructor from a Vector4
+	template<typename T>
+	template<typename U>
+	Vector3<T>::Vector3(const Vector4<U>& other)
+		: x(other.x)
+		, y(other.y)
+		, z(other.z)
 	{}
 
 	// Move constructor

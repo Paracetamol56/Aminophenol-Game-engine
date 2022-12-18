@@ -2,7 +2,9 @@
 #include "CppUnitTest.h"
 
 #define AMINOPHENOL_API __declspec(dllexport)
+#include <Maths/Vector2.h>
 #include <Maths/Vector3.h>
+#include <Maths/Vector4.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace Aminophenol::Maths;
@@ -70,14 +72,25 @@ namespace TestAminophenol
 			Assert::AreEqual(v1.z, 3.0);
 		}
 
+		// Test the copy constructor from a Vector2
+		TEST_METHOD(copyConstructorFromVector2)
+		{
+			Vector2<double> v0(1.0, 2.0);
+			Vector3<double> v1(v0, 3.0);
+			Assert::AreEqual(v1.x, 1.0);
+			Assert::AreEqual(v1.y, 2.0);
+			Assert::AreEqual(v1.z, 3.0);
+		}
+
 		// Test the copy constructor from a Vector4
-		//TEST_METHOD(copyConstructorVector3)
-		//{
-		//	Vector3<double> v0(1.0, 2.0, 3.0);
-		//	Vector3<double> v1(v0);
-		//	Assert::AreEqual(v1.x, 1.0);
-		//	Assert::AreEqual(v1.y, 2.0);
-		//}
+		TEST_METHOD(copyConstructorVector3)
+		{
+			Vector4<double> v0(1.0, 2.0, 3.0, 4.0);
+			Vector3<double> v1(v0);
+			Assert::AreEqual(v1.x, 1.0);
+			Assert::AreEqual(v1.y, 2.0);
+			Assert::AreEqual(v1.z, 3.0);
+		}
 
 		// Test the addition method
 		TEST_METHOD(additionMethod)

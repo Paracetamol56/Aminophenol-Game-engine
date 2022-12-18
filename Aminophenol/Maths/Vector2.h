@@ -4,9 +4,18 @@
 
 #include "pch.h"
 
+#include "Vector3.h"
+#include "Vector4.h"
+
 namespace Aminophenol::Maths
 {
 	
+	template<typename T>
+	class Vector3;
+
+	template<typename T>
+	class Vector4;
+
 	template<typename T>
 	class AMINOPHENOL_API Vector2
 	{
@@ -55,6 +64,20 @@ namespace Aminophenol::Maths
 		template<typename U>
 		Vector2(const Vector2<U>& other);
 
+		/// <summary>
+		/// Copy constructor from a Vector3.
+		/// </summary>
+		/// <param name="other">The vector to copy.</param>
+		template<typename U>
+		Vector2(const Vector3<U>& other);
+
+		/// <summary>
+		/// Copy constructor from a Vector4.
+		/// </summary>
+		/// <param name="other">The vector to copy.</param>
+		template<typename U>
+		Vector2(const Vector4<U>& other);
+		
 		/// <summary>
 		/// Move constructor.
 		/// </summary>
@@ -372,6 +395,22 @@ namespace Aminophenol::Maths
 	template<typename T>
 	template<typename U>
 	Vector2<T>::Vector2(const Vector2<U>& other)
+		: x(static_cast<T>(other.x))
+		, y(static_cast<T>(other.y))
+	{}
+
+	// Copy constructor from a Vector3
+	template<typename T>
+	template<typename U>
+	Vector2<T>::Vector2(const Vector3<U>& other)
+		: x(static_cast<T>(other.x))
+		, y(static_cast<T>(other.y))
+	{}
+	
+	// Copy constructor from a Vector4
+	template<typename T>
+	template<typename U>
+	Vector2<T>::Vector2(const Vector4<U>& other)
 		: x(static_cast<T>(other.x))
 		, y(static_cast<T>(other.y))
 	{}
