@@ -282,7 +282,7 @@ namespace TestAminophenol
 			Assert::AreEqual(mag, 5.0);
 		}
 		
-		// Test the normalise method
+		// Test the normalize method
 		TEST_METHOD(normaliseMethod)
 		{
 			Vector2<double> v0(3.0, 4.0);
@@ -291,7 +291,7 @@ namespace TestAminophenol
 			Assert::AreEqual(v1.y, 0.8);
 		}
 		
-		// Test the normalise method with a magnitude of 0
+		// Test the normalize method with a magnitude of 0
 		TEST_METHOD(normaliseMethodZeroMagnitude)
 		{
 			try
