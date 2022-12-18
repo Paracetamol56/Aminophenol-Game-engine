@@ -1,5 +1,9 @@
 
+#define AMINOPHENOL_EXPORTS
 #include <Core/Engine.h>
+#include <Maths/Color.h>
+
+#include <iostream>
 
 int main(int argc, char* argv[])
 {
