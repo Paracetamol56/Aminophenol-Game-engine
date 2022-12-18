@@ -16,6 +16,8 @@ namespace Aminophenol {
 		operator GLFWwindow* () const;
 		
 		bool shouldClose() const;
+		bool isMinimized() const;
+
 		VkExtent2D getExtent() const;
 		
 	private:
@@ -25,7 +27,6 @@ namespace Aminophenol {
 		const char* m_title;
 		GLFWwindow* m_window{ nullptr };
 
-		void initGlfwWindow();
 		static void framebufferResizeCallback(GLFWwindow* window, int width, int height);
 		
 	};

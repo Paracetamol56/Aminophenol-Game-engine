@@ -14,15 +14,22 @@ namespace Aminophenol
 	{
 		Logger::log(LogLevel::Trace, "Creating window...");
 		
-		initGlfwWindow();
+		// Init GLFW
+		glfwInit();
+
+		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+		// Create the window
+		m_window = glfwCreateWindow(m_width, m_height, m_title, nullptr, nullptr);
+		glfwSetWindowUserPointer(m_window, this);
+		glfwSetFramebufferSizeCallback(m_window, framebufferResizeCallback);
 		
-		Logger::log(LogLevel::Trace, "Window created.");
+		Logger::log(LogLevel::Trace, "Successfully created window.");
 	}
 
 	Window::~Window()
-	{
-		Logger::log(LogLevel::Trace, "Destroying window...");
-		
+	{	
 		glfwDestroyWindow(m_window);
 		glfwTerminate();
 		
@@ -39,25 +46,18 @@ namespace Aminophenol
 		return glfwWindowShouldClose(m_window);
 	}
 
+	bool Window::isMinimized() const
+	{
+		int width, height;
+		glfwGetFramebufferSize(m_window, &width, &height);
+		return width == 0 || height == 0;
+	}
+
 	VkExtent2D Window::getExtent() const
 	{
 		return { m_width, m_height };
 	}
 	
-	void Window::initGlfwWindow()
-	{
-		// Init GLFW
-		glfwInit();
-
-		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-
-		// Create the window
-		m_window = glfwCreateWindow(m_width, m_height, m_title, nullptr, nullptr);
-		glfwSetWindowUserPointer(m_window, this);
-		glfwSetFramebufferSizeCallback(m_window, framebufferResizeCallback);
-	}
-
 	void Window::framebufferResizeCallback(GLFWwindow* window, int width, int height)
 	{
 		auto app = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window));

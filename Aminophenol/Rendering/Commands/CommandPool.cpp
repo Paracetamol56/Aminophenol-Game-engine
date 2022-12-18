@@ -6,7 +6,7 @@
 
 namespace Aminophenol {
 
-	CommandPool::CommandPool(const LogicalDevice& logicalDevice, const uint32_t& queueFamilyIndex)
+	CommandPool::CommandPool(const LogicalDevice& logicalDevice)
 		: m_logicalDevice(logicalDevice)
 	{
 		Logger::log(LogLevel::Trace, "Creating command pool");
@@ -14,7 +14,7 @@ namespace Aminophenol {
 		VkCommandPoolCreateInfo commandPoolCreateInfo{};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
-		commandPoolCreateInfo.queueFamilyIndex = queueFamilyIndex;
+		commandPoolCreateInfo.queueFamilyIndex = m_logicalDevice.getGraphicsQueueFamilyIndex();
 
 		if (vkCreateCommandPool(m_logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool) != VK_SUCCESS)
 		{
