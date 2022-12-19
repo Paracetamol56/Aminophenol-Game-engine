@@ -136,7 +136,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to add</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color& add(const Color& other);
 
 		/// <summary>
@@ -144,7 +143,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to subtract</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color& subtract(const Color& other);
 
 		/// <summary>
@@ -152,7 +150,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to multiply</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color& multiply(const Color& other);
 
 		/// <summary>
@@ -160,7 +157,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="scalar">The scalar to multiply</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color& multiply(float scalar);
 
 		/// <summary>
@@ -168,7 +164,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to divide</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color& divide(const Color& other);
 
 		/// <summary>
@@ -176,7 +171,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="scalar">The scalar to divide</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color& divide(float scalar);
 
 		/// <summary>
@@ -184,7 +178,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to add</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color operator+(const Color& other) const;
 
 		/// <summary>
@@ -192,7 +185,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to subtract</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color operator-(const Color& other) const;
 
 		/// <summary>
@@ -200,7 +192,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to multiply</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color operator*(const Color& other) const;
 
 		/// <summary>
@@ -208,7 +199,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="scalar">The scalar to multiply</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color operator*(float scalar) const;
 		
 		/// <summary>
@@ -216,7 +206,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to divide</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color operator/(const Color& other) const;
 
 		/// <summary>
@@ -224,7 +213,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="scalar">The scalar to divide</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color operator/(float scalar) const;
 
 		/// <summary>
@@ -232,7 +220,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to add</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color& operator+=(const Color& other);
 		
 		/// <summary>
@@ -240,7 +227,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to subtract</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color& operator-=(const Color& other);
 		
 		/// <summary>
@@ -248,7 +234,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to multiply</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color& operator*=(const Color& other);
 
 		/// <summary>
@@ -256,7 +241,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="scalar">The scalar to multiply</param>
 		///	<returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color& operator*=(float scalar);
 		
 		/// <summary>
@@ -264,7 +248,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to divide</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color& operator/=(const Color& other);
 
 		/// <summary>
@@ -272,21 +255,18 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="scalar">The scalar to divide</param>
 		/// <returns>The color</returns>
-		/// <remarks>Alpha component is not affected</remarks>
 		Color& operator/=(float scalar);
 
 		/// <summary>
 		/// Equality operator.
 		/// </summary>
 		/// <param name="color">The color to compare</param>
-		/// <returns>True if equal, false otherwise</returns>
 		bool operator==(const Color& other) const;
 
 		/// <summary>
 		/// Inequality operator.
 		/// </summary>
 		/// <param name="color">The color to compare</param>
-		/// <returns>True if not equal, false otherwise</returns>
 		bool operator!=(const Color& other) const;
 
 		/// <summary>
@@ -294,7 +274,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="os">Output stream</param>
 		/// <param name="color">Color</param>
-		/// <returns>Output stream</returns>
 		friend std::ostream& operator<<(std::ostream& os, const Color& color);
 
 		float r{ 0.0f };

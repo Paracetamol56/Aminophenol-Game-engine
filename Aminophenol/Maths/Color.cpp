@@ -312,6 +312,7 @@ namespace Aminophenol::Maths
 		r = Maths::clamp(r + other.r, 0.0f, 1.0f);
 		g = Maths::clamp(g + other.g, 0.0f, 1.0f);
 		b = Maths::clamp(b + other.b, 0.0f, 1.0f);
+		a = Maths::clamp(a + other.a, 0.0f, 1.0f);
 		return *this;
 	}
 
@@ -321,6 +322,7 @@ namespace Aminophenol::Maths
 		r = Maths::clamp(r - other.r, 0.0f, 1.0f);
 		g = Maths::clamp(g - other.g, 0.0f, 1.0f);
 		b = Maths::clamp(b - other.b, 0.0f, 1.0f);
+		a = Maths::clamp(a - other.a, 0.0f, 1.0f);
 		return *this;
 	}
 
@@ -330,6 +332,7 @@ namespace Aminophenol::Maths
 		r = Maths::clamp(r * other.r, 0.0f, 1.0f);
 		g = Maths::clamp(g * other.g, 0.0f, 1.0f);
 		b = Maths::clamp(b * other.b, 0.0f, 1.0f);
+		a = Maths::clamp(a * other.a, 0.0f, 1.0f);
 		return *this;
 	}
 	
@@ -339,6 +342,7 @@ namespace Aminophenol::Maths
 		r = Maths::clamp(r * scalar, 0.0f, 1.0f);
 		g = Maths::clamp(g * scalar, 0.0f, 1.0f);
 		b = Maths::clamp(b * scalar, 0.0f, 1.0f);
+		a = Maths::clamp(a * scalar, 0.0f, 1.0f);
 		return *this;
 	}
 	
@@ -351,6 +355,7 @@ namespace Aminophenol::Maths
 		r = Maths::clamp(r / other.r, 0.0f, 1.0f);
 		g = Maths::clamp(g / other.g, 0.0f, 1.0f);
 		b = Maths::clamp(b / other.b, 0.0f, 1.0f);
+		a = Maths::clamp(a / other.a, 0.0f, 1.0f);
 		return *this;
 	}
 
@@ -363,6 +368,7 @@ namespace Aminophenol::Maths
 		r = Maths::clamp(r / scalar, 0.0f, 1.0f);
 		g = Maths::clamp(g / scalar, 0.0f, 1.0f);
 		b = Maths::clamp(b / scalar, 0.0f, 1.0f);
+		a = Maths::clamp(a / scalar, 0.0f, 1.0f);
 		return *this;
 	}
 

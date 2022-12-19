@@ -9,7 +9,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace Aminophenol::Maths;
 
-namespace TestAminophenol
+namespace Maths
 {
 
 	TEST_CLASS(TestColor)
@@ -270,7 +270,7 @@ namespace TestAminophenol
 			Assert::AreEqual(0.6f, c2.r, 0.000001f);
 			Assert::AreEqual(0.8f, c2.g, 0.000001f);
 			Assert::AreEqual(1.0f, c2.b, 0.000001f);
-			Assert::AreEqual(0.4f, c2.a, 0.000001f);
+			Assert::AreEqual(1.0f, c2.a, 0.000001f);
 		}
 
 		// Test the subtraction method
@@ -282,7 +282,7 @@ namespace TestAminophenol
 			Assert::AreEqual(0.4f, c2.r, 0.000001f);
 			Assert::AreEqual(0.4f, c2.g, 0.000001f);
 			Assert::AreEqual(0.4f, c2.b, 0.000001f);
-			Assert::AreEqual(0.8f, c2.a, 0.000001f);
+			Assert::AreEqual(0.4f, c2.a, 0.000001f);
 		}
 
 		// Test the multiplication method
@@ -294,7 +294,7 @@ namespace TestAminophenol
 			Assert::AreEqual(0.05f, c2.r, 0.000001f);
 			Assert::AreEqual(0.12f, c2.g, 0.000001f);
 			Assert::AreEqual(0.21f, c2.b, 0.000001f);
-			Assert::AreEqual(0.4f, c2.a, 0.000001f);
+			Assert::AreEqual(0.32f, c2.a, 0.000001f);
 		}
 
 		// Test the multiplication method with a scalar
@@ -305,7 +305,7 @@ namespace TestAminophenol
 			Assert::AreEqual(0.2f, c1.r, 0.000001f);
 			Assert::AreEqual(0.4f, c1.g, 0.000001f);
 			Assert::AreEqual(0.6f, c1.b, 0.000001f);
-			Assert::AreEqual(0.4f, c1.a, 0.000001f);
+			Assert::AreEqual(0.8f, c1.a, 0.000001f);
 		}
 		
 		// Test the division method
@@ -317,7 +317,7 @@ namespace TestAminophenol
 			Assert::AreEqual(0.2f, c2.r, 0.000001f);
 			Assert::AreEqual(0.33333334f, c2.g, 0.000001f);
 			Assert::AreEqual(0.42857143f, c2.b, 0.000001f);
-			Assert::AreEqual(0.4f, c2.a, 0.000001f);
+			Assert::AreEqual(0.5f, c2.a, 0.000001f);
 		}
 		
 		// Test the division method with a scalar
@@ -328,7 +328,7 @@ namespace TestAminophenol
 			Assert::AreEqual(0.05f, c1.r, 0.000001f);
 			Assert::AreEqual(0.1f, c1.g, 0.000001f);
 			Assert::AreEqual(0.15f, c1.b, 0.000001f);
-			Assert::AreEqual(0.4f, c1.a, 0.000001f);
+			Assert::AreEqual(0.2f, c1.a, 0.000001f);
 		}
 
 		// Test the division method by zero
@@ -355,7 +355,7 @@ namespace TestAminophenol
 			Assert::AreEqual(0.6f, c2.r, 0.000001f);
 			Assert::AreEqual(0.8f, c2.g, 0.000001f);
 			Assert::AreEqual(1.0f, c2.b, 0.000001f);
-			Assert::AreEqual(0.4f, c2.a, 0.000001f);
+			Assert::AreEqual(1.0f, c2.a, 0.000001f);
 		}
 
 		// Test the subtraction operator
@@ -367,7 +367,7 @@ namespace TestAminophenol
 			Assert::AreEqual(0.4f, c2.r, 0.000001f);
 			Assert::AreEqual(0.4f, c2.g, 0.000001f);
 			Assert::AreEqual(0.4f, c2.b, 0.000001f);
-			Assert::AreEqual(0.8f, c2.a, 0.000001f);
+			Assert::AreEqual(0.4f, c2.a, 0.000001f);
 		}
 
 		// Test the multiplication operator
@@ -379,7 +379,7 @@ namespace TestAminophenol
 			Assert::AreEqual(0.05f, c2.r, 0.000001f);
 			Assert::AreEqual(0.12f, c2.g, 0.000001f);
 			Assert::AreEqual(0.21f, c2.b, 0.000001f);
-			Assert::AreEqual(0.4f, c2.a, 0.000001f);
+			Assert::AreEqual(0.32f, c2.a, 0.000001f);
 		}
 
 		// Test the multiplication operator with a scalar
@@ -390,7 +390,7 @@ namespace TestAminophenol
 			Assert::AreEqual(0.2f, c1.r, 0.000001f);
 			Assert::AreEqual(0.4f, c1.g, 0.000001f);
 			Assert::AreEqual(0.6f, c1.b, 0.000001f);
-			Assert::AreEqual(0.4f, c1.a, 0.000001f);
+			Assert::AreEqual(0.8f, c1.a, 0.000001f);
 		}
 
 		// Test the division operator
@@ -402,7 +402,7 @@ namespace TestAminophenol
 			Assert::AreEqual(0.2f, c2.r, 0.000001f);
 			Assert::AreEqual(0.33333334f, c2.g, 0.000001f);
 			Assert::AreEqual(0.42857143f, c2.b, 0.000001f);
-			Assert::AreEqual(0.4f, c2.a, 0.000001f);
+			Assert::AreEqual(0.5f, c2.a, 0.000001f);
 		}
 		
 		// Test the division operator with a scalar
@@ -413,7 +413,7 @@ namespace TestAminophenol
 			Assert::AreEqual(0.05f, c1.r, 0.000001f);
 			Assert::AreEqual(0.1f, c1.g, 0.000001f);
 			Assert::AreEqual(0.15f, c1.b, 0.000001f);
-			Assert::AreEqual(0.4f, c1.a, 0.000001f);
+			Assert::AreEqual(0.2f, c1.a, 0.000001f);
 		}
 
 		// Test the division operator by zero
