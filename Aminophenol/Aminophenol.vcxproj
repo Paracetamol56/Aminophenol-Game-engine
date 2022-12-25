@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Maths\Color.h" />
+    <ClInclude Include="Maths\Matrix2.h" />
     <ClInclude Include="Maths\Utils.h" />
     <ClInclude Include="Maths\Vector2.h" />
     <ClInclude Include="Maths\Matrix3.h" />
@@ -179,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Maths\Color.cpp" />
+    <ClCompile Include="Maths\Matrix2.cpp" />
     <ClCompile Include="Maths\Matrix3.cpp" />
     <ClCompile Include="Maths\Matrix4.cpp" />
     <ClCompile Include="Maths\Quaternion.cpp" />

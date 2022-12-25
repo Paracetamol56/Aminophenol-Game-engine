@@ -161,6 +161,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Maths\TestColor.cpp" />
+    <ClCompile Include="Maths\TestMatrix2.cpp" />
     <ClCompile Include="Maths\TestMatrix3.cpp" />
     <ClCompile Include="Maths\TestMatrix4.cpp" />
     <ClCompile Include="Maths\TestQuaternion.cpp" />
