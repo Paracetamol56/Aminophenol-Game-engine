@@ -1,6 +1,6 @@
 
-#ifndef MATRIX3_H
-#define MATRIX3_H
+#ifndef MATRIX2_H
+#define MATRIX2_H
 
 #include "pch.h"
 
@@ -621,4 +621,4 @@ namespace Aminophenol::Maths
 	}
 
 }
-#endif // MATRIX3_H
+#endif // MATRIX2_H

@@ -5,9 +5,6 @@
 namespace Aminophenol::Maths
 {
 
-	Matrix3::Matrix3()
-	{
-		throw std::exception("Not implemented");
-	}
+	// Nothing here
 
 }
