@@ -260,6 +260,14 @@ namespace Aminophenol::Maths
 		Vector4<T> normalize() const;
 
 		/// <summary>
+		/// Array subscript operator
+		/// </summary>
+		/// <param name="index">The index of the element to access</param>
+		/// <returns>The element at the specified index</returns>
+		/// <exception cref="std::out_of_range">Thrown if the index is out of range</exception>
+		T& operator[](size_t index);
+
+		/// <summary>
 		/// Equality operator.
 		/// </summary>
 		/// <param name="other">The vector to compare to.</param>
@@ -642,6 +650,30 @@ namespace Aminophenol::Maths
 			throw std::runtime_error("Cannot normalise a vector with a magnitude of 0.");
 		}
 		return Vector4<T>(x / mag, y / mag, z / mag, w / mag);
+	}
+
+	// Array subscript operator
+	template<typename T>
+	T& Vector4<T>::operator[](size_t index)
+	{
+		switch (index)
+		{
+		case 0:
+			return x;
+			break;
+		case 1:
+			return y;
+			break;
+		case 2:
+			return z;
+			break;
+		case 3:
+			return w;
+			break;
+		default:
+			throw std::runtime_error("Index out of bounds.");
+			break;
+		}
 	}
 
 	// Equality operator

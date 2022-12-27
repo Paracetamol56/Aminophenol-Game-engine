@@ -5,9 +5,6 @@
 namespace Aminophenol::Maths
 {
 
-	Quaternion::Quaternion()
-	{
-		throw std::exception("Not implemented");
-	}
+	// Nothing here
 
 }

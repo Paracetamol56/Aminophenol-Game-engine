@@ -1,10 +1,14 @@
 
 #include <Core/Engine.h>
+#include <Maths/Matrix4.h>
 
 #include <iostream>
 
 int main(int argc, char* argv[])
 {
+
+
+	/*
 	try
 	{
 		Aminophenol::Engine* engine = new Aminophenol::Engine{ "Aminophenol application" };
@@ -19,6 +23,6 @@ int main(int argc, char* argv[])
 
 		return EXIT_FAILURE;
 	}
-
+	*/
 	return EXIT_SUCCESS;
 }

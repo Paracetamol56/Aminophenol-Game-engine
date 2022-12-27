@@ -7,7 +7,7 @@
 namespace Aminophenol::Maths
 {
 	
-	// Clamp between two values static function
+	// Clamp between two values function
 	template <typename T>
 	T clamp(T value, T min, T max)
 	{
@@ -23,7 +23,7 @@ namespace Aminophenol::Maths
 		return value;
 	}
 
-	// Clamp between 0 and 1 static function
+	// Clamp between 0 and 1 function
 	template <typename T>
 	T clamp01(T value)
 	{
@@ -33,7 +33,7 @@ namespace Aminophenol::Maths
 			return 1;
 	}
 	
-	// Linear interpolation static function
+	// Linear interpolation function
 	template <typename T>
 	T lerp(T a, T b, float t)
 	{
@@ -41,21 +41,21 @@ namespace Aminophenol::Maths
 		return a + (b - a) * t;
 	}
 
-	// Min static function
+	// Min function
 	template <typename T>
 	T min(T a, T b)
 	{
 		return a < b ? a : b;
 	}
 
-	// Max static function
+	// Max function
 	template <typename T>
 	T max(T a, T b)
 	{
 		return a > b ? a : b;
 	}
 
-	// Smoothstep static function
+	// Smoothstep function
 	template <typename T>
 	T smoothstep(T a, T b, float t)
 	{
@@ -67,7 +67,14 @@ namespace Aminophenol::Maths
 		return t * t * (3 - 2 * t);
 	}
 	
-	
+	// Swap function
+	template <typename T>
+	void swap(T& a, T& b)
+	{
+		a = a + b;
+		b = a - b;
+		a = a - b;
+	}
 	
 }
 

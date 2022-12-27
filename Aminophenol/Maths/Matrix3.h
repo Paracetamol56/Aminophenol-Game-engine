@@ -220,6 +220,14 @@ namespace Aminophenol::Maths
 		/// Array subscript operator.
 		/// </summary>
 		/// <param name="index">The index of the row.</param>
+		/// <returns>An Vector3 of the row.</returns>
+		Vector3<T> operator[](size_t index);
+
+
+		/// <summary>
+		/// Array subscript operator.
+		/// </summary>
+		/// <param name="index">The index of the row.</param>
 		/// <returns>An array of the row.</returns>
 		T* operator[](int index);
 
@@ -605,6 +613,19 @@ namespace Aminophenol::Maths
 			m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) -
 			m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) +
 			m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]);
+	}
+
+	// Array subscript operator
+	template<typename T>
+	Vector3<T> Matrix3<T>::operator[](size_t index)
+	{
+		// Handle out of range
+		if (index < 0 || index > 2)
+		{
+			throw std::out_of_range("Index out of range");
+		}
+
+		return Vector3<T>(m[index][0], m[index][1], m[index][2]);
 	}
 
 	// Array subscript operator

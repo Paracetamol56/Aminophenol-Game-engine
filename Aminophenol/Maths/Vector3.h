@@ -259,6 +259,14 @@ namespace Aminophenol::Maths
 		Vector3<T> normalize() const;
 
 		/// <summary>
+		/// Array subscript operator
+		/// </summary>
+		/// <param name="index">The index of the element to access</param>
+		/// <returns>The element at the specified index</returns>
+		/// <exception cref="std::out_of_range">Thrown if the index is out of range</exception>
+		T& operator[](size_t index);
+
+		/// <summary>
 		/// Equality operator.
 		/// </summary>
 		/// <param name="other">The vector to compare to.</param>
@@ -653,6 +661,28 @@ namespace Aminophenol::Maths
 		}
 		return Vector3<T>(x / mag, y / mag, z / mag);
 	}
+
+	// Array subscript operator
+	template<typename T>
+	T& Vector3<T>::operator[](size_t index)
+	{
+		switch (index)
+		{
+		case 0:
+			return x;
+			break;
+		case 1:
+			return y;
+			break;
+		case 2:
+			return z;
+			break;
+		default:
+			throw std::runtime_error("Index out of bounds.");
+			break;
+		}
+	}
+
 
 	// Equality operator
 	template<typename T>
