@@ -29,4 +29,10 @@
 // GLFW headers
 #include <GLFW/glfw3.h>
 
+// GLM headers
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
+
 #endif // FRAMEWORK_H
