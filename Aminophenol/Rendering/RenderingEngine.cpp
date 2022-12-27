@@ -15,62 +15,8 @@ namespace Aminophenol {
 		, m_swapchain{ std::make_unique<Swapchain>(*m_logicalDevice, *m_physicalDevice, *m_surface, window.getExtent()) }
 		, m_pipeline{ std::make_unique<Pipeline>(*m_logicalDevice, m_swapchain->getExtent(), m_swapchain->getFormat(), "../Aminophenol/Shaders/shader.vert.spv", "../Aminophenol/Shaders/shader.frag.spv") }
 		, m_commandPool{ std::make_unique<CommandPool>(*m_logicalDevice) }
-		, m_attachments{ m_swapchain->getImageViews() }
 	{
-		// Resize vectors
-		m_maxFramesInFlight = m_attachments.size();
-		
-		m_frameBuffers.resize(m_maxFramesInFlight);
-		m_commandBuffers.resize(m_maxFramesInFlight);
-		m_imageAvailableSemaphores.resize(m_maxFramesInFlight);
-		m_renderFinishedSemaphores.resize(m_maxFramesInFlight);
-		m_inFlightFences.resize(m_maxFramesInFlight);
-
-		// Initialize all syncronization objects
-		for (size_t i = 0; i < m_maxFramesInFlight; i++)
-		{
-			// Create a frame buffer
-			VkImageView attachments[] = { m_attachments[i] };
-
-			VkFramebufferCreateInfo framebufferInfo{};
-			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-			framebufferInfo.renderPass = m_pipeline->getRenderPass();
-			framebufferInfo.attachmentCount = 1;
-			framebufferInfo.pAttachments = attachments;
-			framebufferInfo.width = m_swapchain->getExtent().width;
-			framebufferInfo.height = m_swapchain->getExtent().height;
-			framebufferInfo.layers = 1;
-
-			if (vkCreateFramebuffer(m_logicalDevice->getDevice(), &framebufferInfo, nullptr, &m_frameBuffers[i]) != VK_SUCCESS)
-			{
-				throw std::runtime_error("Failed to create framebuffer!");
-			}
-
-			Logger::log(LogLevel::Trace, "FrameBuffer %d initialized", i);
-			
-			m_commandBuffers[i] = std::make_unique<CommandBuffer>(*m_logicalDevice, *m_commandPool);
-
-			Logger::log(LogLevel::Trace, "CommandBuffer %d initialized", i);
-			
-			// Create 2 semaphores and 1 fence
-			VkSemaphoreCreateInfo semaphoreInfo{};
-			semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-
-			if (vkCreateSemaphore(m_logicalDevice->getDevice(), &semaphoreInfo, nullptr, &m_imageAvailableSemaphores[i]) != VK_SUCCESS ||
-				vkCreateSemaphore(m_logicalDevice->getDevice(), &semaphoreInfo, nullptr, &m_renderFinishedSemaphores[i]) != VK_SUCCESS)
-			{
-				throw std::runtime_error("Failed to create semaphores!");
-			}
-			
-			VkFenceCreateInfo fenceInfo{};
-			fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-			fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
-			
-			if (vkCreateFence(m_logicalDevice->getDevice(), &fenceInfo, nullptr, &m_inFlightFences[i]) != VK_SUCCESS)
-			{
-				throw std::runtime_error("Failed to create fences!");
-			}
-		}
+		initFrameObjects();
 
 		m_globalCommandBuffer = std::make_unique<CommandBuffer>(*m_logicalDevice, *m_commandPool);
 
@@ -145,18 +91,83 @@ namespace Aminophenol {
 		return *m_commandPool;
 	}
 
+	void RenderingEngine::initFrameObjects()
+	{
+		m_attachments = m_swapchain->getImageViews();
+
+		// Resize vectors
+		m_maxFramesInFlight = m_attachments.size();
+
+		m_frameBuffers.resize(m_maxFramesInFlight);
+		m_commandBuffers.resize(m_maxFramesInFlight);
+		m_imageAvailableSemaphores.resize(m_maxFramesInFlight);
+		m_renderFinishedSemaphores.resize(m_maxFramesInFlight);
+		m_inFlightFences.resize(m_maxFramesInFlight);
+
+		// Initialize all syncronization objects
+		for (size_t i = 0; i < m_maxFramesInFlight; i++)
+		{
+			// Create a frame buffer
+			VkImageView attachments[] = { m_attachments[i] };
+
+			VkFramebufferCreateInfo framebufferInfo{};
+			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+			framebufferInfo.renderPass = m_pipeline->getRenderPass();
+			framebufferInfo.attachmentCount = 1;
+			framebufferInfo.pAttachments = attachments;
+			framebufferInfo.width = m_swapchain->getExtent().width;
+			framebufferInfo.height = m_swapchain->getExtent().height;
+			framebufferInfo.layers = 1;
+
+			if (vkCreateFramebuffer(m_logicalDevice->getDevice(), &framebufferInfo, nullptr, &m_frameBuffers[i]) != VK_SUCCESS)
+			{
+				throw std::runtime_error("Failed to create framebuffer!");
+			}
+
+			Logger::log(LogLevel::Trace, "FrameBuffer %d initialized", i);
+
+			m_commandBuffers[i] = std::make_unique<CommandBuffer>(*m_logicalDevice, *m_commandPool);
+
+			Logger::log(LogLevel::Trace, "CommandBuffer %d initialized", i);
+
+			// Create 2 semaphores and 1 fence
+			VkSemaphoreCreateInfo semaphoreInfo{};
+			semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+
+			if (vkCreateSemaphore(m_logicalDevice->getDevice(), &semaphoreInfo, nullptr, &m_imageAvailableSemaphores[i]) != VK_SUCCESS ||
+				vkCreateSemaphore(m_logicalDevice->getDevice(), &semaphoreInfo, nullptr, &m_renderFinishedSemaphores[i]) != VK_SUCCESS)
+			{
+				throw std::runtime_error("Failed to create semaphores!");
+			}
+
+			VkFenceCreateInfo fenceInfo{};
+			fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+			fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+
+			if (vkCreateFence(m_logicalDevice->getDevice(), &fenceInfo, nullptr, &m_inFlightFences[i]) != VK_SUCCESS)
+			{
+				throw std::runtime_error("Failed to create fences!");
+			}
+		}
+	}
+
 	void RenderingEngine::render()
 	{
 		// Wait for the fence to be signaled
 		vkWaitForFences(*m_logicalDevice, 1, &m_inFlightFences[m_currentFrame], VK_TRUE, UINT64_MAX);
-		vkResetFences(*m_logicalDevice, 1, &m_inFlightFences[m_currentFrame]);
 
 		// Acquire the next image
 		uint32_t imageIndex;
-
-		if (vkAcquireNextImageKHR(*m_logicalDevice, *m_swapchain, UINT64_MAX, m_imageAvailableSemaphores[m_currentFrame], VK_NULL_HANDLE, &imageIndex) != VK_SUCCESS)
+		VkResult aquiringResult = vkAcquireNextImageKHR(*m_logicalDevice, *m_swapchain, UINT64_MAX, m_imageAvailableSemaphores[m_currentFrame], VK_NULL_HANDLE, &imageIndex);
+		if (aquiringResult == VK_ERROR_OUT_OF_DATE_KHR)
 		{
-			Logger::log(LogLevel::Error, "Failed to acquire swapchain image!");
+			Logger::log(LogLevel::Trace, "Failed to acquire next image. Swapchain is out of date. Recreating swapchain...");
+			recreateSwapchain();
+			return;
+		}
+		else if (aquiringResult != VK_SUCCESS && aquiringResult != VK_SUBOPTIMAL_KHR)
+		{
+			throw std::runtime_error("Failed to acquire swapchain image!");
 		}
 
 		vkResetCommandBuffer(m_commandBuffers[imageIndex]->getCommandBuffer(), 0);
@@ -179,6 +190,8 @@ namespace Aminophenol {
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = signalSemaphores;
 
+		vkResetFences(*m_logicalDevice, 1, &m_inFlightFences[m_currentFrame]);
+
 		if (vkQueueSubmit(m_logicalDevice->getGraphicsQueue(), 1, &submitInfo, m_inFlightFences[m_currentFrame]) != VK_SUCCESS)
 		{
 			Logger::log(LogLevel::Error, "Failed to submit draw command buffer!");
@@ -196,9 +209,15 @@ namespace Aminophenol {
 		presentInfo.pImageIndices = &imageIndex;
 		presentInfo.pResults = nullptr;
 
-		if (vkQueuePresentKHR(m_logicalDevice->getPresentQueue(), &presentInfo) != VK_SUCCESS)
+		VkResult presentingResult = vkQueuePresentKHR(m_logicalDevice->getPresentQueue(), &presentInfo);
+		if (presentingResult == VK_ERROR_OUT_OF_DATE_KHR || presentingResult == VK_SUBOPTIMAL_KHR)
 		{
-			Logger::log(LogLevel::Error, "Failed to present swapchain image!");
+			Logger::log(LogLevel::Trace, "Failed to present image. Swapchain is out of date. Recreating swapchain...");
+			recreateSwapchain();
+		}
+		else if (presentingResult != VK_SUCCESS)
+		{
+			throw std::runtime_error("Failed to present swapchain image!");
 		}
 
 		m_currentFrame = (m_currentFrame + 1) % m_maxFramesInFlight;
@@ -241,6 +260,25 @@ namespace Aminophenol {
 		{
 			throw std::runtime_error("Failed to record command buffer!");
 		}
+	}
+
+	void RenderingEngine::recreateSwapchain()
+	{	
+		int width = 0, height = 0;
+		glfwGetFramebufferSize(m_window, &width, &height);
+		while (width == 0 || height == 0)
+		{
+			glfwGetFramebufferSize(m_window, &width, &height);
+			glfwWaitEvents();
+		}
+
+		vkDeviceWaitIdle(*m_logicalDevice);
+
+		m_swapchain.reset();
+
+		m_swapchain = std::make_unique<Swapchain>(*m_logicalDevice, *m_physicalDevice, *m_surface, m_window.getExtent(), m_swapchain.get());
+
+		initFrameObjects();
 	}
 
 } // namespace Aminophenol

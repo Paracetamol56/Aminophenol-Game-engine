@@ -19,13 +19,7 @@ namespace Aminophenol {
 	/// <summary>
 	/// This class handles the rendering engine.
 	/// It holds all the necessary objects to render :
-	/// - Instance
-	/// - PhysicalDevice
-	/// - LogicalDevice
-	/// - Surface
-	/// - Swapchain
-	/// - Pipeline
-	/// - CommandPool
+	/// Instance, PhysicalDevice, LogicalDevice, Surface, Swapchain, Pipeline, CommandPool
 	/// </summary>
 	class AMINOPHENOL_API RenderingEngine
 	{
@@ -84,8 +78,10 @@ namespace Aminophenol {
 		// Attachments
 		std::vector<VkImageView> m_attachments{};
 		
+		void initFrameObjects();
 		void render();
 		void recordDrawCommand(uint32_t imageIndex);
+		void recreateSwapchain();
 
 	};
 
