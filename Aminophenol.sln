@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Application", "Application\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Aminophenol", "Aminophenol\Aminophenol.vcxproj", "{59C3CB0C-E690-4B7E-92DA-F657BB38D880}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestAminophenol", "TestAminophenol\TestAminophenol.vcxproj", "{C83C148B-A308-495B-B79F-816A4BCF5E19}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{59C3CB0C-E690-4B7E-92DA-F657BB38D880}.Release|x64.Build.0 = Release|x64
 		{59C3CB0C-E690-4B7E-92DA-F657BB38D880}.Release|x86.ActiveCfg = Release|Win32
 		{59C3CB0C-E690-4B7E-92DA-F657BB38D880}.Release|x86.Build.0 = Release|Win32
+		{C83C148B-A308-495B-B79F-816A4BCF5E19}.Debug|x64.ActiveCfg = Debug|x64
+		{C83C148B-A308-495B-B79F-816A4BCF5E19}.Debug|x64.Build.0 = Debug|x64
+		{C83C148B-A308-495B-B79F-816A4BCF5E19}.Debug|x86.ActiveCfg = Debug|Win32
+		{C83C148B-A308-495B-B79F-816A4BCF5E19}.Debug|x86.Build.0 = Debug|Win32
+		{C83C148B-A308-495B-B79F-816A4BCF5E19}.Release|x64.ActiveCfg = Release|x64
+		{C83C148B-A308-495B-B79F-816A4BCF5E19}.Release|x64.Build.0 = Release|x64
+		{C83C148B-A308-495B-B79F-816A4BCF5E19}.Release|x86.ActiveCfg = Release|Win32
+		{C83C148B-A308-495B-B79F-816A4BCF5E19}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
