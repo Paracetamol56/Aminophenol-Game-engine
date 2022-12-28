@@ -27,14 +27,7 @@ namespace Aminophenol {
 	{
 		vkDeviceWaitIdle(*m_logicalDevice);
 		
-		// Destroy frame buffers, semaphores and fences
-		for (size_t i = 0; i < m_maxFramesInFlight; i++)
-		{
-			vkDestroyFramebuffer(m_logicalDevice->getDevice(), m_frameBuffers[i], nullptr);
-			vkDestroySemaphore(m_logicalDevice->getDevice(), m_imageAvailableSemaphores[i], nullptr);
-			vkDestroySemaphore(m_logicalDevice->getDevice(), m_renderFinishedSemaphores[i], nullptr);
-			vkDestroyFence(m_logicalDevice->getDevice(), m_inFlightFences[i], nullptr);
-		}
+		destroyFrameObjects();
 
 		m_commandPool.reset();
 		m_pipeline.reset();
@@ -151,6 +144,17 @@ namespace Aminophenol {
 		}
 	}
 
+	void RenderingEngine::destroyFrameObjects()
+	{
+		for (size_t i = 0; i < m_maxFramesInFlight; i++)
+		{
+			vkDestroyFramebuffer(m_logicalDevice->getDevice(), m_frameBuffers[i], nullptr);
+			vkDestroySemaphore(m_logicalDevice->getDevice(), m_imageAvailableSemaphores[i], nullptr);
+			vkDestroySemaphore(m_logicalDevice->getDevice(), m_renderFinishedSemaphores[i], nullptr);
+			vkDestroyFence(m_logicalDevice->getDevice(), m_inFlightFences[i], nullptr);
+		}
+	}
+
 	void RenderingEngine::render()
 	{
 		// Wait for the fence to be signaled
@@ -214,6 +218,7 @@ namespace Aminophenol {
 		{
 			Logger::log(LogLevel::Trace, "Failed to present image. Swapchain is out of date. Recreating swapchain...");
 			recreateSwapchain();
+			return;
 		}
 		else if (presentingResult != VK_SUCCESS)
 		{
@@ -274,10 +279,8 @@ namespace Aminophenol {
 
 		vkDeviceWaitIdle(*m_logicalDevice);
 
-		m_swapchain.reset();
-
-		m_swapchain = std::make_unique<Swapchain>(*m_logicalDevice, *m_physicalDevice, *m_surface, m_window.getExtent(), m_swapchain.get());
-
+		destroyFrameObjects();
+		m_swapchain.reset(new Swapchain(*m_logicalDevice, *m_physicalDevice, *m_surface, m_window.getExtent(), m_swapchain.get()));
 		initFrameObjects();
 	}
 
