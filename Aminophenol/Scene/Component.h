@@ -4,8 +4,6 @@
 
 #include "pch.h"
 
-#include "Utils/uuid_v4.h"
-
 namespace Aminophenol {
 
 	class AMINOPHENOL_API Component

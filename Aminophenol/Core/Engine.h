@@ -6,6 +6,8 @@
 
 #include "Window/Window.h"
 #include "Logging/Logger.h"
+#include "Utils/UUIDv4Generator.h"
+#include "Scene/Scene.h"
 #include "Rendering/RenderingEngine.h"
 
 namespace Aminophenol
@@ -19,6 +21,7 @@ namespace Aminophenol
 		~Engine();
 
 		void run();
+		void setActiveScene(Scene* scene);
 
 		std::string getAppName() const;
 		Window& getWindow() const;
@@ -26,12 +29,14 @@ namespace Aminophenol
 
 	private:
 
-		const std::string m_appName;
+		const std::string _appName;
 		const int _WIDTH{ 640 };
 		const int _HEIGHT{ 480 };
 
 		std::unique_ptr<Window> m_window;
-		std::unique_ptr<Logger> m_logger;
+		Logger m_logger;
+		Utils::UUIDv4Generator32 m_uuidGenerator;
+		Scene* m_activeScene{ nullptr };
 		std::unique_ptr<RenderingEngine> m_renderingEngine;
 
 	};

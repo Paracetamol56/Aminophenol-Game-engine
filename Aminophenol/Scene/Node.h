@@ -4,7 +4,7 @@
 
 #include "pch.h"
 
-#include "Utils/uuid_v4.h"
+#include "Utils/UUIDv4Generator.h"
 #include "Scene/Component.h"
 
 namespace Aminophenol {
@@ -16,18 +16,35 @@ namespace Aminophenol {
 		Node(const std::string name = "New node", Node* parent = nullptr);
 		~Node();
 
+		// Accessors
+		const Utils::UUID getUUID() const;
 		const std::string& getName() const;
 		void setName(const std::string& name);
 		const Node* getParent() const;
+		void enable();
+		void disable();
+		const bool isEnabled() const;
 		const glm::mat4& getTransform() const;
+
+		// Node hierarchy accessors
+		Node& addChild(const std::string& name);
+		Node& addChild(Node* child);
+		void removeChild(const Utils::UUID& uuid);
+		void detachChild(const Utils::UUID& uuid);
+		Node& getChild(const Utils::UUID& uuid);
+
+		// Component accessors
+		// ToDo
 
 	private:
 
-		// std::map<Utils::UUIDv4::UUID, Component> m_components{};
-		
 		std::string m_name;
+		const Utils::UUID m_uuid;
 		Node* m_parent;
-		glm::mat4 m_transform;
+		bool m_enabled{ true };
+		std::vector<Node*> m_children{};
+		glm::mat4 m_transform; // TODO: Make a custom transform class
+		// std::map<Utils::UUIDv4::UUID, Component> m_components{};
 
 	};
 

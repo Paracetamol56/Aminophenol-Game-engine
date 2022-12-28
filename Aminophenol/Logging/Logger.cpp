@@ -88,7 +88,7 @@ namespace Aminophenol
 			// Timestamp & Log level
 			<< "[\033[1;37m"
 			<< std::to_string(st.wHour) + ":" + std::to_string(st.wMinute) + ":" + std::to_string(st.wSecond) + "." + std::to_string(st.wMilliseconds)
-			<< "\033[0m] [INFO\033[0m] ";
+			<< "\033[0m] [\033[1;36mINFO\033[0m] ";
 
 		// Message
 		va_list args;

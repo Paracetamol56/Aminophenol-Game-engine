@@ -171,8 +171,7 @@
     <ClInclude Include="Rendering\Swapchain\Swapchain.h" />
     <ClInclude Include="Rendering\Swapchain\RenderPass.h" />
     <ClInclude Include="Scene\Scene.h" />
-    <ClInclude Include="Utils\endianness.h" />
-    <ClInclude Include="Utils\uuid_v4.h" />
+    <ClInclude Include="Utils\UUIDv4Generator.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +201,7 @@
     <ClCompile Include="Rendering\Swapchain\RenderPass.cpp" />
     <ClCompile Include="Rendering\Renderer\RenderStage.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Utils\UUIDv4Generator.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
