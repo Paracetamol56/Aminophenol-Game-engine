@@ -149,9 +149,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Scene\Component.h" />
     <ClInclude Include="Maths\Vector2.h" />
     <ClInclude Include="Maths\Vector3.h" />
     <ClInclude Include="Maths\Vector4.h" />
+    <ClInclude Include="Scene\Node.h" />
     <ClInclude Include="Rendering\Renderer\Renderer.h" />
     <ClInclude Include="Rendering\Commands\CommandBuffer.h" />
     <ClInclude Include="Rendering\Commands\CommandPool.h" />
@@ -168,12 +170,17 @@
     <ClInclude Include="Rendering\Device\Surface.h" />
     <ClInclude Include="Rendering\Swapchain\Swapchain.h" />
     <ClInclude Include="Rendering\Swapchain\RenderPass.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Utils\endianness.h" />
+    <ClInclude Include="Utils\uuid_v4.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Scene\Component.cpp" />
     <ClCompile Include="Maths\Vector2.cpp" />
     <ClCompile Include="Maths\Vector3.cpp" />
     <ClCompile Include="Maths\Vector4.cpp" />
+    <ClCompile Include="Scene\Node.cpp" />
     <ClCompile Include="Rendering\Commands\CommandBuffer.cpp" />
     <ClCompile Include="Rendering\Commands\CommandPool.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
@@ -194,6 +201,7 @@
     <ClCompile Include="Rendering\Swapchain\Swapchain.cpp" />
     <ClCompile Include="Rendering\Swapchain\RenderPass.cpp" />
     <ClCompile Include="Rendering\Renderer\RenderStage.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>

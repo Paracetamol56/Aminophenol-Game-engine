@@ -17,6 +17,7 @@
 #include <stdexcept>
 #include <vector>
 #include <array>
+#include <map>
 #include <string>
 #include <chrono>
 #include <memory>
