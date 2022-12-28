@@ -27,7 +27,6 @@ namespace Aminophenol
 		{
 			std::string logLevel = "";
 			std::string color = "";
-			std::string timestamp = "";
 			switch (level)
 			{
 			case LogLevel::Trace:
@@ -55,10 +54,16 @@ namespace Aminophenol
 			// Get timestamp
 			SYSTEMTIME st;
 			GetLocalTime(&st);
-			timestamp = std::to_string(st.wHour) + ":" + std::to_string(st.wMinute) + ":" + std::to_string(st.wSecond) + "." + std::to_string(st.wMilliseconds);
 
-			std::cout << "[\033[1;37m" << timestamp << "\033[0m] [" << color << logLevel << "\033[0m" << "] ";
+			std::cout
+				// Timestamp
+				<< "[\033[1;37m"
+				<< std::to_string(st.wHour) + ":" + std::to_string(st.wMinute) + ":" + std::to_string(st.wSecond) + "." + std::to_string(st.wMilliseconds)
+				<< "\033[0m] ["
+				// Log level
+				<< color << logLevel << "\033[0m" << "] ";
 			
+			// Message
 			va_list args;
 			va_start(args, message);
 			vprintf(message, args);
@@ -66,6 +71,32 @@ namespace Aminophenol
 			
 			std::cout << std::endl;
 		}
+	}
+
+	void Logger::log(const char* message, ...)
+	{
+		if (LogLevel::Info < s_minLogLevel)
+		{
+			return;
+		}
+
+		// Get timestamp
+		SYSTEMTIME st;
+		GetLocalTime(&st);
+
+		std::cout
+			// Timestamp & Log level
+			<< "[\033[1;37m"
+			<< std::to_string(st.wHour) + ":" + std::to_string(st.wMinute) + ":" + std::to_string(st.wSecond) + "." + std::to_string(st.wMilliseconds)
+			<< "\033[0m] [INFO\033[0m] ";
+
+		// Message
+		va_list args;
+		va_start(args, message);
+		vprintf(message, args);
+		va_end(args);
+
+		std::cout << std::endl;
 	}
 
 } // namespace Aminophenol

@@ -6,6 +6,7 @@ int main(int argc, char* argv[])
 	try
 	{
 		Aminophenol::Engine* engine = new Aminophenol::Engine{ "Aminophenol application" };
+		Aminophenol::Logger::s_minLogLevel = Aminophenol::LogLevel::Trace;
 
 		engine->run();
 		
