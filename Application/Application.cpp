@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 	Node& node_2 = scene->addChild("Node 2");
 	Logger::log("Node 2 name: %s", node_2.getName().c_str());
 	Logger::log("Node 2 UUID: %s", node_2.getUUID().toString().c_str());
-	
+
 	try
 	{
 		engine->run();

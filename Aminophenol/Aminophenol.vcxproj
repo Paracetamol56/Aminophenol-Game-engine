@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Mesh\Mesh.h" />
     <ClInclude Include="Scene\Component.h" />
     <ClInclude Include="Maths\Vector2.h" />
     <ClInclude Include="Maths\Vector3.h" />
@@ -172,9 +173,11 @@
     <ClInclude Include="Rendering\Swapchain\RenderPass.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Utils\UUIDv4Generator.h" />
+    <ClInclude Include="Mesh\Vertex.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Mesh\Mesh.cpp" />
     <ClCompile Include="Scene\Component.cpp" />
     <ClCompile Include="Maths\Vector2.cpp" />
     <ClCompile Include="Maths\Vector3.cpp" />
@@ -202,6 +205,7 @@
     <ClCompile Include="Rendering\Renderer\RenderStage.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Utils\UUIDv4Generator.cpp" />
+    <ClCompile Include="Mesh\Vertex.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
