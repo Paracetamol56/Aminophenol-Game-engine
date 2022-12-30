@@ -120,6 +120,16 @@ namespace Aminophenol
 		return m_device;
 	}
 
+	const Instance& LogicalDevice::getInstance() const
+	{
+		return m_instance;
+	}
+
+	const PhysicalDevice& LogicalDevice::getPhysicalDevice() const
+	{
+		return m_physicalDevice;
+	}
+
 	const uint32_t LogicalDevice::getGraphicsQueueFamilyIndex() const
 	{
 		return m_graphicsFamilyIndex;

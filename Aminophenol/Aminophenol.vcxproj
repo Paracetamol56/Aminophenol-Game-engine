@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Buffers\Buffer.h" />
     <ClInclude Include="Mesh\Mesh.h" />
     <ClInclude Include="Scene\Component.h" />
     <ClInclude Include="Maths\Vector2.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Buffers\Buffer.cpp" />
     <ClCompile Include="Mesh\Mesh.cpp" />
     <ClCompile Include="Scene\Component.cpp" />
     <ClCompile Include="Maths\Vector2.cpp" />
