@@ -28,9 +28,9 @@ namespace Aminophenol {
 		VkBuffer m_indexBuffer;
 		VkDeviceMemory m_indexBufferMemory;
 		
-		uint32_t m_vertexCount;
+	protected:
+
 		std::vector<Vertex> m_vertices;
-		uint32_t m_indexCount;
 		std::vector<uint32_t> m_indices;
 
 		void createVertexBuffer();

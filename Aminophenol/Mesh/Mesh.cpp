@@ -41,6 +41,13 @@ namespace Aminophenol {
 	}
 
 	Mesh::~Mesh()
+	{}
+
+	void Aminophenol::Mesh::createVertexBuffer()
+	{
+	}
+
+	void Aminophenol::Mesh::createIndexBuffer()
 	{
 	}
 
