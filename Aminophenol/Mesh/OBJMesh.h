@@ -5,6 +5,8 @@
 #include "pch.h"
 #include "Mesh/Mesh.h"
 
+#include "Rendering/Device/LogicalDevice.h"
+
 namespace Aminophenol {
 
 	class OBJMesh
@@ -12,7 +14,7 @@ namespace Aminophenol {
 	{
 	public:
 
-		OBJMesh(std::string filePath);
+		OBJMesh(LogicalDevice& logicalDevice, std::string filePath);
 		~OBJMesh();
 
 	private:

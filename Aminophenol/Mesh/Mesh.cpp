@@ -43,14 +43,6 @@ namespace Aminophenol {
 	Mesh::~Mesh()
 	{}
 
-	void Aminophenol::Mesh::createVertexBuffer()
-	{
-	}
-
-	void Aminophenol::Mesh::createIndexBuffer()
-	{
-	}
-
 	void Mesh::bind(VkCommandBuffer commandBuffer)
 	{
 		VkBuffer vertexBuffers[] = { m_vertexBuffer };

@@ -6,8 +6,8 @@
 
 namespace Aminophenol {
 
-	OBJMesh::OBJMesh(std::string filePath)
-		: Mesh{}
+	OBJMesh::OBJMesh(LogicalDevice& logicalDevice, std::string filePath)
+		: Mesh{ logicalDevice }
 		, m_filePath{ filePath }
 	{
 		Logger::log(LogLevel::Trace, "Loading a mesh from file...");
