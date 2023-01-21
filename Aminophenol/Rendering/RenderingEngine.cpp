@@ -46,7 +46,75 @@ namespace Aminophenol {
 		if (m_window.isMinimized())
 			return;
 
-		render();
+		// Wait for the fence to be signaled
+		vkWaitForFences(*m_logicalDevice, 1, &m_inFlightFences[m_currentFrame], VK_TRUE, UINT64_MAX);
+
+		// Acquire the next image
+		uint32_t imageIndex;
+		VkResult aquiringResult = vkAcquireNextImageKHR(*m_logicalDevice, *m_swapchain, UINT64_MAX, m_imageAvailableSemaphores[m_currentFrame], VK_NULL_HANDLE, &imageIndex);
+		if (aquiringResult == VK_ERROR_OUT_OF_DATE_KHR)
+		{
+			Logger::log(LogLevel::Trace, "Failed to acquire next image. Swapchain is out of date. Recreating swapchain...");
+			recreateSwapchain();
+			return;
+		}
+		else if (aquiringResult != VK_SUCCESS && aquiringResult != VK_SUBOPTIMAL_KHR)
+		{
+			throw std::runtime_error("Failed to acquire swapchain image!");
+		}
+
+		vkResetCommandBuffer(m_commandBuffers[imageIndex]->getCommandBuffer(), 0);
+
+		recordDrawCommand(imageIndex);
+
+		// Submit the command buffer
+		VkSubmitInfo submitInfo{};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+
+		VkSemaphore waitSemaphores[] = { m_imageAvailableSemaphores[m_currentFrame] };
+		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+		submitInfo.waitSemaphoreCount = 1;
+		submitInfo.pWaitSemaphores = waitSemaphores;
+		submitInfo.pWaitDstStageMask = waitStages;
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &m_commandBuffers[imageIndex]->getCommandBuffer();
+
+		VkSemaphore signalSemaphores[] = { m_renderFinishedSemaphores[m_currentFrame] };
+		submitInfo.signalSemaphoreCount = 1;
+		submitInfo.pSignalSemaphores = signalSemaphores;
+
+		vkResetFences(*m_logicalDevice, 1, &m_inFlightFences[m_currentFrame]);
+
+		if (vkQueueSubmit(m_logicalDevice->getGraphicsQueue(), 1, &submitInfo, m_inFlightFences[m_currentFrame]) != VK_SUCCESS)
+		{
+			Logger::log(LogLevel::Error, "Failed to submit draw command buffer!");
+		}
+
+		// Present the image
+		VkPresentInfoKHR presentInfo{};
+		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+		presentInfo.waitSemaphoreCount = 1;
+		presentInfo.pWaitSemaphores = signalSemaphores;
+
+		VkSwapchainKHR swapChains[] = { *m_swapchain };
+		presentInfo.swapchainCount = 1;
+		presentInfo.pSwapchains = swapChains;
+		presentInfo.pImageIndices = &imageIndex;
+		presentInfo.pResults = nullptr;
+
+		VkResult presentingResult = vkQueuePresentKHR(m_logicalDevice->getPresentQueue(), &presentInfo);
+		if (presentingResult == VK_ERROR_OUT_OF_DATE_KHR || presentingResult == VK_SUBOPTIMAL_KHR)
+		{
+			Logger::log(LogLevel::Trace, "Failed to present image. Swapchain is out of date. Recreating swapchain...");
+			recreateSwapchain();
+			return;
+		}
+		else if (presentingResult != VK_SUCCESS)
+		{
+			throw std::runtime_error("Failed to present swapchain image!");
+		}
+
+		m_currentFrame = (m_currentFrame + 1) % m_maxFramesInFlight;
 	}
 	
 	Instance& RenderingEngine::getInstance() const
@@ -155,79 +223,6 @@ namespace Aminophenol {
 		}
 	}
 
-	void RenderingEngine::render()
-	{
-		// Wait for the fence to be signaled
-		vkWaitForFences(*m_logicalDevice, 1, &m_inFlightFences[m_currentFrame], VK_TRUE, UINT64_MAX);
-
-		// Acquire the next image
-		uint32_t imageIndex;
-		VkResult aquiringResult = vkAcquireNextImageKHR(*m_logicalDevice, *m_swapchain, UINT64_MAX, m_imageAvailableSemaphores[m_currentFrame], VK_NULL_HANDLE, &imageIndex);
-		if (aquiringResult == VK_ERROR_OUT_OF_DATE_KHR)
-		{
-			Logger::log(LogLevel::Trace, "Failed to acquire next image. Swapchain is out of date. Recreating swapchain...");
-			recreateSwapchain();
-			return;
-		}
-		else if (aquiringResult != VK_SUCCESS && aquiringResult != VK_SUBOPTIMAL_KHR)
-		{
-			throw std::runtime_error("Failed to acquire swapchain image!");
-		}
-
-		vkResetCommandBuffer(m_commandBuffers[imageIndex]->getCommandBuffer(), 0);
-
-		recordDrawCommand(imageIndex);
-
-		// Submit the command buffer
-		VkSubmitInfo submitInfo{};
-		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-
-		VkSemaphore waitSemaphores[] = { m_imageAvailableSemaphores[m_currentFrame] };
-		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
-		submitInfo.waitSemaphoreCount = 1;
-		submitInfo.pWaitSemaphores = waitSemaphores;
-		submitInfo.pWaitDstStageMask = waitStages;
-		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &m_commandBuffers[imageIndex]->getCommandBuffer();
-
-		VkSemaphore signalSemaphores[] = { m_renderFinishedSemaphores[m_currentFrame] };
-		submitInfo.signalSemaphoreCount = 1;
-		submitInfo.pSignalSemaphores = signalSemaphores;
-
-		vkResetFences(*m_logicalDevice, 1, &m_inFlightFences[m_currentFrame]);
-
-		if (vkQueueSubmit(m_logicalDevice->getGraphicsQueue(), 1, &submitInfo, m_inFlightFences[m_currentFrame]) != VK_SUCCESS)
-		{
-			Logger::log(LogLevel::Error, "Failed to submit draw command buffer!");
-		}
-
-		// Present the image
-		VkPresentInfoKHR presentInfo{};
-		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-		presentInfo.waitSemaphoreCount = 1;
-		presentInfo.pWaitSemaphores = signalSemaphores;
-
-		VkSwapchainKHR swapChains[] = { *m_swapchain };
-		presentInfo.swapchainCount = 1;
-		presentInfo.pSwapchains = swapChains;
-		presentInfo.pImageIndices = &imageIndex;
-		presentInfo.pResults = nullptr;
-
-		VkResult presentingResult = vkQueuePresentKHR(m_logicalDevice->getPresentQueue(), &presentInfo);
-		if (presentingResult == VK_ERROR_OUT_OF_DATE_KHR || presentingResult == VK_SUBOPTIMAL_KHR)
-		{
-			Logger::log(LogLevel::Trace, "Failed to present image. Swapchain is out of date. Recreating swapchain...");
-			recreateSwapchain();
-			return;
-		}
-		else if (presentingResult != VK_SUCCESS)
-		{
-			throw std::runtime_error("Failed to present swapchain image!");
-		}
-
-		m_currentFrame = (m_currentFrame + 1) % m_maxFramesInFlight;
-	}
-
 	void RenderingEngine::recordDrawCommand(uint32_t imageIndex)
 	{
 		// Begin recording
@@ -248,7 +243,7 @@ namespace Aminophenol {
 		renderPassInfo.renderArea.offset = { 0, 0 };
 		renderPassInfo.renderArea.extent = m_swapchain->getExtent();
 
-		VkClearValue clearColor = { 0.2f, 0.5f, 1.0f, 1.0f };
+		VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 1.0f };
 		renderPassInfo.clearValueCount = 1;
 		renderPassInfo.pClearValues = &clearColor;
 

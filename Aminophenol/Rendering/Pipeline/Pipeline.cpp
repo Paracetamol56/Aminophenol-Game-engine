@@ -3,6 +3,7 @@
 #include "Pipeline.h"
 
 #include "Logging/Logger.h"
+#include "Mesh/Mesh.h"
 
 namespace Aminophenol {
 	
@@ -31,7 +32,7 @@ namespace Aminophenol {
 		// Create the render pass
 		m_renderPass = std::make_unique<RenderPass>(m_logicalDevice, m_swapchainImageFormat);
 		
-		// Create the sheder modules
+		// Create the shader modules
 		createShaderModule(m_logicalDevice, readFile("../Aminophenol/Shaders/shader.vert.spv"), m_vertShaderModule);
 		createShaderModule(m_logicalDevice, readFile("../Aminophenol/Shaders/shader.frag.spv"), m_fragShaderModule);
 		
@@ -71,7 +72,7 @@ namespace Aminophenol {
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		
 		std::vector<VkPipelineShaderStageCreateInfo> shaderStages;
-		
+
 		// Vertex input
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;

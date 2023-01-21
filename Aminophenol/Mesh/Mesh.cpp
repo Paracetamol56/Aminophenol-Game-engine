@@ -6,7 +6,7 @@
 
 namespace Aminophenol {
 
-	Mesh::Mesh(LogicalDevice& logicalDevice)
+	Mesh::Mesh(const LogicalDevice& logicalDevice)
 		: m_logicalDevice(logicalDevice)
 	{
 		// Create a cube

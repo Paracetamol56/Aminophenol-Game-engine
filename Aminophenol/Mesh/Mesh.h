@@ -13,7 +13,7 @@ namespace Aminophenol {
 	{
 	public:
 		
-		Mesh(LogicalDevice& logicalDevice);
+		Mesh(const LogicalDevice& logicalDevice);
 		~Mesh();
 
 		void bind(VkCommandBuffer commandBuffer);
@@ -21,7 +21,7 @@ namespace Aminophenol {
 
 	private:
 		
-		LogicalDevice& m_logicalDevice;
+		const LogicalDevice& m_logicalDevice;
 
 		VkBuffer m_vertexBuffer;
 		VkDeviceMemory m_vertexBufferMemory;

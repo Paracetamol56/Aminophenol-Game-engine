@@ -8,7 +8,7 @@
 
 namespace Aminophenol {
 
-	class AMINOPHENOL_API Scene
+	class AMINOPHENOL_API Scene final
 		: public Node
 	{
 	public:

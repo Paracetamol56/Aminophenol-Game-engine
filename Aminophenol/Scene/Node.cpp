@@ -112,4 +112,14 @@ namespace Aminophenol {
 		Logger::log(LogLevel::Error, "Node::getChild: Node with UUID %s not found.", uuid);
 	}
 
+	const std::vector<std::shared_ptr<Component>>& Node::getComponents() const
+	{
+		return m_components;
+	}
+
+	const size_t Node::getComponentCount() const
+	{
+		return m_components.size();
+	}
+
 } // namespace Aminophenol

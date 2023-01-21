@@ -150,8 +150,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Buffers\Buffer.h" />
+    <ClInclude Include="Components\Camera.h" />
+    <ClInclude Include="Components\MeshRenderer.h" />
     <ClInclude Include="Mesh\Mesh.h" />
     <ClInclude Include="Mesh\OBJMesh.h" />
+    <ClInclude Include="Components\PointLight.h" />
     <ClInclude Include="Scene\Component.h" />
     <ClInclude Include="Maths\Vector2.h" />
     <ClInclude Include="Maths\Vector3.h" />
@@ -174,6 +177,7 @@
     <ClInclude Include="Rendering\Swapchain\Swapchain.h" />
     <ClInclude Include="Rendering\Swapchain\RenderPass.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Rendering\Renderer\SubRenderer.h" />
     <ClInclude Include="Utils\HashCombine.h" />
     <ClInclude Include="Utils\UUIDv4Generator.h" />
     <ClInclude Include="Mesh\Vertex.h" />
@@ -181,8 +185,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\Buffer.cpp" />
+    <ClCompile Include="Components\Camera.cpp" />
+    <ClCompile Include="Components\MeshRenderer.cpp" />
     <ClCompile Include="Mesh\Mesh.cpp" />
     <ClCompile Include="Mesh\OBJMesh.cpp" />
+    <ClCompile Include="Components\PointLight.cpp" />
     <ClCompile Include="Scene\Component.cpp" />
     <ClCompile Include="Maths\Vector2.cpp" />
     <ClCompile Include="Maths\Vector3.cpp" />
@@ -209,6 +216,7 @@
     <ClCompile Include="Rendering\Swapchain\RenderPass.cpp" />
     <ClCompile Include="Rendering\Renderer\RenderStage.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Rendering\Renderer\SubRenderer.cpp" />
     <ClCompile Include="Utils\HashCombine.cpp" />
     <ClCompile Include="Utils\UUIDv4Generator.cpp" />
     <ClCompile Include="Mesh\Vertex.cpp" />

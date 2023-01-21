@@ -4,19 +4,34 @@
 
 #include "pch.h"
 
+#include "Utils/UUIDv4Generator.h"
+
 namespace Aminophenol {
+
+	class Node;
 
 	class AMINOPHENOL_API Component
 	{
 	public:
 
-		Component();
-		~Component();
+		Component(const Node* node);
+		virtual ~Component();
 
-		virtual void update() = 0;
-		virtual void fixedUpdate() = 0;
+		// Accessors
+		const Utils::UUID getUUID() const;
+		const Node* getNode() const;
+		void enable();
+		void disable();
+		const bool isEnabled() const;
 
-	private:
+		virtual void update() {};
+		virtual void fixedUpdate() {};
+
+	protected:
+
+		const Utils::UUID m_uuid;
+		const Node* m_node;
+		bool m_enabled{ true };
 
 	};
 

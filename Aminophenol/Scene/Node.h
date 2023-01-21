@@ -34,8 +34,19 @@ namespace Aminophenol {
 		Node& getChild(const Utils::UUID& uuid);
 
 		// Component accessors
-		// ToDo
-
+		template<typename T, typename... Args>
+		T* addComponent(Args &&...args);
+		const std::vector<std::shared_ptr<Component>>& getComponents() const;
+		const size_t getComponentCount() const;
+		template<typename T>
+		T* getComponentOfType() const;
+		template<typename T>
+		std::vector<T*> getComponentsOfType() const;
+		template<typename T>
+		T* getComponent(const Utils::UUID& uuid) const;
+		template<typename T>
+		void removeComponent(const Utils::UUID& uuid);
+		
 	private:
 
 		std::string m_name;
@@ -43,10 +54,72 @@ namespace Aminophenol {
 		Node* m_parent;
 		bool m_enabled{ true };
 		std::vector<Node*> m_children{};
-		glm::mat4 m_transform; // TODO: Make a custom transform class
-		// std::map<Utils::UUIDv4::UUID, Component> m_components{};
-
+		glm::mat4 m_transform; // ToDo: Make a custom transform class
+		std::vector<std::shared_ptr<Component>> m_components;
+		
 	};
+	
+	template<typename T, typename... Args>
+	T* Node::addComponent(Args &&...args)
+	{
+		T* component = new T(this, std::forward<Args>(args)...);
+		m_components.push_back(std::unique_ptr<T>(component));
+		return component;
+	}
+
+	template<typename T>
+	T* Node::getComponentOfType() const
+	{
+		for (const std::unique_ptr<Component>& component : m_components)
+		{
+			auto castedComponent = dynamic_cast<T*>(component.get());
+			if (castedComponent)
+			{
+				return castedComponent;
+			}
+		}
+		return nullptr;
+	}
+
+	template<typename T>
+	inline std::vector<T*> Aminophenol::Node::getComponentsOfType() const
+	{
+		std::vector<T*> components;
+		for (const std::shared_ptr<Component>& component : m_components)
+		{
+			if (dynamic_cast<T*>(component.get()))
+			{
+				components.push_back(dynamic_cast<T*>(component.get()));
+			}
+		}
+		return components;
+	}
+
+	template<typename T>
+	T* Node::getComponent(const Utils::UUID& uuid) const
+	{
+		for (const std::unique_ptr<Component>& component : m_components)
+		{
+			if (component->getUUID() == uuid)
+			{
+				return dynamic_cast<T*>(component.get());
+			}
+		}
+		return nullptr;
+	}
+	
+	template<typename T>
+	void Node::removeComponent(const Utils::UUID& uuid)
+	{
+		for (auto it = m_components.begin(); it != m_components.end(); ++it)
+		{
+			if ((*it)->getUUID() == uuid)
+			{
+				m_components.erase(it);
+				return;
+			}
+		}
+	}
 
 } // namespace Aminophenol
 
