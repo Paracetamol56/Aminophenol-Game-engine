@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Rendering\Buffers\Buffer.h" />
     <ClInclude Include="Buffers\Buffer.h" />
     <ClInclude Include="Components\Camera.h" />
     <ClInclude Include="Components\MeshRenderer.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Rendering\Buffers\Buffer.cpp" />
     <ClCompile Include="Buffers\Buffer.cpp" />
     <ClCompile Include="Components\Camera.cpp" />
     <ClCompile Include="Components\MeshRenderer.cpp" />
