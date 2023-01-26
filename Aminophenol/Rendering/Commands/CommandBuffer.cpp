@@ -4,7 +4,7 @@
 
 namespace Aminophenol {
 	
-	CommandBuffer::CommandBuffer(const LogicalDevice& logicalDevice, const CommandPool& commandPool, const VkCommandBufferLevel& level)
+	CommandBuffer::CommandBuffer(const LogicalDevice& logicalDevice, const std::shared_ptr<CommandPool> commandPool, const VkCommandBufferLevel& level)
 		: m_logicalDevice(logicalDevice)
 		, m_commandPool(commandPool)
 	{
@@ -12,7 +12,7 @@ namespace Aminophenol {
 		// Documentation: https://registry.khronos.org/vulkan/specs/1.3-khr-extensions/html/chap6.html#VkCommandBufferAllocateInfo
 		VkCommandBufferAllocateInfo commandBufferAllocateInfo{};
 		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		commandBufferAllocateInfo.commandPool = m_commandPool;
+		commandBufferAllocateInfo.commandPool = *m_commandPool;
 		commandBufferAllocateInfo.level = level;
 		commandBufferAllocateInfo.commandBufferCount = 1;
 

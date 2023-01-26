@@ -3,11 +3,13 @@
 #include "Mesh.h"
 
 #include "Logging/Logger.h"
+#include "Rendering/Commands/CommandBuffer.h"
 
 namespace Aminophenol {
 
-	Mesh::Mesh(const LogicalDevice& logicalDevice)
+	Mesh::Mesh(const LogicalDevice& logicalDevice, const std::shared_ptr<CommandPool> commandPool)
 		: m_logicalDevice(logicalDevice)
+		, m_commandPool(commandPool)
 	{
 		// Create a cube
 		m_vertices = {
@@ -45,10 +47,10 @@ namespace Aminophenol {
 
 	void Mesh::bind(VkCommandBuffer commandBuffer)
 	{
-		VkBuffer vertexBuffers[] = { m_vertexBuffer };
+		VkBuffer vertexBuffers[] = { *m_vertexBuffer };
 		VkDeviceSize offsets[] = { 0 };
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
-		vkCmdBindIndexBuffer(commandBuffer, m_indexBuffer, 0, VK_INDEX_TYPE_UINT32);
+		vkCmdBindIndexBuffer(commandBuffer, *m_indexBuffer, 0, VK_INDEX_TYPE_UINT32);
 	}
 
 	void Mesh::draw(VkCommandBuffer commandBuffer)
@@ -58,7 +60,14 @@ namespace Aminophenol {
 
 	void Mesh::createVertexBuffer()
 	{
-		// ToDo
+		VkDeviceSize bufferSize = sizeof(m_vertices[0]) * m_vertices.size();
+
+		Buffer stagingBuffer(m_logicalDevice, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vertices.data());
+
+		m_vertexBuffer = std::make_unique<Buffer>(m_logicalDevice, bufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+
+		// Create a command buffer to copy the staging buffer to the vertex buffer
+		CommandBuffer commandBuffer(m_logicalDevice, m_commandPool, VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 	}
 
 	void Mesh::createIndexBuffer()

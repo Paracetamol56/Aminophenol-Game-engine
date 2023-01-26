@@ -18,7 +18,7 @@ namespace Aminophenol {
 	{
 		initFrameObjects();
 
-		m_globalCommandBuffer = std::make_unique<CommandBuffer>(*m_logicalDevice, *m_commandPool);
+		m_globalCommandBuffer = std::make_unique<CommandBuffer>(*m_logicalDevice, m_commandPool);
 
 		Logger::log(LogLevel::Trace, "Global CommandBuffer initialized");
 	}
@@ -29,6 +29,8 @@ namespace Aminophenol {
 		
 		destroyFrameObjects();
 
+		m_commandBuffers.clear();
+		m_globalCommandBuffer.reset();
 		m_commandPool.reset();
 		m_pipeline.reset();
 		m_swapchain.reset();
@@ -147,9 +149,9 @@ namespace Aminophenol {
 		return *m_pipeline;
 	}
 
-	CommandPool& RenderingEngine::getCommandPool() const
+	const std::shared_ptr<CommandPool> RenderingEngine::getCommandPool() const
 	{
-		return *m_commandPool;
+		return m_commandPool;
 	}
 
 	void RenderingEngine::initFrameObjects()
@@ -187,7 +189,7 @@ namespace Aminophenol {
 
 			Logger::log(LogLevel::Trace, "FrameBuffer %d initialized", i);
 
-			m_commandBuffers[i] = std::make_unique<CommandBuffer>(*m_logicalDevice, *m_commandPool);
+			m_commandBuffers[i] = std::make_unique<CommandBuffer>(*m_logicalDevice, m_commandPool);
 
 			Logger::log(LogLevel::Trace, "CommandBuffer %d initialized", i);
 

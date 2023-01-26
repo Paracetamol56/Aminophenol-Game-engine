@@ -41,7 +41,7 @@ namespace Aminophenol {
 		Surface& getSurface() const;
 		Swapchain& getSwapchain() const;
 		Pipeline& getPipeline() const;
-		CommandPool& getCommandPool() const;
+		const std::shared_ptr<CommandPool> getCommandPool() const;
 
 	private:
 
@@ -63,7 +63,7 @@ namespace Aminophenol {
 		std::unique_ptr<Pipeline> m_pipeline{ nullptr };
 		
 		// Command Pool
-		std::unique_ptr<CommandPool> m_commandPool{ nullptr };
+		std::shared_ptr<CommandPool> m_commandPool{ nullptr };
 		
 		// Buffers
 		std::vector<VkFramebuffer> m_frameBuffers{};

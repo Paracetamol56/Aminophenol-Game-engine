@@ -14,7 +14,7 @@ namespace Aminophenol {
 	{
 	public:
 
-		OBJMesh(LogicalDevice& logicalDevice, std::string filePath);
+		OBJMesh(LogicalDevice& logicalDevice, const std::shared_ptr<CommandPool> commandPool, std::string filePath);
 		~OBJMesh();
 
 	private:

@@ -6,6 +6,8 @@
 
 #include "Mesh/Vertex.h"
 #include "Rendering/Device/LogicalDevice.h"
+#include "Rendering/Commands/CommandPool.h"
+#include "Rendering/Buffers/Buffer.h"
 
 namespace Aminophenol {
 	
@@ -13,7 +15,7 @@ namespace Aminophenol {
 	{
 	public:
 		
-		Mesh(const LogicalDevice& logicalDevice);
+		Mesh(const LogicalDevice& logicalDevice, const std::shared_ptr<CommandPool> commandPool);
 		~Mesh();
 
 		void bind(VkCommandBuffer commandBuffer);
@@ -23,15 +25,15 @@ namespace Aminophenol {
 		
 		const LogicalDevice& m_logicalDevice;
 
-		VkBuffer m_vertexBuffer;
-		VkDeviceMemory m_vertexBufferMemory;
-		VkBuffer m_indexBuffer;
-		VkDeviceMemory m_indexBufferMemory;
+		std::unique_ptr<Buffer> m_vertexBuffer;
+		std::unique_ptr<Buffer> m_indexBuffer;
 		
 	protected:
 
 		std::vector<Vertex> m_vertices;
 		std::vector<uint32_t> m_indices;
+
+		std::shared_ptr<CommandPool> m_commandPool;
 
 		void createVertexBuffer();
 		void createIndexBuffer();
