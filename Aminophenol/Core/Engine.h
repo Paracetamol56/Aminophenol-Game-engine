@@ -21,7 +21,7 @@ namespace Aminophenol
 		~Engine();
 
 		void run();
-		void setActiveScene(Scene* scene);
+		void setActiveScene(const std::shared_ptr<Scene> scene);
 
 		std::string getAppName() const;
 		Window& getWindow() const;
@@ -36,7 +36,7 @@ namespace Aminophenol
 		std::unique_ptr<Window> m_window;
 		Logger m_logger;
 		Utils::UUIDv4Generator32 m_uuidGenerator;
-		Scene* m_activeScene{ nullptr };
+		std::shared_ptr<Scene> m_activeScene{ nullptr };
 		std::unique_ptr<RenderingEngine> m_renderingEngine;
 
 	};

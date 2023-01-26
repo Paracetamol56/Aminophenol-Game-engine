@@ -45,7 +45,7 @@ namespace Aminophenol {
 
 	void Engine::run()
 	{
-		Logger::log(LogLevel::Trace, "Running %s...", _appName.c_str());
+		Logger::log(LogLevel::Info, "Running %s...", _appName.c_str());
 
 		while (!m_window->shouldClose())
 		{
@@ -54,7 +54,7 @@ namespace Aminophenol {
 		}
 	}
 
-	void Engine::setActiveScene(Scene* scene)
+	void Engine::setActiveScene(const std::shared_ptr<Scene> scene)
 	{
 		if (!scene)
 		{
