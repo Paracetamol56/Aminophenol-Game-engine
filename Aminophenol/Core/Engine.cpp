@@ -56,12 +56,16 @@ namespace Aminophenol {
 
 	void Engine::setActiveScene(const std::shared_ptr<Scene> scene)
 	{
-		if (!scene)
+		m_activeScene = scene;
+		if (!m_activeScene)
 		{
 			Logger::log(LogLevel::Warning, "Active scene is null.");
 		}
-		
-		m_activeScene = scene;
+		else
+		{
+			// Call the start method of all components with a quadratic loop
+			m_activeScene->onAttach();
+		}
 	}
 
 	std::string Engine::getAppName() const

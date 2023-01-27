@@ -47,6 +47,17 @@ namespace Aminophenol {
 		template<typename T>
 		void removeComponent(const Utils::UUID& uuid);
 		
+		// Events
+		virtual void onAttach();
+		virtual void onFixedUpdate();
+		virtual void onUpdate();
+
+	protected:
+		
+		// Events
+		virtual void onCreate();
+		virtual void onDestroy();
+
 	private:
 
 		std::string m_name;

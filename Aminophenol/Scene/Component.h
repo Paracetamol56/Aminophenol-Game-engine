@@ -24,8 +24,9 @@ namespace Aminophenol {
 		void disable();
 		const bool isEnabled() const;
 
-		virtual void update() {};
-		virtual void fixedUpdate() {};
+		virtual void start();
+		virtual void update();
+		virtual void fixedUpdate();
 
 	protected:
 

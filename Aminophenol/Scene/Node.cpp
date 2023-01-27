@@ -10,14 +10,13 @@ namespace Aminophenol {
 		: m_name{ name }
 		, m_uuid{ Utils::UUIDv4Generator32::getUUID() }
 		, m_parent{ parent }
-	{}
+	{
+		onCreate();
+	}
 
 	Node::~Node()
 	{
-		for (Node* child : m_children)
-		{
-			delete child;
-		}
+		onDestroy();
 	}
 
 	const Utils::UUID Aminophenol::Node::getUUID() const
@@ -120,6 +119,56 @@ namespace Aminophenol {
 	const size_t Node::getComponentCount() const
 	{
 		return m_components.size();
+	}
+
+	void Node::onAttach()
+	{
+		for (std::shared_ptr<Component> component : m_components)
+		{
+			component->start();
+		}
+		for (Node* child : m_children)
+		{
+			child->onAttach();
+		}
+	}
+
+	void Node::onFixedUpdate()
+	{
+		for (std::shared_ptr<Component> component : m_components)
+		{
+			component->fixedUpdate();
+		}
+
+		for (Node* child : m_children)
+		{
+			child->onFixedUpdate();
+		}
+	}
+
+	void Node::onUpdate()
+	{
+		for (std::shared_ptr<Component> component : m_components)
+		{
+			component->update();
+		}
+
+		for (Node* child : m_children)
+		{
+			child->onUpdate();
+		}
+	}
+
+	void Node::onCreate()
+	{}
+
+	void Node::onDestroy()
+	{
+		for (Node* child : m_children)
+		{
+			child->onDestroy();
+			delete child;
+		}
 	}
 
 } // namespace Aminophenol

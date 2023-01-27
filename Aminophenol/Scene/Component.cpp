@@ -37,4 +37,13 @@ namespace Aminophenol {
 		return m_enabled;
 	}
 
+	void Component::start()
+	{}
+	
+	void Component::update()
+	{}
+	
+	void Component::fixedUpdate()
+	{}
+
 } // namespace Aminophenol
