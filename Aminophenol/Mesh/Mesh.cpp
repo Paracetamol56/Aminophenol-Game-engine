@@ -14,16 +14,16 @@ namespace Aminophenol {
 		// Create a cube
 		m_vertices = {
 			// Front
-			{ { -0.5f, -0.5f,  0.5f }, { 1.0f, 0.0f, 0.0f } },
-			{ {  0.5f, -0.5f,  0.5f }, { 0.0f, 1.0f, 0.0f } },
-			{ {  0.5f,  0.5f,  0.5f }, { 0.0f, 0.0f, 1.0f } },
-			{ { -0.5f,  0.5f,  0.5f }, { 1.0f, 1.0f, 1.0f } },
+			{ { -0.5f, -0.5f,  0.0f }, { 1.0f, 1.0f, 0.0f } },
+			{ {  0.5f, -0.5f,  0.0f }, { 0.0f, 1.0f, 1.0f } },
+			{ {  0.5f,  0.5f,  0.0f }, { 1.0f, 0.0f, 1.0f } },
+			{ { -0.5f,  0.5f,  0.0f }, { 1.0f, 1.0f, 1.0f } },
 
 			// Back
-			{ { -0.5f, -0.5f, -0.5f }, { 1.0f, 0.0f, 0.0f } },
-			{ {  0.5f, -0.5f, -0.5f }, { 0.0f, 1.0f, 0.0f } },
-			{ {  0.5f,  0.5f, -0.5f }, { 0.0f, 0.0f, 1.0f } },
-			{ { -0.5f,  0.5f, -0.5f }, { 1.0f, 1.0f, 1.0f } }
+			{ { -0.5f, -0.5f, -1.0f }, { 1.0f, 0.0f, 0.0f } },
+			{ {  0.5f, -0.5f, -1.0f }, { 0.0f, 1.0f, 0.0f } },
+			{ {  0.5f,  0.5f, -1.0f }, { 0.0f, 0.0f, 1.0f } },
+			{ { -0.5f,  0.5f, -1.0f }, { 1.0f, 1.0f, 1.0f } }
 		};
 
 		m_indices = {
@@ -40,10 +40,17 @@ namespace Aminophenol {
 			// Bottom
 			4, 5, 1, 1, 0, 4
 		};
+
+		createVertexBuffer();
+		createIndexBuffer();
 	}
 
 	Mesh::~Mesh()
-	{}
+	{
+		// Clear buffers
+		m_vertexBuffer.reset();
+		m_indexBuffer.reset();
+	}
 
 	void Mesh::bind(VkCommandBuffer commandBuffer)
 	{
@@ -55,11 +62,18 @@ namespace Aminophenol {
 
 	void Mesh::draw(VkCommandBuffer commandBuffer)
 	{
-		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(m_indices.size()), 1, 0, 0, 0);
+		//vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(m_indices.size()), 1, 0, 0, 0);
+		vkCmdDraw(commandBuffer, static_cast<uint32_t>(m_indices.size()), 1, 0, 0);
 	}
 
 	void Mesh::createVertexBuffer()
 	{
+		// Assert that the size is at least 3
+		if (m_vertices.size() < 3)
+		{
+			Logger::log(LogLevel::Error, "The size of the vertices is less than 3.");
+			return;
+		}
 		VkDeviceSize bufferSize = sizeof(m_vertices[0]) * m_vertices.size();
 
 		Buffer stagingBuffer(m_logicalDevice, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vertices.data());
@@ -68,11 +82,79 @@ namespace Aminophenol {
 
 		// Create a command buffer to copy the staging buffer to the vertex buffer
 		CommandBuffer commandBuffer(m_logicalDevice, m_commandPool, VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+
+		// Begin
+		VkCommandBufferBeginInfo beginInfo{};
+		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+		vkBeginCommandBuffer(commandBuffer, &beginInfo);
+
+		// Copy the staging buffer to the vertex buffer
+		VkBufferCopy copyRegion = {};
+		copyRegion.srcOffset = 0;
+		copyRegion.dstOffset = 0;
+		copyRegion.size = bufferSize;
+		vkCmdCopyBuffer(commandBuffer, stagingBuffer, *m_vertexBuffer, 1, &copyRegion);
+
+		// End the command buffer
+		vkEndCommandBuffer(commandBuffer);
+
+		// Sumbit
+		VkSubmitInfo submitInfo = {};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &commandBuffer.getCommandBuffer();
+
+		vkQueueSubmit(m_logicalDevice.getGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
+		vkQueueWaitIdle(m_logicalDevice.getGraphicsQueue());
 	}
 
 	void Mesh::createIndexBuffer()
 	{
-		// ToDo
+		// Assert that the size is at least 3
+		if (m_indices.size() < 3)
+		{
+			Logger::log(LogLevel::Error, "The size of the indices is less than 3.");
+			return;
+		}
+		VkDeviceSize bufferSize = sizeof(m_indices[0]) * m_indices.size();
+
+		Buffer stagingBuffer(m_logicalDevice, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_indices.data());
+
+		m_indexBuffer = std::make_unique<Buffer>(m_logicalDevice, bufferSize, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+
+		// Create a command buffer to copy the staging buffer to the index buffer
+		CommandBuffer commandBuffer(m_logicalDevice, m_commandPool, VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+
+		// Begin
+		VkCommandBufferBeginInfo beginInfo{};
+		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+		vkBeginCommandBuffer(commandBuffer, &beginInfo);
+
+		// Copy the staging buffer to the index buffer
+		VkBufferCopy copyRegion = {};
+		copyRegion.srcOffset = 0;
+		copyRegion.dstOffset = 0;
+		copyRegion.size = bufferSize;
+		vkCmdCopyBuffer(commandBuffer, stagingBuffer, *m_indexBuffer, 1, &copyRegion);
+
+		// End the command buffer
+		if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS)
+		{
+			Logger::log(LogLevel::Error, "Failed to end the command buffer.");
+			return;
+		}
+
+		// Sumbit
+		VkSubmitInfo submitInfo = {};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &commandBuffer.getCommandBuffer();
+
+		vkQueueSubmit(m_logicalDevice.getGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
+		vkQueueWaitIdle(m_logicalDevice.getGraphicsQueue());
+		vkFreeCommandBuffers(m_logicalDevice, *m_commandPool, 1, &commandBuffer.getCommandBuffer());
 	}
 
 } // namespace Aminophenol

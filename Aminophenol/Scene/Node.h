@@ -6,6 +6,7 @@
 
 #include "Utils/UUIDv4Generator.h"
 #include "Scene/Component.h"
+#include "Components/MeshRenderer.h"
 
 namespace Aminophenol {
 
@@ -32,6 +33,9 @@ namespace Aminophenol {
 		void removeChild(const Utils::UUID& uuid);
 		void detachChild(const Utils::UUID& uuid);
 		Node& getChild(const Utils::UUID& uuid);
+		std::vector<Node*> getChildren() const;
+		std::vector<Node*>::iterator begin();
+		std::vector<Node*>::iterator end();
 
 		// Component accessors
 		template<typename T, typename... Args>
@@ -73,6 +77,7 @@ namespace Aminophenol {
 	template<typename T, typename... Args>
 	T* Node::addComponent(Args &&...args)
 	{
+		static_assert(std::is_base_of<Component, T>::value, "T must inherit from Component");
 		T* component = new T(this, std::forward<Args>(args)...);
 		m_components.push_back(std::unique_ptr<T>(component));
 		return component;

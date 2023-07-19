@@ -15,10 +15,15 @@ int main(int argc, char* argv[])
 	std::shared_ptr<Scene> scene = std::make_shared<Scene>("Basic scene");
 	engine->setActiveScene(scene);
 	Node& node_1 = scene->addChild("Node 1");
+	node_1.addComponent<MeshRenderer>(std::make_shared<Mesh>(
+		engine->getRenderingEngine().getLogicalDevice(),
+		engine->getRenderingEngine().getCommandPool()
+	));
 
 	try
 	{
 		engine->run();
+		scene.reset();
 	}
 	catch (const std::exception& e)
 	{

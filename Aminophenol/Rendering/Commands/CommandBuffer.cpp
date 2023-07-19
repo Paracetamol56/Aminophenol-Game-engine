@@ -25,6 +25,7 @@ namespace Aminophenol {
 
 	CommandBuffer::~CommandBuffer()
 	{
+		vkFreeCommandBuffers(m_logicalDevice, *m_commandPool, 1, &m_commandBuffer);
 	}
 
 	CommandBuffer::operator const VkCommandBuffer& () const

@@ -5,6 +5,7 @@
 #include "pch.h"
 
 #include "Window/Window.h"
+#include "Scene/Scene.h"
 #include "Rendering/Device/Instance.h"
 #include "Rendering/Device/PhysicalDevice.h"
 #include "Rendering/Device/LogicalDevice.h"
@@ -13,6 +14,7 @@
 #include "Rendering/Pipeline/Pipeline.h"
 #include "Rendering/Commands/CommandPool.h"
 #include "Rendering/Commands/CommandBuffer.h"
+#include <Mesh/Mesh.h>
 
 namespace Aminophenol {
 
@@ -43,10 +45,15 @@ namespace Aminophenol {
 		Pipeline& getPipeline() const;
 		const std::shared_ptr<CommandPool> getCommandPool() const;
 
+		void setActiveScene(const std::shared_ptr<Scene> scene);
+
 	private:
 
 		// Window
 		const Window& m_window;
+
+		// Scene
+		std::shared_ptr<Scene> m_activeScene{ nullptr };
 		
 		// Device
 		std::unique_ptr<Instance> m_instance{ nullptr };

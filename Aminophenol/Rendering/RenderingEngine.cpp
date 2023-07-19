@@ -154,6 +154,11 @@ namespace Aminophenol {
 		return m_commandPool;
 	}
 
+	void Aminophenol::RenderingEngine::setActiveScene(const std::shared_ptr<Scene> scene)
+	{
+		m_activeScene = scene;
+	}
+
 	void RenderingEngine::initFrameObjects()
 	{
 		m_attachments = m_swapchain->getImageViews();
@@ -245,7 +250,7 @@ namespace Aminophenol {
 		renderPassInfo.renderArea.offset = { 0, 0 };
 		renderPassInfo.renderArea.extent = m_swapchain->getExtent();
 
-		VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 1.0f };
+		VkClearValue clearColor = { 0.1f, 0.1f, 0.2f, 1.0f };
 		renderPassInfo.clearValueCount = 1;
 		renderPassInfo.pClearValues = &clearColor;
 
@@ -253,8 +258,24 @@ namespace Aminophenol {
 
 		vkCmdBindPipeline(m_commandBuffers[imageIndex]->getCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, *m_pipeline);
 
-		vkCmdDraw(m_commandBuffers[imageIndex]->getCommandBuffer(), 3, 1, 0, 0);
-
+		if (m_activeScene == nullptr)
+		{
+			Logger::log(LogLevel::Warning, "No active scene!");
+		}
+		else
+		{
+			// Iterate through all renderables in the active scene and draw them
+			for (std::vector<Node*>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
+			{
+				// If the Node has a MeshRenderer component, draw it
+				std::vector<MeshRenderer*> renderers = (*it)->getComponentsOfType<MeshRenderer>();
+				for (std::vector<MeshRenderer*>::iterator it2 = renderers.begin(); it2 != renderers.end(); ++it2)
+				{
+					(*it2)->renderMesh(m_commandBuffers[imageIndex]->getCommandBuffer());
+				}
+			}
+		}
+		
 		vkCmdEndRenderPass(m_commandBuffers[imageIndex]->getCommandBuffer());
 
 		// End recording

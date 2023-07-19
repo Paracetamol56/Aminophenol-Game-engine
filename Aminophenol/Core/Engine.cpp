@@ -57,6 +57,7 @@ namespace Aminophenol {
 	void Engine::setActiveScene(const std::shared_ptr<Scene> scene)
 	{
 		m_activeScene = scene;
+		m_renderingEngine->setActiveScene(scene);
 		if (!m_activeScene)
 		{
 			Logger::log(LogLevel::Warning, "Active scene is null.");
