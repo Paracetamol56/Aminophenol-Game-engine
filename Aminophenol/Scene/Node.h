@@ -40,7 +40,7 @@ namespace Aminophenol {
 		// Component accessors
 		template<typename T, typename... Args>
 		T* addComponent(Args &&...args);
-		const std::vector<std::shared_ptr<Component>>& getComponents() const;
+		std::vector<Component*> getComponents() const;
 		const size_t getComponentCount() const;
 		template<typename T>
 		T* getComponentOfType() const;
@@ -53,6 +53,7 @@ namespace Aminophenol {
 		
 		// Events
 		virtual void onAttach();
+		virtual void onStart();
 		virtual void onFixedUpdate();
 		virtual void onUpdate();
 
@@ -70,7 +71,7 @@ namespace Aminophenol {
 		bool m_enabled{ true };
 		std::vector<Node*> m_children{};
 		glm::mat4 m_transform; // ToDo: Make a custom transform class
-		std::vector<std::shared_ptr<Component>> m_components;
+		std::vector<Component*> m_components;
 		
 	};
 	
@@ -79,14 +80,14 @@ namespace Aminophenol {
 	{
 		static_assert(std::is_base_of<Component, T>::value, "T must inherit from Component");
 		T* component = new T(this, std::forward<Args>(args)...);
-		m_components.push_back(std::unique_ptr<T>(component));
+		m_components.push_back(component);
 		return component;
 	}
 
 	template<typename T>
 	T* Node::getComponentOfType() const
 	{
-		for (const std::unique_ptr<Component>& component : m_components)
+		for (Component* component : m_components)
 		{
 			auto castedComponent = dynamic_cast<T*>(component.get());
 			if (castedComponent)
@@ -101,11 +102,11 @@ namespace Aminophenol {
 	inline std::vector<T*> Aminophenol::Node::getComponentsOfType() const
 	{
 		std::vector<T*> components;
-		for (const std::shared_ptr<Component>& component : m_components)
+		for (Component* component : m_components)
 		{
-			if (dynamic_cast<T*>(component.get()))
+			if (dynamic_cast<T*>(component))
 			{
-				components.push_back(dynamic_cast<T*>(component.get()));
+				components.push_back(dynamic_cast<T*>(component));
 			}
 		}
 		return components;
@@ -114,11 +115,11 @@ namespace Aminophenol {
 	template<typename T>
 	T* Node::getComponent(const Utils::UUID& uuid) const
 	{
-		for (const std::unique_ptr<Component>& component : m_components)
+		for (Component* component : m_components)
 		{
 			if (component->getUUID() == uuid)
 			{
-				return dynamic_cast<T*>(component.get());
+				return dynamic_cast<T*>(component);
 			}
 		}
 		return nullptr;

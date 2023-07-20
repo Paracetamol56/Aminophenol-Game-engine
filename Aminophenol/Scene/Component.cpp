@@ -10,7 +10,9 @@ namespace Aminophenol {
 	{}
 
 	Component::~Component()
-	{}
+	{
+		onDestroy();
+	}
 
 	const Utils::UUID Component::getUUID() const
 	{
@@ -37,13 +39,16 @@ namespace Aminophenol {
 		return m_enabled;
 	}
 
-	void Component::start()
+	void Component::onStart()
 	{}
 	
-	void Component::update()
+	void Component::onUpdate()
 	{}
 	
-	void Component::fixedUpdate()
+	void Component::onFixedUpdate()
+	{}
+
+	void Component::onDestroy()
 	{}
 
 } // namespace Aminophenol

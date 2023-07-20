@@ -17,6 +17,17 @@ namespace Aminophenol {
 	Node::~Node()
 	{
 		onDestroy();
+
+		for (Node* child : m_children)
+		{
+			child->onDestroy();
+			delete child;
+		}
+		for (Component* component : m_components)
+		{
+			component->onDestroy();
+			delete component;
+		}
 	}
 
 	const Utils::UUID Aminophenol::Node::getUUID() const
@@ -126,7 +137,7 @@ namespace Aminophenol {
 		return m_children.end();
 	}
 
-	const std::vector<std::shared_ptr<Component>>& Node::getComponents() const
+	std::vector<Component*> Node::getComponents() const
 	{
 		return m_components;
 	}
@@ -138,9 +149,9 @@ namespace Aminophenol {
 
 	void Node::onAttach()
 	{
-		for (std::shared_ptr<Component> component : m_components)
+		for (Component* component : m_components)
 		{
-			component->start();
+			component->onStart();
 		}
 		for (Node* child : m_children)
 		{
@@ -148,11 +159,23 @@ namespace Aminophenol {
 		}
 	}
 
+	void Node::onStart()
+	{
+		for (Component* component : m_components)
+		{
+			component->onStart();
+		}
+		for (Node* child : m_children)
+		{
+			child->onStart();
+		}
+	}
+
 	void Node::onFixedUpdate()
 	{
-		for (std::shared_ptr<Component> component : m_components)
+		for (Component* component : m_components)
 		{
-			component->fixedUpdate();
+			component->onFixedUpdate();
 		}
 
 		for (Node* child : m_children)
@@ -163,9 +186,9 @@ namespace Aminophenol {
 
 	void Node::onUpdate()
 	{
-		for (std::shared_ptr<Component> component : m_components)
+		for (Component* component : m_components)
 		{
-			component->update();
+			component->onUpdate();
 		}
 
 		for (Node* child : m_children)
@@ -178,12 +201,6 @@ namespace Aminophenol {
 	{}
 
 	void Node::onDestroy()
-	{
-		for (Node* child : m_children)
-		{
-			child->onDestroy();
-			delete child;
-		}
-	}
+	{}
 
 } // namespace Aminophenol

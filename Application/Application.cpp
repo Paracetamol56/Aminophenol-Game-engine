@@ -23,7 +23,6 @@ int main(int argc, char* argv[])
 	try
 	{
 		engine->run();
-		scene.reset();
 	}
 	catch (const std::exception& e)
 	{

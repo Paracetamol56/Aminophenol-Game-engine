@@ -30,7 +30,7 @@ namespace Aminophenol
 	private:
 
 		const std::string _appName;
-		const int _WIDTH{ 640 };
+		const int _WIDTH{ 480 };
 		const int _HEIGHT{ 480 };
 
 		std::unique_ptr<Window> m_window;

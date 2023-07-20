@@ -52,6 +52,8 @@ namespace Aminophenol {
 			glfwPollEvents();
 			m_renderingEngine->update();
 		}
+
+		Logger::log(LogLevel::Info, "Exiting %s...", _appName.c_str());
 	}
 
 	void Engine::setActiveScene(const std::shared_ptr<Scene> scene)
