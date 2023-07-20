@@ -250,20 +250,25 @@ namespace Aminophenol {
 		renderPassInfo.renderArea.offset = { 0, 0 };
 		renderPassInfo.renderArea.extent = m_swapchain->getExtent();
 
-		VkClearValue clearColor = { 0.1f, 0.1f, 0.2f, 1.0f };
-		renderPassInfo.clearValueCount = 1;
-		renderPassInfo.pClearValues = &clearColor;
-
-		vkCmdBeginRenderPass(m_commandBuffers[imageIndex]->getCommandBuffer(), &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-
-		vkCmdBindPipeline(m_commandBuffers[imageIndex]->getCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, *m_pipeline);
-
 		if (m_activeScene == nullptr)
 		{
 			Logger::log(LogLevel::Warning, "No active scene!");
 		}
 		else
 		{
+			VkClearValue clearColor = { 
+				m_activeScene->getBackgroundColor().r,
+				m_activeScene->getBackgroundColor().g,
+				m_activeScene->getBackgroundColor().b,
+				m_activeScene->getBackgroundColor().a,
+			};
+			renderPassInfo.clearValueCount = 1;
+			renderPassInfo.pClearValues = &clearColor;
+
+			vkCmdBeginRenderPass(m_commandBuffers[imageIndex]->getCommandBuffer(), &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+			vkCmdBindPipeline(m_commandBuffers[imageIndex]->getCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, *m_pipeline);
+			
 			// Iterate through all renderables in the active scene and draw them
 			for (std::vector<Node*>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
 			{
@@ -274,10 +279,10 @@ namespace Aminophenol {
 					(*it2)->renderMesh(m_commandBuffers[imageIndex]->getCommandBuffer());
 				}
 			}
+		
+			vkCmdEndRenderPass(m_commandBuffers[imageIndex]->getCommandBuffer());
 		}
 		
-		vkCmdEndRenderPass(m_commandBuffers[imageIndex]->getCommandBuffer());
-
 		// End recording
 		if (vkEndCommandBuffer(m_commandBuffers[imageIndex]->getCommandBuffer()) != VK_SUCCESS)
 		{

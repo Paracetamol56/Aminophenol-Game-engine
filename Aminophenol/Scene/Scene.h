@@ -13,12 +13,18 @@ namespace Aminophenol {
 	{
 	public:
 
-		Scene(const std::string name = "Scene");
+		Scene(const std::string name = "Scene", const glm::vec4 backgroundColor = glm::vec4{ 0.0f, 0.0f, 0.0f, 1.0f });
 		~Scene();
+
+		// Getters
+		const glm::vec4& getBackgroundColor() const;
+		// Setters
+		void setBackgroundColor(const glm::vec4& backgroundColor);
 
 	private:
 		
 		Node* m_activeCamera{ nullptr };
+		glm::vec4 m_backgroundColor;
 		
 	};
 
