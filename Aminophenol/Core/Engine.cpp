@@ -7,11 +7,6 @@ namespace Aminophenol {
 	Engine::Engine(std::string appName)
 		: _appName{ appName }
 		, m_uuidGenerator{}
-#ifdef _DEBUG
-		, m_logger{ LogLevel::Trace }
-#else
-		, m_logger{ LogLevel::Error }
-#endif // _DEBUG
 	{
 		try {
 			m_window = std::make_unique<Window>(_WIDTH, _HEIGHT, _appName.c_str());
@@ -30,11 +25,9 @@ namespace Aminophenol {
 	Engine::~Engine()
 	{
 		try {
+			m_activeScene.reset();
 			m_renderingEngine.reset();
-			Logger::log(LogLevel::Trace, "Rendering engine destroyed.");
-
 			m_window.reset();
-			Logger::log(LogLevel::Trace, "Window destroyed.");
 		}
 		catch (const std::exception& e)
 		{

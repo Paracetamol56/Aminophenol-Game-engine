@@ -1,23 +1,23 @@
 #include "pch.h"
 #include "MeshRenderer.h"
 
+#include "Logging/Logger.h"
+
 namespace Aminophenol {
 
 	MeshRenderer::MeshRenderer(Node* node)
 		: Component(node)
-		//, SubRenderer()
-	{
-	}
+	{}
 
 	Aminophenol::MeshRenderer::MeshRenderer(Node* node, const std::shared_ptr<Mesh>& mesh)
 		: Component(node)
-		//, SubRenderer()
 		, m_mesh(mesh)
-	{
-	}
+	{}
 
 	MeshRenderer::~MeshRenderer()
 	{
+		Logger::log(LogLevel::Trace, "MeshRenderer destroyed: %s (%s)", m_node->getName().c_str(), m_node->getUUID().toString().c_str());
+		m_mesh.reset();
 	}
 
 	void Aminophenol::MeshRenderer::setMesh(const std::shared_ptr<Mesh>& mesh)
@@ -27,7 +27,7 @@ namespace Aminophenol {
 
 	const std::shared_ptr<Mesh>& Aminophenol::MeshRenderer::getMesh() const
 	{
-		return std::shared_ptr<Mesh>();
+		return m_mesh;
 	}
 
 	void Aminophenol::MeshRenderer::renderMesh(VkCommandBuffer commandBuffer)

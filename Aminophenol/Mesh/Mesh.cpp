@@ -47,9 +47,7 @@ namespace Aminophenol {
 
 	Mesh::~Mesh()
 	{
-		// Clear buffers
-		m_vertexBuffer.reset();
-		m_indexBuffer.reset();
+		Logger::log(LogLevel::Trace, "Mesh destroyed");
 	}
 
 	void Mesh::bind(VkCommandBuffer commandBuffer)
@@ -62,8 +60,7 @@ namespace Aminophenol {
 
 	void Mesh::draw(VkCommandBuffer commandBuffer)
 	{
-		//vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(m_indices.size()), 1, 0, 0, 0);
-		vkCmdDraw(commandBuffer, static_cast<uint32_t>(m_indices.size()), 1, 0, 0);
+		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(m_indices.size()), 1, 0, 0, 0);
 	}
 
 	void Mesh::createVertexBuffer()
@@ -154,7 +151,6 @@ namespace Aminophenol {
 
 		vkQueueSubmit(m_logicalDevice.getGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
 		vkQueueWaitIdle(m_logicalDevice.getGraphicsQueue());
-		vkFreeCommandBuffers(m_logicalDevice, *m_commandPool, 1, &commandBuffer.getCommandBuffer());
 	}
 
 } // namespace Aminophenol

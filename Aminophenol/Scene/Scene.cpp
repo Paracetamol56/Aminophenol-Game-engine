@@ -2,6 +2,8 @@
 #include "pch.h"
 #include "Scene.h"
 
+#include "Logging/Logger.h"
+
 namespace Aminophenol {
 
 	Scene::Scene(const std::string name, const glm::vec4 backgroundColor)

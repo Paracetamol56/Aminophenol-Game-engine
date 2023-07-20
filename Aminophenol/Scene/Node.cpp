@@ -20,14 +20,14 @@ namespace Aminophenol {
 
 		for (Node* child : m_children)
 		{
-			child->onDestroy();
 			delete child;
 		}
 		for (Component* component : m_components)
 		{
-			component->onDestroy();
 			delete component;
 		}
+
+		Logger::log(LogLevel::Trace, "Node destroyed: %s (%s)", m_name.c_str(), m_uuid.toString().c_str());
 	}
 
 	const Utils::UUID Aminophenol::Node::getUUID() const

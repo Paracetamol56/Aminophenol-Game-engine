@@ -34,7 +34,6 @@ namespace Aminophenol
 		const int _HEIGHT{ 480 };
 
 		std::unique_ptr<Window> m_window;
-		Logger m_logger;
 		Utils::UUIDv4Generator32 m_uuidGenerator;
 		std::shared_ptr<Scene> m_activeScene{ nullptr };
 		std::unique_ptr<RenderingEngine> m_renderingEngine;

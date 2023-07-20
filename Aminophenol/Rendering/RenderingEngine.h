@@ -46,6 +46,7 @@ namespace Aminophenol {
 		const std::shared_ptr<CommandPool> getCommandPool() const;
 
 		void setActiveScene(const std::shared_ptr<Scene> scene);
+		std::shared_ptr<Scene> getActiveScene() const;
 
 	private:
 

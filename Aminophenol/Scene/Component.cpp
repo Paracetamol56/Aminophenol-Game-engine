@@ -2,6 +2,8 @@
 #include "pch.h"
 #include "Component.h"
 
+#include "Logging/Logger.h"
+
 namespace Aminophenol {
 
 	Component::Component(const Node* node)

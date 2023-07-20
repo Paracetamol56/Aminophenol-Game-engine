@@ -8,8 +8,13 @@ using namespace Aminophenol;
 
 int main(int argc, char* argv[])
 {
+#if _DEBUG
+	Logger logger{ LogLevel::Trace };
+#else
+	Logger logger{ LogLevel::Info };
+#endif // DEBUG
+
 	Engine* engine = new Engine{ "Aminophenol application" };
-	Logger::s_minLogLevel = LogLevel::Info;
 
 	// Create a basic scene
 	std::shared_ptr<Scene> scene = std::make_shared<Scene>("Basic scene");
@@ -20,6 +25,7 @@ int main(int argc, char* argv[])
 		engine->getRenderingEngine().getLogicalDevice(),
 		engine->getRenderingEngine().getCommandPool()
 	));
+	scene.reset();
 
 	try
 	{

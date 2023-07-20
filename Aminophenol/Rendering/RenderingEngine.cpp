@@ -29,6 +29,8 @@ namespace Aminophenol {
 		
 		destroyFrameObjects();
 
+		m_activeScene.reset();
+
 		m_commandBuffers.clear();
 		m_globalCommandBuffer.reset();
 		m_commandPool.reset();
@@ -157,6 +159,10 @@ namespace Aminophenol {
 	void Aminophenol::RenderingEngine::setActiveScene(const std::shared_ptr<Scene> scene)
 	{
 		m_activeScene = scene;
+	}
+	std::shared_ptr<Scene> RenderingEngine::getActiveScene() const
+	{
+		return m_activeScene;
 	}
 
 	void RenderingEngine::initFrameObjects()

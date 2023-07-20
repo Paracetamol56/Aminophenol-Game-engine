@@ -12,7 +12,6 @@ namespace Aminophenol {
 	
 	class AMINOPHENOL_API MeshRenderer final
 		: public Component
-		// , public SubRenderer
 	{
 	public:
 
