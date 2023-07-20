@@ -58,7 +58,10 @@ namespace Aminophenol
 			std::cout
 				// Timestamp
 				<< "[\033[1;37m"
-				<< std::to_string(st.wHour) + ":" + std::to_string(st.wMinute) + ":" + std::to_string(st.wSecond) + "." + std::to_string(st.wMilliseconds)
+				<< std::setw(2) << std::setfill('0') << st.wHour << ":"
+				<< std::setw(2) << std::setfill('0') << st.wMinute << ":"
+				<< std::setw(2) << std::setfill('0') << st.wSecond << "."
+				<< std::setw(3) << std::setfill('0') << st.wMilliseconds
 				<< "\033[0m] ["
 				// Log level
 				<< color << logLevel << "\033[0m" << "] ";
