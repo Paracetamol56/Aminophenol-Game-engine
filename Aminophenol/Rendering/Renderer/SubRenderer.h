@@ -4,6 +4,7 @@
 
 #include "pch.h"
 
+#include "Utils/NonCopyable.h"
 #include "Rendering/Commands/CommandBuffer.h"
 #include "Rendering/Device/LogicalDevice.h"
 #include "Rendering/Pipeline/Pipeline.h"
@@ -11,7 +12,7 @@
 namespace Aminophenol {
 
 	// ToDo: Make this class abstract and derive from it
-	class SubRenderer
+	class SubRenderer : NonCopyable
 	{
 	public:
 

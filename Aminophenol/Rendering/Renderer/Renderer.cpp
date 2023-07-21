@@ -6,7 +6,8 @@ namespace Aminophenol
 {
 	
 	Renderer::Renderer(const LogicalDevice& logicalDevice)
-		: m_logicalDevice{ logicalDevice }
+		: NonCopyable()
+		, m_logicalDevice{ logicalDevice }
 	{
 
 	}

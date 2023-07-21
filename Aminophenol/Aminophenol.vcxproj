@@ -149,12 +149,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Maths\Transform2.h" />
+    <ClInclude Include="Maths\Transform3.h" />
+    <ClInclude Include="Mesh\Vertex.h" />
     <ClInclude Include="Rendering\Buffers\Buffer.h" />
     <ClInclude Include="Components\Camera.h" />
     <ClInclude Include="Components\MeshRenderer.h" />
     <ClInclude Include="Mesh\Mesh.h" />
     <ClInclude Include="Mesh\OBJMesh.h" />
     <ClInclude Include="Components\PointLight.h" />
+    <ClInclude Include="Rendering\Renderer\RenderStage.h" />
+    <ClInclude Include="Rendering\Renderer\SubRenderer.h" />
     <ClInclude Include="Scene\Component.h" />
     <ClInclude Include="Maths\Color.h" />
     <ClInclude Include="Maths\Matrix2.h" />
@@ -182,12 +187,34 @@
     <ClInclude Include="Rendering\Device\Surface.h" />
     <ClInclude Include="Rendering\Swapchain\Swapchain.h" />
     <ClInclude Include="Rendering\Swapchain\RenderPass.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Utils\HashCombine.h" />
+    <ClInclude Include="Utils\NonCopyable.h" />
+    <ClInclude Include="Utils\UUIDv4Generator.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\Camera.cpp" />
+    <ClCompile Include="Components\MeshRenderer.cpp" />
+    <ClCompile Include="Components\PointLight.cpp" />
+    <ClCompile Include="Maths\Color.cpp" />
+    <ClCompile Include="Maths\Matrix2.cpp" />
+    <ClCompile Include="Maths\Matrix3.cpp" />
+    <ClCompile Include="Maths\Matrix4.cpp" />
+    <ClCompile Include="Maths\Quaternion.cpp" />
+    <ClCompile Include="Maths\Transform2.cpp" />
+    <ClCompile Include="Maths\Transform3.cpp" />
+    <ClCompile Include="Maths\Utils.cpp" />
     <ClCompile Include="Maths\Vector2.cpp" />
     <ClCompile Include="Maths\Vector3.cpp" />
     <ClCompile Include="Maths\Vector4.cpp" />
+    <ClCompile Include="Mesh\Mesh.cpp" />
+    <ClCompile Include="Mesh\OBJMesh.cpp" />
+    <ClCompile Include="Mesh\Vertex.cpp" />
+    <ClCompile Include="Rendering\Buffers\Buffer.cpp" />
+    <ClCompile Include="Rendering\Renderer\Renderer.cpp" />
+    <ClCompile Include="Rendering\Renderer\SubRenderer.cpp" />
+    <ClCompile Include="Scene\Component.cpp" />
     <ClCompile Include="Scene\Node.cpp" />
     <ClCompile Include="Rendering\Commands\CommandBuffer.cpp" />
     <ClCompile Include="Rendering\Commands\CommandPool.cpp" />
@@ -209,6 +236,9 @@
     <ClCompile Include="Rendering\Swapchain\Swapchain.cpp" />
     <ClCompile Include="Rendering\Swapchain\RenderPass.cpp" />
     <ClCompile Include="Rendering\Renderer\RenderStage.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Utils\HashCombine.cpp" />
+    <ClCompile Include="Utils\UUIDv4Generator.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
