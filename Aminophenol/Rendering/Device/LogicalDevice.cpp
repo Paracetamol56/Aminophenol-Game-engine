@@ -120,6 +120,16 @@ namespace Aminophenol
 		return m_device;
 	}
 
+	const Instance& LogicalDevice::getInstance() const
+	{
+		return m_instance;
+	}
+
+	const PhysicalDevice& LogicalDevice::getPhysicalDevice() const
+	{
+		return m_physicalDevice;
+	}
+
 	const uint32_t LogicalDevice::getGraphicsQueueFamilyIndex() const
 	{
 		return m_graphicsFamilyIndex;
@@ -158,6 +168,22 @@ namespace Aminophenol
 	const VkQueue& LogicalDevice::getTransferQueue() const
 	{
 		return m_transferQueue;
+	}
+
+	uint32_t LogicalDevice::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) const
+	{
+		VkPhysicalDeviceMemoryProperties memProperties;
+		vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &memProperties);
+
+		for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++)
+		{
+			if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties)
+			{
+				return i;
+			}
+		}
+
+		throw std::runtime_error("Failed to find suitable memory type!");
 	}
 
 	void Aminophenol::LogicalDevice::findQueueFamilyIndices()

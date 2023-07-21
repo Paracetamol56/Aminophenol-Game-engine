@@ -13,7 +13,7 @@ namespace Aminophenol {
 	{
 	public:
 		
-		CommandBuffer(const LogicalDevice& logicalDevice, const CommandPool& commandPool, const VkCommandBufferLevel& level = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+		CommandBuffer(const LogicalDevice& logicalDevice, const std::shared_ptr<CommandPool> commandPool, const VkCommandBufferLevel& level = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 		~CommandBuffer();
 
 		operator const VkCommandBuffer& () const;
@@ -25,7 +25,7 @@ namespace Aminophenol {
 		VkCommandBuffer m_commandBuffer{ VK_NULL_HANDLE };
 
 		const LogicalDevice& m_logicalDevice;
-		const CommandPool& m_commandPool;
+		std::shared_ptr<CommandPool> m_commandPool;
 		
 	};
 

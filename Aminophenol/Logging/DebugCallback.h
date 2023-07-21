@@ -18,7 +18,19 @@ namespace Aminophenol
         void* pUserData
     )
     {
-		std::cout << "[\033[1;31mVALIDATION LAYER\033[0m] " << pCallbackData->pMessage << std::endl;
+		// Get timestamp
+		SYSTEMTIME st;
+		GetLocalTime(&st);
+
+		// Timestamp
+		std::cout
+			<< "[\033[1;37m"
+			<< std::setw(2) << std::setfill('0') << st.wHour << ":"
+			<< std::setw(2) << std::setfill('0') << st.wMinute << ":"
+			<< std::setw(2) << std::setfill('0') << st.wSecond << "."
+			<< std::setw(3) << std::setfill('0') << st.wMilliseconds
+			<< "\033[0m] ["
+			<< "\033[1;31mVALIDATION LAYER\033[0m] " << pCallbackData->pMessage << std::endl;
 
 		return VK_FALSE;
     }
