@@ -276,7 +276,7 @@ namespace Aminophenol {
 			vkCmdBindPipeline(m_commandBuffers[imageIndex]->getCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, *m_pipeline);
 			
 			// Iterate through all renderables in the active scene and draw them
-			for (std::vector<Node*>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
+			for (std::vector<std::unique_ptr<Node>>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
 			{
 				// If the Node has a MeshRenderer component, draw it
 				std::vector<MeshRenderer*> renderers = (*it)->getComponentsOfType<MeshRenderer>();

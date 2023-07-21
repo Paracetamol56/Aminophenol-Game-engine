@@ -179,6 +179,7 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Rendering\Renderer\SubRenderer.h" />
     <ClInclude Include="Utils\HashCombine.h" />
+    <ClInclude Include="Utils\NonCopyable.h" />
     <ClInclude Include="Utils\UUIDv4Generator.h" />
     <ClInclude Include="Mesh\Vertex.h" />
     <ClInclude Include="Window\Window.h" />

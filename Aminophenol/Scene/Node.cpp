@@ -7,7 +7,8 @@
 namespace Aminophenol {
 
 	Node::Node(const std::string name, Node* parent)
-		: m_name{ name }
+		: NonCopyable()
+		, m_name{ name }
 		, m_uuid{ Utils::UUIDv4Generator32::getUUID() }
 		, m_parent{ parent }
 	{
@@ -17,15 +18,6 @@ namespace Aminophenol {
 	Node::~Node()
 	{
 		onDestroy();
-
-		for (Node* child : m_children)
-		{
-			delete child;
-		}
-		for (Component* component : m_components)
-		{
-			delete component;
-		}
 
 		Logger::log(LogLevel::Trace, "Node destroyed: %s (%s)", m_name.c_str(), m_uuid.toString().c_str());
 	}
@@ -70,74 +62,71 @@ namespace Aminophenol {
 		return m_transform;
 	}
 
-	Node& Node::addChild(const std::string& name)
+	Node* Node::addChild(const std::string& name)
 	{
-		m_children.push_back(new Node(name, this));
-		return *m_children.back();
+		std::unique_ptr<Node> child = std::make_unique<Node>(name, this);
+		m_children.push_back(std::move(child));
+		return m_children.back().get();
 	}
 
-	Node& Node::addChild(Node* child)
+	Node* Node::addChild(std::unique_ptr<Node> child)
 	{
-		m_children.push_back(child);
-		return *m_children.back();
+		child->m_parent = this;
+		m_children.push_back(std::move(child));
+		return m_children.back().get();
 	}
 	
 	void Node::removeChild(const Utils::UUID& uuid)
 	{
-		for (std::vector<Node*>::iterator it = m_children.begin(); it != m_children.end(); ++it)
+		for (std::vector<std::unique_ptr<Node>>::iterator it = m_children.begin(); it != m_children.end(); ++it)
 		{
 			if ((*it)->getUUID() == uuid)
 			{
-				delete* it;
 				m_children.erase(it);
 				return;
 			}
 		}
 		Logger::log(LogLevel::Error, "Node::removeChild: Node with UUID %s not found.", uuid);
 	}
-
-	void Aminophenol::Node::detachChild(const Utils::UUID& uuid)
-	{
-		for (std::vector<Node*>::iterator it = m_children.begin(); it != m_children.end(); ++it)
-		{
-			if ((*it)->getUUID() == uuid)
-			{
-				m_parent->addChild(*it);
-				m_children.erase(it);
-				return;
-			}
-		}
-		Logger::log(LogLevel::Error, "Node::detachChild: Node with UUID %s not found.", uuid);
-	}
 	
-	Node& Node::getChild(const Utils::UUID& uuid)
+	Node* Node::getChild(const Utils::UUID& uuid)
 	{
-		for (Node* child : m_children)
+		for (std::unique_ptr<Node>& child : m_children)
 		{
 			if (child->getUUID() == uuid)
 			{
-				return *child;
+				return child.get();
 			}
 		}
 		Logger::log(LogLevel::Error, "Node::getChild: Node with UUID %s not found.", uuid);
 	}
 
-	std::vector<Node*> Aminophenol::Node::getChildren() const
+	const size_t Node::getChildrenCount() const
 	{
-		return m_children;
+		return m_children.size();
 	}
 
-	std::vector<Node*>::iterator Aminophenol::Node::begin()
+	const std::vector<Node*> Aminophenol::Node::getChildren() const
+	{
+		std::vector<Node*> children{};
+		for (std::unique_ptr<Node> const& child : m_children)
+		{
+			children.push_back(child.get());
+		}
+		return children;
+	}
+
+	std::vector<std::unique_ptr<Node>>::iterator Aminophenol::Node::begin()
 	{
 		return m_children.begin();
 	}
 
-	std::vector<Node*>::iterator Aminophenol::Node::end()
+	std::vector<std::unique_ptr<Node>>::iterator Aminophenol::Node::end()
 	{
 		return m_children.end();
 	}
 
-	std::vector<Component*> Node::getComponents() const
+	const std::vector<std::unique_ptr<Component>>& Node::getComponents() const
 	{
 		return m_components;
 	}
@@ -149,11 +138,7 @@ namespace Aminophenol {
 
 	void Node::onAttach()
 	{
-		for (Component* component : m_components)
-		{
-			component->onStart();
-		}
-		for (Node* child : m_children)
+		for (std::unique_ptr<Node> const& child : m_children)
 		{
 			child->onAttach();
 		}
@@ -161,11 +146,11 @@ namespace Aminophenol {
 
 	void Node::onStart()
 	{
-		for (Component* component : m_components)
+		for (std::unique_ptr<Component> const& component : m_components)
 		{
 			component->onStart();
 		}
-		for (Node* child : m_children)
+		for (std::unique_ptr<Node> const& child : m_children)
 		{
 			child->onStart();
 		}
@@ -173,12 +158,11 @@ namespace Aminophenol {
 
 	void Node::onFixedUpdate()
 	{
-		for (Component* component : m_components)
+		for (std::unique_ptr<Component> const& component : m_components)
 		{
 			component->onFixedUpdate();
 		}
-
-		for (Node* child : m_children)
+		for (std::unique_ptr<Node> const& child : m_children)
 		{
 			child->onFixedUpdate();
 		}
@@ -186,12 +170,11 @@ namespace Aminophenol {
 
 	void Node::onUpdate()
 	{
-		for (Component* component : m_components)
+		for (std::unique_ptr<Component> const& component : m_components)
 		{
 			component->onUpdate();
 		}
-
-		for (Node* child : m_children)
+		for (std::unique_ptr<Node> const& child : m_children)
 		{
 			child->onUpdate();
 		}

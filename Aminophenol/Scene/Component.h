@@ -4,18 +4,19 @@
 
 #include "pch.h"
 
+#include "Utils/NonCopyable.h"
 #include "Utils/UUIDv4Generator.h"
 
 namespace Aminophenol {
 
 	class Node;
 
-	class AMINOPHENOL_API Component
+	class AMINOPHENOL_API Component : NonCopyable
 	{
 	public:
 
 		Component(const Node* node);
-		~Component();
+		virtual ~Component();
 
 		// Accessors
 		const Utils::UUID getUUID() const;

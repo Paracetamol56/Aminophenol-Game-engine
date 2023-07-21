@@ -47,6 +47,9 @@ namespace Aminophenol {
 
 	Mesh::~Mesh()
 	{
+		m_vertexBuffer.reset();
+		m_indexBuffer.reset();
+		
 		Logger::log(LogLevel::Trace, "Mesh destroyed");
 	}
 

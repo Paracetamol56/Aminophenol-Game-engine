@@ -20,8 +20,8 @@ int main(int argc, char* argv[])
 	std::shared_ptr<Scene> scene = std::make_shared<Scene>("Basic scene");
 	scene->setBackgroundColor({ 0.1f, 0.2f, 0.4f, 1.0f });
 	engine->setActiveScene(scene);
-	Node& node_1 = scene->addChild("Node 1");
-	node_1.addComponent<MeshRenderer>(std::make_shared<Mesh>(
+	Node* node_1 = scene->addChild("Node 1");
+	node_1->addComponent<MeshRenderer>(std::make_shared<Mesh>(
 		engine->getRenderingEngine().getLogicalDevice(),
 		engine->getRenderingEngine().getCommandPool()
 	));
