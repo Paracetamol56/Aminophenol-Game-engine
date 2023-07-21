@@ -31,7 +31,7 @@ namespace Maths
 		}
 
 		// Test the constructor with 9 parameters
-		TEST_METHOD(constructor4)
+		TEST_METHOD(constructor9)
 		{
 			Matrix3<double> m0(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
 			Assert::AreEqual(m0[0][0], 1.0);
@@ -61,7 +61,7 @@ namespace Maths
 		}
 
 		// Test the constructor with 3 Vector3 parameters
-		TEST_METHOD(constructor2)
+		TEST_METHOD(constructor3)
 		{
 			Vector3<double> v0(1.0, 2.0, 3.0);
 			Vector3<double> v1(4.0, 5.0, 6.0);

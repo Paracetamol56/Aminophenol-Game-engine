@@ -12,9 +12,7 @@ namespace Aminophenol::Maths
 	T clamp(T value, T min, T max)
 	{
 		if (min >= max)
-		{
 			return value;
-		}
 		
 		if (value < min)
 			return min;
@@ -28,9 +26,10 @@ namespace Aminophenol::Maths
 	T clamp01(T value)
 	{
 		if (value < 0)
-			return 0;
+			return static_cast<T>(0);
 		if (value > 1)
-			return 1;
+			return static_cast<T>(1);
+		return value;
 	}
 	
 	// Linear interpolation static function
@@ -66,9 +65,7 @@ namespace Aminophenol::Maths
 		t = (t - a) / (b - a);
 		return t * t * (3 - 2 * t);
 	}
-	
-	
-	
+
 }
 
 #endif // UTILS_H

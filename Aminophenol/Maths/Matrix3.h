@@ -613,9 +613,8 @@ namespace Aminophenol::Maths
 	{
 		// Handle out of range
 		if (index < 0 || index > 2)
-		{
 			throw std::out_of_range("Index out of range");
-		}
+
 		return m[index];
 	}
 
