@@ -19,6 +19,8 @@ namespace Aminophenol
 		operator const VkDevice& () const;
 
 		const VkDevice& getDevice() const;
+		const Instance& getInstance() const;
+		const PhysicalDevice& getPhysicalDevice() const;
 
 		const uint32_t getGraphicsQueueFamilyIndex() const;
 		const uint32_t getPresentQueueFamilyIndex() const;
@@ -29,6 +31,8 @@ namespace Aminophenol
 		const VkQueue& getPresentQueue() const;
 		const VkQueue& getComputeQueue() const;
 		const VkQueue& getTransferQueue() const;
+
+		uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) const;
 
 	private:
 

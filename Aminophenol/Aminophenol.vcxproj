@@ -114,14 +114,14 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);C:\sdk\glfw-3.3.8.bin.WIN64\include;C:\sdk\VulkanSDK\1.3.236.0\Include;C:\sdk\glm;C:\sdk\tinyobjloader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);C:\sdk\glfw-3.3.8.bin.WIN64\include;C:\sdk\VulkanSDK\1.3.250.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>C:\sdk\VulkanSDK\1.3.236.0\Lib;C:\sdk\glfw-3.3.8.bin.WIN64\lib-vc2017</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\sdk\VulkanSDK\1.3.250.1\Lib;C:\sdk\glfw-3.3.8.bin.WIN64\lib-vc2017</AdditionalLibraryDirectories>
       <AdditionalDependencies>vulkan-1.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -135,7 +135,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);C:\sdk\glfw-3.3.8.bin.WIN64\include;C:\sdk\VulkanSDK1.3.224.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);C:\sdk\glfw-3.3.8.bin.WIN64\include;C:\sdk\VulkanSDK\1.3.250.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -144,14 +144,22 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>C:\sdk\VulkanSDK1.3.224.1\Lib;C:\sdk\glfw-3.3.8.bin.WIN64\lib-vc2017</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\sdk\VulkanSDK\1.3.250.1\Lib;C:\sdk\glfw-3.3.8.bin.WIN64\lib-vc2017</AdditionalLibraryDirectories>
       <AdditionalDependencies>vulkan-1.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Rendering\Buffers\Buffer.h" />
+    <ClInclude Include="Components\Camera.h" />
+    <ClInclude Include="Components\MeshRenderer.h" />
+    <ClInclude Include="Mesh\Mesh.h" />
+    <ClInclude Include="Mesh\OBJMesh.h" />
+    <ClInclude Include="Components\PointLight.h" />
+    <ClInclude Include="Scene\Component.h" />
     <ClInclude Include="Maths\Vector2.h" />
     <ClInclude Include="Maths\Vector3.h" />
     <ClInclude Include="Maths\Vector4.h" />
+    <ClInclude Include="Scene\Node.h" />
     <ClInclude Include="Rendering\Renderer\Renderer.h" />
     <ClInclude Include="Rendering\Commands\CommandBuffer.h" />
     <ClInclude Include="Rendering\Commands\CommandPool.h" />
@@ -168,12 +176,26 @@
     <ClInclude Include="Rendering\Device\Surface.h" />
     <ClInclude Include="Rendering\Swapchain\Swapchain.h" />
     <ClInclude Include="Rendering\Swapchain\RenderPass.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Rendering\Renderer\SubRenderer.h" />
+    <ClInclude Include="Utils\HashCombine.h" />
+    <ClInclude Include="Utils\NonCopyable.h" />
+    <ClInclude Include="Utils\UUIDv4Generator.h" />
+    <ClInclude Include="Mesh\Vertex.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Rendering\Buffers\Buffer.cpp" />
+    <ClCompile Include="Components\Camera.cpp" />
+    <ClCompile Include="Components\MeshRenderer.cpp" />
+    <ClCompile Include="Mesh\Mesh.cpp" />
+    <ClCompile Include="Mesh\OBJMesh.cpp" />
+    <ClCompile Include="Components\PointLight.cpp" />
+    <ClCompile Include="Scene\Component.cpp" />
     <ClCompile Include="Maths\Vector2.cpp" />
     <ClCompile Include="Maths\Vector3.cpp" />
     <ClCompile Include="Maths\Vector4.cpp" />
+    <ClCompile Include="Scene\Node.cpp" />
     <ClCompile Include="Rendering\Commands\CommandBuffer.cpp" />
     <ClCompile Include="Rendering\Commands\CommandPool.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
@@ -194,6 +216,11 @@
     <ClCompile Include="Rendering\Swapchain\Swapchain.cpp" />
     <ClCompile Include="Rendering\Swapchain\RenderPass.cpp" />
     <ClCompile Include="Rendering\Renderer\RenderStage.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Rendering\Renderer\SubRenderer.cpp" />
+    <ClCompile Include="Utils\HashCombine.cpp" />
+    <ClCompile Include="Utils\UUIDv4Generator.cpp" />
+    <ClCompile Include="Mesh\Vertex.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>

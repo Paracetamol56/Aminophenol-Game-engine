@@ -5,6 +5,7 @@
 #include "pch.h"
 
 #include "Window/Window.h"
+#include "Scene/Scene.h"
 #include "Rendering/Device/Instance.h"
 #include "Rendering/Device/PhysicalDevice.h"
 #include "Rendering/Device/LogicalDevice.h"
@@ -13,19 +14,14 @@
 #include "Rendering/Pipeline/Pipeline.h"
 #include "Rendering/Commands/CommandPool.h"
 #include "Rendering/Commands/CommandBuffer.h"
+#include <Mesh/Mesh.h>
 
 namespace Aminophenol {
 
 	/// <summary>
 	/// This class handles the rendering engine.
 	/// It holds all the necessary objects to render :
-	/// - Instance
-	/// - PhysicalDevice
-	/// - LogicalDevice
-	/// - Surface
-	/// - Swapchain
-	/// - Pipeline
-	/// - CommandPool
+	/// Instance, PhysicalDevice, LogicalDevice, Surface, Swapchain, Pipeline, CommandPool
 	/// </summary>
 	class AMINOPHENOL_API RenderingEngine
 	{
@@ -47,12 +43,18 @@ namespace Aminophenol {
 		Surface& getSurface() const;
 		Swapchain& getSwapchain() const;
 		Pipeline& getPipeline() const;
-		CommandPool& getCommandPool() const;
+		const std::shared_ptr<CommandPool> getCommandPool() const;
+
+		void setActiveScene(const std::shared_ptr<Scene> scene);
+		std::shared_ptr<Scene> getActiveScene() const;
 
 	private:
 
 		// Window
 		const Window& m_window;
+
+		// Scene
+		std::shared_ptr<Scene> m_activeScene{ nullptr };
 		
 		// Device
 		std::unique_ptr<Instance> m_instance{ nullptr };
@@ -69,7 +71,7 @@ namespace Aminophenol {
 		std::unique_ptr<Pipeline> m_pipeline{ nullptr };
 		
 		// Command Pool
-		std::unique_ptr<CommandPool> m_commandPool{ nullptr };
+		std::shared_ptr<CommandPool> m_commandPool{ nullptr };
 		
 		// Buffers
 		std::vector<VkFramebuffer> m_frameBuffers{};
@@ -84,8 +86,11 @@ namespace Aminophenol {
 		// Attachments
 		std::vector<VkImageView> m_attachments{};
 		
+		void initFrameObjects();
+		void destroyFrameObjects();
 		void render();
 		void recordDrawCommand(uint32_t imageIndex);
+		void recreateSwapchain();
 
 	};
 

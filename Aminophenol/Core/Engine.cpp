@@ -5,46 +5,68 @@
 namespace Aminophenol {
 	
 	Engine::Engine(std::string appName)
-		: m_appName{ appName }
+		: _appName{ appName }
+		, m_uuidGenerator{}
 	{
-#ifdef _DEBUG
-		m_logger = std::make_unique<Logger>(LogLevel::Trace);
-#else
-		m_logger = std::make_unique<Logger>(LogLevel::Error);
-#endif // _DEBUG
-		
-		m_window = std::make_unique<Window>(_WIDTH, _HEIGHT, m_appName.c_str());
-		Logger::log(LogLevel::Trace, "Window initialized.");
+		try {
+			m_window = std::make_unique<Window>(_WIDTH, _HEIGHT, _appName.c_str());
+			Logger::log(LogLevel::Trace, "Window initialized.");
 
-		m_renderingEngine = std::make_unique<RenderingEngine>(*m_window, m_appName);
-		Logger::log(LogLevel::Trace, "Rendering engine initialized.");
+			m_renderingEngine = std::make_unique<RenderingEngine>(*m_window, _appName);
+			Logger::log(LogLevel::Trace, "Rendering engine initialized.");
+		}
+		catch (const std::exception& e)
+		{
+			Logger::log(LogLevel::Critical, "Failed to initialize engine.");
+			Logger::log(LogLevel::Critical, e.what());
+		}
 	}
 
 	Engine::~Engine()
 	{
-		m_renderingEngine.reset();
-		Logger::log(LogLevel::Trace, "Rendering engine destroyed.");
-		
-		m_window.reset();
-		Logger::log(LogLevel::Trace, "Window destroyed.");
-
-		m_logger.reset();
+		try {
+			m_activeScene.reset();
+			m_renderingEngine.reset();
+			m_window.reset();
+		}
+		catch (const std::exception& e)
+		{
+			Logger::log(LogLevel::Critical, "Failed to destroy engine.");
+			Logger::log(LogLevel::Critical, e.what());
+		}
 	}
 
 	void Engine::run()
 	{
-		Logger::log(LogLevel::Trace, "Running %s...", m_appName.c_str());
+		Logger::log(LogLevel::Info, "Running %s...", _appName.c_str());
 
-		 while (!m_window->shouldClose())
-		 {
-		 	glfwPollEvents();
-		 	m_renderingEngine->update();
-		 }
+		while (!m_window->shouldClose())
+		{
+			glfwPollEvents();
+			m_renderingEngine->update();
+		}
+
+		Logger::log(LogLevel::Info, "Exiting %s...", _appName.c_str());
+	}
+
+	void Engine::setActiveScene(const std::shared_ptr<Scene> scene)
+	{
+		m_activeScene = scene;
+		m_renderingEngine->setActiveScene(scene);
+		if (!m_activeScene)
+		{
+			Logger::log(LogLevel::Warning, "Active scene is null.");
+		}
+		else
+		{
+			// Call the start method of all components with a quadratic loop
+			m_activeScene->onAttach();
+		}
 	}
 
 	std::string Engine::getAppName() const
 	{
-		return m_appName;
+		return _appName;
 	}
 
 	Window& Engine::getWindow() const
