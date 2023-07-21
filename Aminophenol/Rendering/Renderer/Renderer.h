@@ -4,6 +4,7 @@
 
 #include "pch.h"
 
+#include "Utils/NonCopyable.h"
 #include "Rendering/Device/LogicalDevice.h"
 #include "Rendering/Pipeline/Pipeline.h"
 #include "Rendering/Renderer/SubRenderer.h"
@@ -11,7 +12,7 @@
 namespace Aminophenol
 {
 
-	class AMINOPHENOL_API Renderer
+	class AMINOPHENOL_API Renderer : NonCopyable
 	{
 	public:
 

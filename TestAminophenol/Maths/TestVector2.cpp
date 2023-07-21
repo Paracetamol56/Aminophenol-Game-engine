@@ -8,7 +8,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace Aminophenol::Maths;
 
-namespace TestAminophenol
+namespace Maths
 {
 	
 	TEST_CLASS(TestVector2)
