@@ -263,12 +263,8 @@ namespace Aminophenol {
 		}
 		else
 		{
-			VkClearValue clearColor = { 
-				m_activeScene->getBackgroundColor().r,
-				m_activeScene->getBackgroundColor().g,
-				m_activeScene->getBackgroundColor().b,
-				m_activeScene->getBackgroundColor().a,
-			};
+			VkClearValue clearColor = m_activeScene->getBackgroundColor();
+
 			renderPassInfo.clearValueCount = 1;
 			renderPassInfo.pClearValues = &clearColor;
 

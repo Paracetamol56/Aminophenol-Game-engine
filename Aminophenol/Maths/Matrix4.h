@@ -14,7 +14,7 @@ namespace Aminophenol::Maths
 	class Matrix3;
 
 	template<typename T>
-	class AMINOPHENOL_API Matrix4
+	class Matrix4
 	{
 	public:
 

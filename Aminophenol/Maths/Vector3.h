@@ -14,7 +14,7 @@ namespace Aminophenol::Maths
 	class Vector4;
 
 	template<typename T>
-	class AMINOPHENOL_API Vector3
+	class Vector3
 	{
 	public:
 		

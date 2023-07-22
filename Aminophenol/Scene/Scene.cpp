@@ -6,7 +6,7 @@
 
 namespace Aminophenol {
 
-	Scene::Scene(const std::string name, const glm::vec4 backgroundColor)
+	Scene::Scene(const std::string name, const Maths::Color backgroundColor)
 		: Node{ name, nullptr }
 		, m_backgroundColor{ backgroundColor }
 	{}
@@ -14,12 +14,12 @@ namespace Aminophenol {
 	Scene::~Scene()
 	{}
 
-	const glm::vec4& Scene::getBackgroundColor() const
+	const Maths::Color& Scene::getBackgroundColor() const
 	{
 		return m_backgroundColor;
 	}
 
-	void Scene::setBackgroundColor(const glm::vec4& backgroundColor)
+	void Scene::setBackgroundColor(const Maths::Color& backgroundColor)
 	{
 		m_backgroundColor = backgroundColor;
 	}
