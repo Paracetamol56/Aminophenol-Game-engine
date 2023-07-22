@@ -35,10 +35,4 @@ namespace Aminophenol::Maths
 	const Vector3i Vector3<int>::forward(0, 0, 1);
 	const Vector3i Vector3<int>::backward(0, 0, -1);
 
-	const Vector3ui Vector3<unsigned int>::zero(0);
-	const Vector3ui Vector3<unsigned int>::unit(1);
-
-	const Vector3us Vector3<unsigned short>::zero(0);
-	const Vector3us Vector3<unsigned short>::unit(1);
-
 }

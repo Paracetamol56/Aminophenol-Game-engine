@@ -10,12 +10,6 @@
 namespace Aminophenol::Maths
 {
 
-	template<typename T>
-	class Vector3;
-
-	template<typename T>
-	class Vector4;
-
 	// Color format enum
 	enum class AMINOPHENOL_API ColorFormat
 	{

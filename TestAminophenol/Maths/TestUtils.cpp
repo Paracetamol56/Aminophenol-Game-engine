@@ -59,7 +59,7 @@ namespace Maths
 		{
 			float a = 0.5f;
 			float b = clamp01(a);
-			Assert::AreEqual(b, 0.5f);
+			Assert::AreEqual(0.5f, b);
 		}
 		
 		// Test the clamp01 static function with out of range value

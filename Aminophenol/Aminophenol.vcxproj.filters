@@ -277,5 +277,23 @@
       <Filter>Fichiers sources</Filter>
     </None>
     <None Include="Shaders\shader.frag" />
+    <None Include="Maths\Matrix2.inl">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </None>
+    <None Include="Maths\Matrix3.inl">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </None>
+    <None Include="Maths\Matrix4.inl">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </None>
+    <None Include="Maths\Vector2.inl">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </None>
+    <None Include="Maths\Vector3.inl">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </None>
+    <None Include="Maths\Vector4.inl">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </None>
   </ItemGroup>
 </Project>
