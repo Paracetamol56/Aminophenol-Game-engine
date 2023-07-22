@@ -8,28 +8,29 @@ using namespace Aminophenol;
 
 int main(int argc, char* argv[])
 {
+	// Initialize logger
 #if _DEBUG
 	Logger logger{ LogLevel::Trace };
 #else
 	Logger logger{ LogLevel::Info };
 #endif // _DEBUG
 
-	Engine* engine = new Engine{ "Aminophenol application" };
+	Engine engine{ "Aminophenol application" };
 
 	// Create a basic scene
 	std::shared_ptr<Scene> scene = std::make_shared<Scene>("Basic scene");
 	scene->setBackgroundColor({ 0.1f, 0.2f, 0.4f, 1.0f });
-	engine->setActiveScene(scene);
+	engine.setActiveScene(scene);
 	Node* node_1 = scene->addChild("Node 1");
 	node_1->addComponent<MeshRenderer>(std::make_shared<Mesh>(
-		engine->getRenderingEngine().getLogicalDevice(),
-		engine->getRenderingEngine().getCommandPool()
+		engine.getRenderingEngine().getLogicalDevice(),
+		engine.getRenderingEngine().getCommandPool()
 	));
 	scene.reset();
 
 	try
 	{
-		engine->run();
+		engine.run();
 	}
 	catch (const std::exception& e)
 	{
@@ -37,8 +38,6 @@ int main(int argc, char* argv[])
 
 		return EXIT_FAILURE;
 	}
-
-	delete engine;
 	
 	return EXIT_SUCCESS;
 }

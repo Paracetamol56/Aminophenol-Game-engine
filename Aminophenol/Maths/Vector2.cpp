@@ -27,12 +27,6 @@ namespace Aminophenol::Maths
 	const Vector2i Vector2<int>::left(-1, 0);
 	const Vector2i Vector2<int>::right(1, 0);
 	const Vector2i Vector2<int>::up(0, 1);
-	const Vector2i Vector2<int>::down(0, -1);
+	const Vector2i Vector2<int>::down(0, -1);	
 
-	const Vector2ui Vector2<unsigned int>::zero(0);
-	const Vector2ui Vector2<unsigned int>::unit(1);
-	
-	const Vector2us Vector2<unsigned short>::zero(0);
-	const Vector2us Vector2<unsigned short>::unit(1);
-	
 }

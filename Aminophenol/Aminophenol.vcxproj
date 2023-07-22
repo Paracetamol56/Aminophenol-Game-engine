@@ -242,6 +242,12 @@
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Maths\Matrix2.inl" />
+    <None Include="Maths\Matrix3.inl" />
+    <None Include="Maths\Matrix4.inl" />
+    <None Include="Maths\Vector2.inl" />
+    <None Include="Maths\Vector3.inl" />
+    <None Include="Maths\Vector4.inl" />
     <None Include="Shaders\compile.bat" />
     <None Include="Shaders\shader.frag" />
     <None Include="Shaders\shader.frag.frag" />
