@@ -1,17 +1,17 @@
-
+﻿
 #ifndef MATRIX4_H
 #define MATRIX4_H
 
 #include "pch.h"
 
+#include "Maths/Vector4.h"
+#include "Maths/Matrix3.h"
+
 namespace Aminophenol::Maths
 {
 
 	template<typename T>
-	class Vector4;
-
-	template<typename T>
-	class Matrix4
+	class AMINOPHENOL_API Matrix4
 	{
 	public:
 
@@ -139,17 +139,211 @@ namespace Aminophenol::Maths
 		Matrix4<T> divide(const Matrix4<T>& other) const;
 
 		/// <summary>
+		/// Addition operator.
+		/// </summary>
+		/// <param name="other">The matrix to add.</param>
+		/// <returns>The sum of the two matrices.</returns>
+		Matrix4<T> operator+(const Matrix4<T>& other) const;
+
+		/// <summary>
+		/// Subtraction operator.
+		/// </summary>
+		/// <param name="other">The matrix to subtract.</param>
+		/// <returns>The difference of the two matrices.</returns>
+		Matrix4<T> operator-(const Matrix4<T>& other) const;
+
+		/// <summary>
+		/// Multiplication operator.
+		/// </summary>
+		/// <param name="other">The matrix to multiply.</param>
+		/// <returns>The product of the two matrices.</returns>
+		Matrix4<T> operator*(const Matrix4<T>& other) const;
+
+		/// <summary>
+		/// Multiplication operator by a Vector4.
+		/// </summary>
+		/// <param name="other">The vector to multiply.</param>
+		/// <returns>The product of the matrix and the vector.</returns>
+		Vector4<T> operator*(const Vector4<T>& other) const;
+
+		/// <summary>
+		/// Multiplication operator by a scalar.
+		/// </summary>
+		/// <param name="other">The scalar to multiply.</param>
+		/// <returns>The product of the matrix and the scalar.</returns>
+		Matrix4<T> operator*(T other) const;
+
+		/// <summary>
+		/// Division operator.
+		/// </summary>
+		/// <param name="other">The matrix to divide.</param>
+		/// <returns>The quotient of the two matrices.</returns>
+		/// <exception cref="std::invalid_argument">Thrown if the matrix is singular.</exception>
+		Matrix4<T> operator/(const Matrix4<T>& other) const;
+
+		/// <summary>
+		/// Addition assignment operator.
+		/// </summary>
+		/// <param name="other">The matrix to add.</param>
+		/// <returns>A reference to this matrix.</returns>
+		Matrix4<T>& operator+=(const Matrix4<T>& other);
+
+		/// <summary>
+		/// Subtraction assignment operator.
+		/// </summary>
+		/// <param name="other">The matrix to subtract.</param>
+		/// <returns>A reference to this matrix.</returns>
+		/// <exception cref="std::invalid_argument">Thrown if the matrix is singular.</exception>
+		Matrix4<T>& operator-=(const Matrix4<T>& other);
+
+		/// <summary>
+		/// Multiplication assignment operator.
+		/// </summary>
+		/// <param name="other">The matrix to multiply.</param>
+		/// <returns>A reference to this matrix.</returns>
+		Matrix4<T>& operator*=(const Matrix4<T>& other);
+
+		/// <summary>
+		/// Division assignment operator.
+		/// </summary>
+		/// <param name="other">The matrix to divide.</param>
+		/// <returns>A reference to this matrix.</returns>
+		Matrix4<T>& operator/=(const Matrix4<T>& other);
+
+		/// <summary>
+		/// Submatrix method.
+		/// </summary>
+		/// <param name="row">The index of the row take out.</param>
+		/// <param name="col">The index of the column take out.</param>
+		/// <returns>The submatrix of the matrix.</returns>
+		Matrix3<T> submatrix(size_t row, size_t col) const;
+
+		/// <summary>
+		/// Inversion method.
+		/// </summary>
+		/// <returns>The inverse of the matrix.</returns>
+		Matrix4<T>& inverse();
+
+		/// <summary>
+		/// Transposition method.
+		/// </summary>
+		/// <returns>The transpose of the matrix.</returns>
+		Matrix4<T>& transpose();
+
+		/// <summary>
+		/// Determinant method.
+		/// </summary>
+		/// <returns>The determinant of the matrix.</returns>
+		T determinant() const;
+
+		/// <summary>
 		/// Array subscript operator.
 		/// </summary>
 		/// <param name="index">The index of the row.</param>
 		/// <returns>An array of the row.</returns>
 		T* operator[](int index);
 
+		/// <summary>
+		/// Array subscript operator (const).
+		/// </summary>
+		/// <param name="index">The index of the row.</param>
+		/// <returns>An array of the row.</returns>
+		const T* operator[](int index) const;
+
+		/// <summary>
+		/// Equality operator.
+		/// </summary>
+		/// <param name="other">The matrix to compare.</param>
+		/// <returns>True if the matrices are equal, false otherwise.</returns>
+		bool operator==(const Matrix4<T>& other) const;
+
+		/// <summary>
+		/// Inequality operator.
+		/// </summary>
+		/// <param name="other">The matrix to compare.</param>
+		/// <returns>True if the matrices are not equal, false otherwise.</returns>
+		bool operator!=(const Matrix4<T>& other) const;
+
+		/// <summary>
+		/// Checks if the matrix is singular.
+		/// </summary>
+		/// <returns>True if the matrix is singular, false otherwise.</returns>
+		bool isSingular() const;
+
+		/// <summary>
+		/// Checks if the matrix is orthogonal.
+		/// </summary>
+		/// <returns>True if the matrix is orthogonal, false otherwise.</returns>
+		bool isOrthogonal() const;
+
+		/// <summary>
+		/// Checks if the matrix is diagonal.
+		/// </summary>
+		/// <returns>True if the matrix is diagonal, false otherwise.</returns>
+		bool isDiagonal() const;
+
+		/// <summary>
+		/// Checks if the matrix is identity.
+		/// </summary>
+		/// <returns>True if the matrix is identity, false otherwise.</returns>
+		bool isIdentity() const;
+
+		/// <summary>
+		/// Checks if the matrix is zero.
+		/// </summary>
+		/// <returns>True if the matrix is zero, false otherwise.</returns>
+		bool isZero() const;
+
+		/// <summary>
+		/// Checks if the matrix is symmetric.
+		/// </summary>
+		/// <returns>True if the matrix is symmetric, false otherwise.</returns>
+		bool isSymmetric() const;
+
+		/// <summary>
+		/// Makes the matrix identity.
+		/// </summary>
+		/// <returns>A reference to this matrix.</returns>
+		Matrix4<T>& makeIdentity();
+
+		/// <summary>
+		/// Makes the matrix zero.
+		/// </summary>
+		/// <returns>A reference to this matrix.</returns>
+		Matrix4<T>& makeZero();
+
+		/// <summary>
+		/// Outputs stram operator.
+		/// </summary>
+		/// <param name="os">The output stream.</param>
+		/// <param name="matrix">The matrix to output.</param>
+		/// <returns>The output stream.</returns>
+		friend std::ostream& operator<<(std::ostream& os, const Matrix3<T>& matrix);
+
+		/// <summary>
+		/// Static zero matrix.
+		/// </summary>
+		static const Matrix4<T> zero;
+
+		/// <summary>
+		/// Static unit matrix.
+		/// </summary>
+		static const Matrix4<T> identity;
+
+		/// <summary>
+		/// Static infinity matrix.
+		/// </summary>
+		static const Matrix4<T> infinity;
+
 	private:
 
 		T m[4][4];
 
 	};
+
+	using Matrix4f = Matrix4<float>;
+	using Matrix4d = Matrix4<double>;
+	using Matrix4i = Matrix4<int32_t>;
 
 	// Empty constructor
 	template<typename T>
@@ -354,6 +548,177 @@ namespace Aminophenol::Maths
 		);
 	}
 
+	// Division method
+	template<typename T>
+	Matrix4<T> Matrix4<T>::divide(const Matrix4<T>& other) const
+	{
+		return Matrix4<T>(
+			m[0][0] / other.m[0][0], m[0][1] / other.m[0][1], m[0][2] / other.m[0][2], m[0][3] / other.m[0][3],
+			m[1][0] / other.m[1][0], m[1][1] / other.m[1][1], m[1][2] / other.m[1][2], m[1][3] / other.m[1][3],
+			m[2][0] / other.m[2][0], m[2][1] / other.m[2][1], m[2][2] / other.m[2][2], m[2][3] / other.m[2][3],
+			m[3][0] / other.m[3][0], m[3][1] / other.m[3][1], m[3][2] / other.m[3][2], m[3][3] / other.m[3][3]
+		);
+	}
+
+	// Addition operator
+	template<typename T>
+	Matrix4<T> Matrix4<T>::operator+(const Matrix4<T>& other) const
+	{
+		return add(other);
+	}
+
+	// Subtraction operator
+	template<typename T>
+	Matrix4<T> Matrix4<T>::operator-(const Matrix4<T>& other) const
+	{
+		return subtract(other);
+	}
+
+	// Multiplication operator
+	template<typename T>
+	Matrix4<T> Matrix4<T>::operator*(const Matrix4<T>& other) const
+	{
+		return multiply(other);
+	}
+
+	// Multiplication operator by a Vector3
+	template<typename T>
+	Vector4<T> Matrix4<T>::operator*(const Vector4<T>& other) const
+	{
+		return multiply(other);
+	}
+
+	// Multiplication operator by a scalar
+	template<typename T>
+	Matrix4<T> Matrix4<T>::operator*(T scalar) const
+	{
+		return multiply(scalar);
+	}
+
+	// Division operator
+	template<typename T>
+	Matrix4<T> Matrix4<T>::operator/(const Matrix4<T>& other) const
+	{
+		return divide(other);
+	}
+
+	// Addition assignment operator
+	template<typename T>
+	Matrix4<T>& Matrix4<T>::operator+=(const Matrix4<T>& other)
+	{
+		return *this = add(other);
+	}
+
+	// Subtraction assignment operator
+	template<typename T>
+	Matrix4<T>& Matrix4<T>::operator-=(const Matrix4<T>& other)
+	{
+		return *this = subtract(other);
+	}
+
+	// Multiplication assignment operator
+	template<typename T>
+	Matrix4<T>& Matrix4<T>::operator*=(const Matrix4<T>& other)
+	{
+		return *this = multiply(other);
+	}
+
+	// Division assignment operator
+	template<typename T>
+	Matrix4<T>& Matrix4<T>::operator/=(const Matrix4<T>& other)
+	{
+		return *this = divide(other);
+	}
+
+	// Submatrix method
+	template<typename T>
+	Matrix3<T> Matrix4<T>::submatrix(size_t row, size_t column) const
+	{
+		Matrix3<T> result;
+		size_t colCount = 0;
+		size_t rowCount = 0;
+
+		for (uint32_t i = 0; i < 4; ++i) {
+			if (i != row) {
+				colCount = 0;
+				for (uint32_t j = 0; j < 4; ++j) {
+					if (j != column) {
+						result[rowCount][colCount] = m[i][j];
+						++colCount;
+					}
+				}
+				++rowCount;
+			}
+		}
+
+		return result;
+	}
+
+	// Inversion method
+	template<typename T>
+	Matrix4<T>& Matrix4<T>::inverse()
+	{
+		const T det = determinant();
+		if (det == 0)
+			return *this;
+
+		Matrix4<T> original(*this);
+
+		for (size_t j = 0; j < 4; ++j) {
+			for (size_t i = 0; i < 4; ++i) {
+				Matrix3<T> minorSubmatrix = original.submatrix(j, i);
+				T minor = minorSubmatrix.determinant();
+
+				auto factor = ((i + j) % 2 == 1) ? -1.0f : 1.0f;
+				auto cofactor = minor * factor;
+
+				m[i][j] = cofactor / det;
+			}
+		}
+
+		return *this;
+	}
+
+	// Transposition method
+	template<typename T>
+	Matrix4<T>& Matrix4<T>::transpose()
+	{
+		Matrix4<T> original(*this);
+
+		for (size_t j = 0; j < 4; ++j) {
+			for (size_t i = 0; i < 4; ++i) {
+				m[i][j] = original.m[j][i];
+			}
+		}
+
+		return *this;
+	}
+
+	// Determinant method
+	template<typename T>
+	T Matrix4<T>::determinant() const
+	{
+		const T subFactor00 = m[2][2] * m[3][3] - m[3][2] * m[2][3];	
+		const T subFactor01 = m[2][1] * m[3][3] - m[3][1] * m[2][3];
+		const T subFactor02 = m[2][1] * m[3][2] - m[3][1] * m[2][2];
+		const T subFactor03 = m[2][0] * m[3][3] - m[3][0] * m[2][3];
+		const T subFactor04 = m[2][0] * m[3][2] - m[3][0] * m[2][2];
+		const T subFactor05 = m[2][0] * m[3][1] - m[3][0] * m[2][1];
+
+		const Vector4<T> detCof(
+			m[1][1] * subFactor00 - m[1][2] * subFactor01 + m[1][3] * subFactor02,
+			- (m[1][0] * subFactor00 - m[1][2] * subFactor03 + m[1][3] * subFactor04),
+			m[1][0] * subFactor01 - m[1][1] * subFactor03 + m[1][3] * subFactor05,
+			- (m[1][0] * subFactor02 - m[1][1] * subFactor04 + m[1][2] * subFactor05)
+		);
+
+		return
+			m[0][0] * detCof.x +
+			m[0][1] * detCof.y +
+			m[0][2] * detCof.z +
+			m[0][3] * detCof.w;
+	}
+
 	// Array subscript operator
 	template<typename T>
 	T* Matrix4<T>::operator[](int index)
@@ -363,6 +728,121 @@ namespace Aminophenol::Maths
 			throw std::out_of_range("Index out of range");
 
 		return m[index];
+	}
+
+	// Array subscript operator (const)
+	template<typename T>
+	const T* Matrix4<T>::operator[](int index) const
+	{
+		// Handle out of range
+		if (index < 0 || index > 3)
+			throw std::out_of_range("Index out of range");
+
+		return m[index];
+	}
+
+	// Equality operator
+	template<typename T>
+	bool Matrix4<T>::operator==(const Matrix4<T>& other) const
+	{
+		return
+			m[0][0] == other.m[0][0] && m[0][1] == other.m[0][1] && m[0][2] == other.m[0][2] && m[0][3] == other.m[0][3] &&
+			m[1][0] == other.m[1][0] && m[1][1] == other.m[1][1] && m[1][2] == other.m[1][2] && m[1][3] == other.m[1][3] &&
+			m[2][0] == other.m[2][0] && m[2][1] == other.m[2][1] && m[2][2] == other.m[2][2] && m[2][3] == other.m[2][3] &&
+			m[3][0] == other.m[3][0] && m[3][1] == other.m[3][1] && m[3][2] == other.m[3][2] && m[3][3] == other.m[3][3];
+	}
+
+	// Inequality operator
+	template<typename T>
+	bool Matrix4<T>::operator!=(const Matrix4<T>& other) const
+	{
+		return !(*this == other);
+	}
+
+	// isSingular method
+	template<typename T>
+	bool Matrix4<T>::isSingular() const
+	{
+		return determinant() == 0;
+	}
+
+	// isOrthogonal method
+	template<typename T>
+	bool Matrix4<T>::isOrthogonal() const
+	{
+		Matrix4<T> original(*this);
+		Matrix4<T> transposedMultiplied(original.transpose() * original);
+		Matrix4<T> inverse(original.inverse());
+
+		return transposedMultiplied == inverse;
+	}
+
+	// isDiagonal method
+	template<typename T>
+	bool Matrix4<T>::isDiagonal() const
+	{
+		return
+			m[0][1] == 0 && m[0][2] == 0 && m[0][3] == 0 &&
+			m[1][0] == 0 && m[1][2] == 0 && m[1][3] == 0 &&
+			m[2][0] == 0 && m[2][1] == 0 && m[2][3] == 0 &&
+			m[3][0] == 0 && m[3][1] == 0 && m[3][2] == 0;
+	}
+
+	// isIdentity method
+	template<typename T>
+	bool Matrix4<T>::isIdentity() const
+	{
+		return
+			m[0][0] == 1 && m[0][1] == 0 && m[0][2] == 0 && m[0][3] == 0 &&
+			m[1][0] == 0 && m[1][1] == 1 && m[1][2] == 0 && m[1][3] == 0 &&
+			m[2][0] == 0 && m[2][1] == 0 && m[2][2] == 1 && m[2][3] == 0 &&
+			m[3][0] == 0 && m[3][1] == 0 && m[3][2] == 0 && m[3][3] == 1;
+	}
+
+	// isZero method
+	template<typename T>
+	bool Matrix4<T>::isZero() const
+	{
+		return
+			m[0][0] == 0 && m[0][1] == 0 && m[0][2] == 0 && m[0][3] == 0 &&
+			m[1][0] == 0 && m[1][1] == 0 && m[1][2] == 0 && m[1][3] == 0 &&
+			m[2][0] == 0 && m[2][1] == 0 && m[2][2] == 0 && m[2][3] == 0 &&
+			m[3][0] == 0 && m[3][1] == 0 && m[3][2] == 0 && m[3][3] == 0;
+	}
+
+	// isSymmetric method
+	template<typename T>
+	bool Matrix4<T>::isSymmetric() const
+	{
+		return
+			m[0][1] == m[1][0] &&
+			m[0][2] == m[2][0] &&
+			m[0][3] == m[3][0] &&
+			m[1][2] == m[2][1] &&
+			m[1][3] == m[3][1] &&
+			m[2][3] == m[3][2];
+	}
+
+	// makeIdentity method
+	template<typename T>
+	Matrix4<T>& Matrix4<T>::makeIdentity()
+	{
+		m[0][0] = 1; m[0][1] = 0; m[0][2] = 0; m[0][3] = 0;
+		m[1][0] = 0; m[1][1] = 1; m[1][2] = 0; m[1][3] = 0;
+		m[2][0] = 0; m[2][1] = 0; m[2][2] = 1; m[2][3] = 0;
+		m[3][0] = 0; m[3][1] = 0; m[3][2] = 0; m[3][3] = 1;
+		return *this;
+	}
+
+	// makeZero method
+	template<typename T>
+	Matrix4<T>& Matrix4<T>::makeZero()
+	{
+		m[0][0] = 0; m[0][1] = 0; m[0][2] = 0; m[0][3] = 0;
+		m[1][0] = 0; m[1][1] = 0; m[1][2] = 0; m[1][3] = 0;
+		m[2][0] = 0; m[2][1] = 0; m[2][2] = 0; m[2][3] = 0;
+		m[3][0] = 0; m[3][1] = 0; m[3][2] = 0; m[3][3] = 0;
+		return *this;
 	}
 
 	// Output stream operator

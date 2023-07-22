@@ -26,10 +26,16 @@ namespace Aminophenol::Maths
 
 		/// <summary>
 		/// Single value constructor.
-		/// Initialize the vector to (value, value, value).
+		/// Initialize the vector to (value, value, value, value).
 		/// </summary>
 		/// <param name="value">The value to initialize the vector to.</param>
-		Vector4(const T& value);
+		Vector4(const T value);
+
+		/// <summary>
+		/// Constructor from an array.
+		/// </summary>
+		/// <param name="array">The array to initialise the vector with.</param>
+		Vector4(const T values[4]);
 
 		/// <summary>
 		/// Three values constructor.
@@ -352,11 +358,20 @@ namespace Aminophenol::Maths
 
 	// Single value constructor
 	template<typename T>
-	Vector4<T>::Vector4(const T& value)
+	Vector4<T>::Vector4(const T value)
 		: x(value)
 		, y(value)
 		, z(value)
 		, w(value)
+	{}
+
+	// Array constructor
+	template<typename T>
+	Vector4<T>::Vector4(const T values[4])
+		: x(values[0])
+		, y(values[1])
+		, z(values[2])
+		, w(values[3])
 	{}
 
 	// Three value constructor

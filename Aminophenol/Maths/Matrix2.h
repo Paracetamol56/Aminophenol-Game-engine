@@ -13,7 +13,7 @@ namespace Aminophenol::Maths
 	class Vector2;
 
 	template<typename T>
-	class Matrix2
+	class AMINOPHENOL_API Matrix2
 	{
 	public:
 
@@ -289,11 +289,30 @@ namespace Aminophenol::Maths
 		/// <returns>The output stream.</returns>
 		friend std::ostream& operator<<(std::ostream& os, const Matrix2<T>& matrix);
 
+		/// <summary>
+		/// Static zero matrix.
+		/// </summary>
+		static const Matrix2<T> zero;
+
+		/// <summary>
+		/// Static unit matrix.
+		/// </summary>
+		static const Matrix2<T> identity;
+
+		/// <summary>
+		/// Static infinity matrix.
+		/// </summary>
+		static const Matrix2<T> infinity;
+
 	private:
 
 		T m[2][2];
 
 	};
+
+	using Matrix2f = Matrix2<float>;
+	using Matrix2d = Matrix2<double>;
+	using Matrix2i = Matrix2<int32_t>;
 
 	// Empty constructor
 	template<typename T>

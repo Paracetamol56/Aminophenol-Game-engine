@@ -11,7 +11,7 @@ namespace Aminophenol::Maths
 	class Vector3;
 
 	template<typename T>
-	class Matrix3
+	class AMINOPHENOL_API Matrix3
 	{
 	public:
 
@@ -125,7 +125,6 @@ namespace Aminophenol::Maths
 		/// <exception cref="std::invalid_argument">Thrown if the matrix is singular.</exception>
 		Matrix3<T> divide(const Matrix3<T>& other) const;
 
-
 		/// <summary>
 		/// Addition operator.
 		/// </summary>
@@ -224,6 +223,13 @@ namespace Aminophenol::Maths
 		T* operator[](int index);
 
 		/// <summary>
+		/// Array subscript operator (const).
+		/// </summary>
+		/// <param name="index">The index of the row.</param>
+		/// <returns>An array of the row.</returns>
+		const T* operator[](int index) const;
+
+		/// <summary>
 		/// Equality operator.
 		/// </summary>
 		/// <param name="other">The matrix to compare.</param>
@@ -293,11 +299,30 @@ namespace Aminophenol::Maths
 		/// <returns>The output stream.</returns>
 		friend std::ostream& operator<<(std::ostream& os, const Matrix3<T>& matrix);
 
+		/// <summary>
+		/// Static zero matrix.
+		/// </summary>
+		static const Matrix3<T> zero;
+
+		/// <summary>
+		/// Static unit matrix.
+		/// </summary>
+		static const Matrix3<T> identity;
+
+		/// <summary>
+		/// Static infinity matrix.
+		/// </summary>
+		static const Matrix3<T> infinity;
+
 	private:
 
 		T m[3][3];
 
 	};
+
+	using Matrix3f = Matrix3<float>;
+	using Matrix3d = Matrix3<double>;
+	using Matrix3i = Matrix3<int32_t>;
 
 	// Empty constructor
 	template<typename T>
@@ -559,7 +584,7 @@ namespace Aminophenol::Maths
 	template<typename T>
 	Matrix3<T>& Matrix3<T>::inverse()
 	{
-		T det = determinant();
+		const T det = determinant();
 		if (det == 0)
 			return *this;
 		
@@ -618,10 +643,21 @@ namespace Aminophenol::Maths
 		return m[index];
 	}
 
+	// Array subscript operator (const)
+	template<typename T>
+	const T* Matrix3<T>::operator[](int index) const
+	{
+		// Handle out of range
+		if (index < 0 || index > 2)
+			throw std::out_of_range("Index out of range");
+
+		return m[index];
+	}
+
 	// Equality operator
 	template<typename T>
 	bool Matrix3<T>::operator==(const Matrix3<T>& other) const
-	{
+	{	
 		return
 			m[0][0] == other.m[0][0] && m[0][1] == other.m[0][1] && m[0][2] == other.m[0][2] &&
 			m[1][0] == other.m[1][0] && m[1][1] == other.m[1][1] && m[1][2] == other.m[1][2] &&

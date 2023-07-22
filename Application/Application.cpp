@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
 	Logger logger{ LogLevel::Trace };
 #else
 	Logger logger{ LogLevel::Info };
-#endif // DEBUG
+#endif // _DEBUG
 
 	Engine* engine = new Engine{ "Aminophenol application" };
 
