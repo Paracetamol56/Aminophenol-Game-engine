@@ -218,6 +218,13 @@ namespace Aminophenol::Maths
 		/// <param name="index">The index of the row.</param>
 		/// <returns>An array of the row.</returns>
 		T* operator[](int index);
+
+		/// <summary>
+		/// Array subscript operator (const).
+		/// </summary>
+		/// <param name="index">The index of the row.</param>
+		/// <returns>An array of the row.</returns>
+		const T* operator[](int index) const;
 		
 		/// <summary>
 		/// Equality operator.
@@ -543,6 +550,18 @@ namespace Aminophenol::Maths
 	// Array subscript operator
 	template<typename T>
 	T* Matrix2<T>::operator[](int index)
+	{
+		// Handle out of range
+		if (index < 0 || index > 1)
+		{
+			throw std::out_of_range("Index out of range");
+		}
+		return m[index];
+	}
+
+	// Array subscript operator (const)
+	template<typename T>
+	const T* Matrix2<T>::operator[](int index) const
 	{
 		// Handle out of range
 		if (index < 0 || index > 1)

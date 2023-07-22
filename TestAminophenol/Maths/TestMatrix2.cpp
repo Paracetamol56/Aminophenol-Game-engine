@@ -340,6 +340,26 @@ namespace Maths
 			Assert::AreEqual(m0[1][1], 4.0);
 		}
 
+		// Test [] operator (const)
+		TEST_METHOD(arrayOperatorConst)
+		{
+			const Matrix2<double> m0(1.0, 2.0, 3.0, 4.0);
+			Assert::AreEqual(m0[0][0], 1.0);
+			Assert::AreEqual(m0[0][1], 2.0);
+			Assert::AreEqual(m0[1][0], 3.0);
+			Assert::AreEqual(m0[1][1], 4.0);
+		}
+
+		// Test [][] operator (const)
+		TEST_METHOD(arrayArrayOperatorConst)
+		{
+			const Matrix2<double> m0(1.0, 2.0, 3.0, 4.0);
+			Assert::AreEqual(m0[0][0], 1.0);
+			Assert::AreEqual(m0[0][1], 2.0);
+			Assert::AreEqual(m0[1][0], 3.0);
+			Assert::AreEqual(m0[1][1], 4.0);
+		}
+
 		// Test the equality operator
 		TEST_METHOD(equalityOperator)
 		{
