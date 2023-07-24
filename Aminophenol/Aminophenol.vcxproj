@@ -247,6 +247,7 @@
     <None Include="Maths\Matrix2.inl" />
     <None Include="Maths\Matrix3.inl" />
     <None Include="Maths\Matrix4.inl" />
+    <None Include="Maths\Quaternion.inl" />
     <None Include="Maths\Vector2.inl" />
     <None Include="Maths\Vector3.inl" />
     <None Include="Maths\Vector4.inl" />

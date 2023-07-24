@@ -5,9 +5,10 @@
 namespace Aminophenol::Maths
 {
 
-	Quaternion::Quaternion()
-	{
-		throw std::exception("Not implemented");
-	}
+	const Quaternionf Quaternion<float>::identity(0.0f, 0.0f, 0.0f, 1.0f);
+
+	const Quaterniond Quaternion<double>::identity(0.0, 0.0, 0.0, 1.0);
+
+	const Quaternioni Quaternion<int>::identity(0, 0, 0, 1);
 
 }
