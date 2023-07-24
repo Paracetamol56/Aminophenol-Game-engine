@@ -1,0 +1,106 @@
+
+namespace Aminophenol::Maths {
+
+	template<typename T>
+	const T zero()
+	{
+		return static_cast<T>(0);
+	}
+
+	template<typename T>
+	const T one()
+	{
+		return static_cast<T>(1);
+	}
+
+	template<typename T>
+	const T pi()
+	{
+		return static_cast<T>(3.141592653589793238462643383279502884197169399375105820974944592307816406286);
+	}
+
+	template<typename T>
+	const T twoPi()
+	{
+		return static_cast<T>(6.283185307179586476925286766559005768394338798750211641949889184615632812572);
+	}
+
+	template<typename T>
+	const T halfPi()
+	{
+		return static_cast<T>(1.570796326794896619231321691639751442098584699687552910487472296153908203143);
+	}
+
+	template<typename T>
+	const T quarterPi()
+	{
+		return static_cast<T>(0.7853981633974483096156608458198757210492923498437764552437361480769541015715);
+	}
+
+	template<typename T>
+	const T threeQuarterPi()
+	{
+		return static_cast<T>(2.356194490192344928846982537459627163147877049531328365730886444230862406714);
+	}
+
+	template<typename T>
+	const T piSquared()
+	{
+		return static_cast<T>(9.869604401089358618834490999876151135313699407240790626413592973003345232830);
+	}
+
+	template<typename T>
+	const T rootPi()
+	{
+		return static_cast<T>(1.772453850905516027298167483341145182797549456122387128213807789852911284591);
+	}
+
+	template<typename T>
+	const T rootTwoPi()
+	{
+		return static_cast<T>(2.506628274631000502415765284811045253006986740609938316629923571234823845145);
+	}
+
+	template<typename T>
+	const T oneOverPi()
+	{
+		return static_cast<T>(0.3183098861837906715377675267450287240689192914809128974953346881171418161355);
+	}
+
+	template<typename T>
+	const T rootTwo()
+	{
+		return static_cast<T>(1.414213562373095048801688724209698078569671875376948073176679737990732478462);
+	}
+
+	template<typename T>
+	const T lnTwo()
+	{
+		return static_cast<T>(0.6931471805599453094172321214581765680755001343602552541206800094933936219692);
+	}
+
+	template<typename T>
+	const T lnTen()
+	{
+		return static_cast<T>(2.302585092994045684017991454684364207601101488628772976033327900967572609677);
+	}
+
+	template<typename T>
+	const T e()
+	{
+		return static_cast<T>(2.718281828459045235360287471352662497757247093699959574966967627724076630353);
+	}
+
+	template<typename T>
+	const T euler()
+	{
+		return static_cast<T>(0.5772156649015328606065120900824024310421593359399235988057672348848677267776);
+	}
+
+	template<typename T>
+	const T goldenRatio()
+	{
+		return static_cast<T>(1.618033988749894848204586834365638117720309179805762862135448622705260462818);
+	}
+
+} // namespace Aminophenol::Maths

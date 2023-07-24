@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Maths\Constant.h" />
     <ClInclude Include="Maths\Transform2.h" />
     <ClInclude Include="Maths\Transform3.h" />
     <ClInclude Include="Mesh\Vertex.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Maths\Constant.inl" />
     <None Include="Maths\Matrix2.inl" />
     <None Include="Maths\Matrix3.inl" />
     <None Include="Maths\Matrix4.inl" />

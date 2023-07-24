@@ -144,6 +144,9 @@
     <ClInclude Include="Rendering\Renderer\SubRenderer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Maths\Constant.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -293,6 +296,9 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </None>
     <None Include="Maths\Vector4.inl">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </None>
+    <None Include="Maths\Constant.inl">
       <Filter>Fichiers d%27en-tête</Filter>
     </None>
   </ItemGroup>
