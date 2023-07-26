@@ -30,11 +30,6 @@ namespace Aminophenol {
 
 		RenderingEngine(const Window& window, const std::string& appName);
 		~RenderingEngine();
-
-		// Delete copy and move constructors and assign operators
-		RenderingEngine(const RenderingEngine&) = delete;
-		RenderingEngine(RenderingEngine&&) = delete;
-		RenderingEngine& operator=(const RenderingEngine&) = delete;
 		
 		void update();
 

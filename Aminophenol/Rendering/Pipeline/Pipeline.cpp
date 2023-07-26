@@ -101,28 +101,14 @@ namespace Aminophenol {
 		vertShaderStageInfo.module = m_vertShaderModule;
 		vertShaderStageInfo.pName = "main";
 		shaderStages.push_back(vertShaderStageInfo);
-		
-		// Viewport
-		VkViewport viewport{};
-		viewport.x = 0.0f;
-		viewport.y = 0.0f;
-		viewport.width = (float)m_swapchainExtent.width;
-		viewport.height = (float)m_swapchainExtent.height;
-		viewport.minDepth = 0.0f;
-		viewport.maxDepth = 1.0f;
-		
-		// Scissor
-		VkRect2D scissor{};
-		scissor.offset = { 0, 0 };
-		scissor.extent = m_swapchainExtent;
-		
+
 		// Viewport state
 		VkPipelineViewportStateCreateInfo viewportState{};
 		viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
 		viewportState.viewportCount = 1;
-		viewportState.pViewports = &viewport;
+		viewportState.pViewports = nullptr;
 		viewportState.scissorCount = 1;
-		viewportState.pScissors = &scissor;
+		viewportState.pScissors = nullptr;
 		
 		pipelineInfo.pViewportState = &viewportState;
 
@@ -186,6 +172,20 @@ namespace Aminophenol {
 		
 		pipelineInfo.pColorBlendState = &colorBlending;
 		
+		// Dynamic state
+		std::vector<VkDynamicState> dynamicStatesEnables = {
+			VK_DYNAMIC_STATE_VIEWPORT,
+			VK_DYNAMIC_STATE_SCISSOR
+		};
+
+		VkPipelineDynamicStateCreateInfo dynamicStates{};
+		dynamicStates.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+		dynamicStates.pDynamicStates = dynamicStatesEnables.data();
+		dynamicStates.dynamicStateCount = static_cast<uint32_t>(dynamicStatesEnables.size());
+		dynamicStates.flags = 0;
+
+		pipelineInfo.pDynamicState = &dynamicStates;
+
 		pipelineInfo.layout = m_pipelineLayout;
 		pipelineInfo.renderPass = *m_renderPass;
 		pipelineInfo.subpass = 0;
