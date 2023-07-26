@@ -69,12 +69,6 @@ namespace Aminophenol::Maths
 		/// </summary>
 		/// <param name="color">The color to copy</param>
 		Color(const Color& color);
-		
-		/// <summary>
-		/// Conversion to VkClearValue.
-		/// </summary>
-		/// <returns>VkClearValue</returns>
-		operator VkClearValue() const;
 
 		/// <summary>
 		/// Assignment operator.

@@ -22,10 +22,10 @@ namespace Aminophenol::Maths
 
 		Quaternion(T x, T y, T z, T w);
 
-		Quaternion(const Vector4<T> vector);
+		Quaternion(const Vector4<T>& vector);
 
-		template<typename T, typename U>
-		Quaternion(const Vector3<T>& axis, U angle);
+		template<typename U>
+		Quaternion(const Vector3<T>& axis, const U angle);
 
 		template<typename U>
 		Quaternion(const Vector3<U>& eulerAngles);
@@ -53,6 +53,10 @@ namespace Aminophenol::Maths
 
 		Quaternion<T>& inverse();
 
+		T magnitude() const;
+
+		T magnitudeSquared() const;
+
 		Quaternion<T>& rotate(const Vector3<T>& axis, T angle);
 
 		Quaternion<T>& rotate(const Vector3<T>& eulerAngles);
@@ -64,11 +68,34 @@ namespace Aminophenol::Maths
 		Quaternion<T>& rotateZ(T angle);
 
 		// operation methods
+		Quaternion<T> add(const Quaternion<T>& other) const;
+
+		Quaternion<T> subtract(const Quaternion<T>& other) const;
+
 		Quaternion<T> multiply(const Quaternion<T>& other) const;
+
+		Quaternion<T> multiplyInverse(const Quaternion<T>& other) const;
+
+		Quaternion<T> dot(const Quaternion<T>& other) const;
+
+		// Opperator overloads
+		Quaternion<T> operator-() const;
+
+		Quaternion<T> operator+(const Quaternion<T>& other) const;
+
+		Quaternion<T> operator-(const Quaternion<T>& other) const;
 
 		Quaternion<T> operator*(const Quaternion<T>& other) const;
 
+		Quaternion<T> operator*(T scalar) const;
+
+		Quaternion<T>& operator+=(const Quaternion<T>& other);
+
+		Quaternion<T>& operator-=(const Quaternion<T>& other);
+
 		Quaternion<T>& operator*=(const Quaternion<T>& other);
+
+		Quaternion<T>& operator*=(T scalar);
 
 		// Comparison methods
 		bool operator==(const Quaternion<T>& other) const;
@@ -76,6 +103,9 @@ namespace Aminophenol::Maths
 		bool operator!=(const Quaternion<T>& other) const;
 
 		// Accessors and mutators
+		T operator[](int index) const;
+		T operator[](int index);
+
 		T getX() const;
 		void setX(T x);
 
@@ -91,6 +121,7 @@ namespace Aminophenol::Maths
 		friend std::ostream& operator<<(std::ostream& stream, const Quaternion<T>& quaternion);
 
 		// Static methods
+		static const Quaternion<T> zero;
 		static const Quaternion<T> identity;
 		
 	private:

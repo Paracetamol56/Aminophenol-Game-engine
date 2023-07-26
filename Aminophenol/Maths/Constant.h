@@ -4,7 +4,7 @@
 
 #include "pch.h"
 
-namespace Aminophenol::Maths
+namespace Aminophenol::Maths::Constant
 {
 
 	/// <summary>
@@ -12,7 +12,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T zero();
 
 	/// <summary>
@@ -20,7 +20,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T one();
 
 	/// <summary>
@@ -28,7 +28,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T pi();
 
 	/// <summary>
@@ -36,7 +36,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T twoPi();
 
 	/// <summary>
@@ -44,7 +44,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T halfPi();
 
 	/// <summary>
@@ -52,7 +52,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T quarterPi();
 
 	/// <summary>
@@ -60,7 +60,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T threeQuarterPi();
 
 	/// <summary>
@@ -68,7 +68,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T piSquared();
 
 	/// <summary>
@@ -76,7 +76,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T rootPi();
 
 	/// <summary>
@@ -84,7 +84,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T rootTwoPi();
 
 	/// <summary>
@@ -92,15 +92,31 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T oneOverPi();
+
+	/// <summary>
+	/// Pi over 180
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	template<typename T>
+	const T piOverOneEighty();
+
+	/// <summary>
+	/// 180 over Pi
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	template<typename T>
+	const T oneEightyOverPi();
 
 	/// <summary>
 	/// Root two
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T rootTwo();
 
 	/// <summary>
@@ -108,7 +124,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T lnTwo();
 
 	/// <summary>
@@ -116,7 +132,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T lnTen();
 
 	/// <summary>
@@ -124,7 +140,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T e();
 
 	/// <summary>
@@ -132,7 +148,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T euler();
 
 	/// <summary>
@@ -140,7 +156,7 @@ namespace Aminophenol::Maths
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	template <typename T>
+	template<typename T>
 	const T phi();
 
 } // namespace Aminophenol::Maths

@@ -1,5 +1,5 @@
 
-namespace Aminophenol::Maths {
+namespace Aminophenol::Maths::Constant {
 
 	template<typename T>
 	const T zero()
@@ -65,6 +65,18 @@ namespace Aminophenol::Maths {
 	const T oneOverPi()
 	{
 		return static_cast<T>(0.3183098861837906715377675267450287240689192914809128974953346881171418161355);
+	}
+
+	template<typename T>
+	const T piOverOneEighty()
+	{
+		return static_cast<T>(0.0174532925199432957692369076848861271344287188854172545609719144015278599019);
+	}
+
+	template<typename T>
+	const T oneEightyOverPi()
+	{
+		return static_cast<T>(57.29577951308232087679815481410517033240547246656432154916024386110352723214);
 	}
 
 	template<typename T>

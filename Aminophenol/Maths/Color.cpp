@@ -163,12 +163,6 @@ namespace Aminophenol::Maths
 		a = color.a;
 	}
 
-	// Conversion to VkClearValue
-	Color::operator VkClearValue() const
-	{
-		return VkClearValue{ VkClearColorValue{ { r, g, b, a } } };
-	}
-
 	// Assignment operator
 	Color& Color::operator=(const Color& color)
 	{
