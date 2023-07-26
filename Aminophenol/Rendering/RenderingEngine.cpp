@@ -288,6 +288,22 @@ namespace Aminophenol {
 			vkCmdSetViewport(m_commandBuffers[imageIndex]->getCommandBuffer(), 0, 1, &viewport);
 			vkCmdSetScissor(m_commandBuffers[imageIndex]->getCommandBuffer(), 0, 1, &scissor);
 			
+			static int frame = 0;
+			frame = (frame + 1) % 1000;
+
+			PushConstantData push{};
+			push.offset = Maths::Vector3f{ 0.0f, 0.0f, 0.0f };
+			push.color = Maths::Vector3f{ 0.0f, 0.0f, frame / 1000.0f };
+			
+			vkCmdPushConstants(
+				m_commandBuffers[imageIndex]->getCommandBuffer(),
+				m_pipeline->getPipelineLayout(),
+				VK_SHADER_STAGE_VERTEX_BIT,
+				0,
+				sizeof(PushConstantData),
+				&push
+			);
+		
 			// Iterate through all renderables in the active scene and draw them
 			for (std::vector<std::unique_ptr<Node>>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
 			{
@@ -298,7 +314,7 @@ namespace Aminophenol {
 					(*it2)->renderMesh(m_commandBuffers[imageIndex]->getCommandBuffer());
 				}
 			}
-		
+
 			vkCmdEndRenderPass(m_commandBuffers[imageIndex]->getCommandBuffer());
 		}
 		

@@ -17,7 +17,16 @@
 #include "Rendering/Commands/CommandBuffer.h"
 #include "Mesh/Mesh.h"
 
+#include "Maths/Vector2.h"
+#include "Maths/Color.h"
+
 namespace Aminophenol {
+
+	struct PushConstantData
+	{
+		alignas(0) Maths::Vector3f offset;
+		alignas(16) Maths::Vector3f color;
+	};
 
 	/// <summary>
 	/// This class handles the rendering engine.
