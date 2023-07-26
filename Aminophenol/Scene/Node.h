@@ -7,6 +7,8 @@
 #include "Utils/NonCopyable.h"
 #include "Utils/UUIDv4Generator.h"
 #include "Scene/Component.h"
+
+#include "Components/Camera.h"
 #include "Components/MeshRenderer.h"
 
 namespace Aminophenol {
