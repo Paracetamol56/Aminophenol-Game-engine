@@ -9,7 +9,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace Aminophenol::Maths;
 
-namespace TestAminophenol
+namespace Maths
 {
 
 	TEST_CLASS(TestVector4)
@@ -34,6 +34,17 @@ namespace TestAminophenol
 			Assert::AreEqual(v0.y, 1.0);
 			Assert::AreEqual(v0.z, 1.0);
 			Assert::AreEqual(v0.w, 1.0);
+		}
+
+		// Test the array constructor
+		TEST_METHOD(arrayConstructor)
+		{
+			double values[4] = { 1.0, 2.0, 3.0, 4.0 };
+			Vector4<double> v0(values);
+			Assert::AreEqual(v0.x, 1.0);
+			Assert::AreEqual(v0.y, 2.0);
+			Assert::AreEqual(v0.z, 3.0);
+			Assert::AreEqual(v0.w, 4.0);
 		}
 
 		// Test the three values constructor

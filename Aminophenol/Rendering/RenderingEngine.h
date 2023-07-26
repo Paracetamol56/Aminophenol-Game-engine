@@ -4,6 +4,7 @@
 
 #include "pch.h"
 
+#include "Utils/NonCopyable.h"
 #include "Window/Window.h"
 #include "Scene/Scene.h"
 #include "Rendering/Device/Instance.h"
@@ -14,7 +15,7 @@
 #include "Rendering/Pipeline/Pipeline.h"
 #include "Rendering/Commands/CommandPool.h"
 #include "Rendering/Commands/CommandBuffer.h"
-#include <Mesh/Mesh.h>
+#include "Mesh/Mesh.h"
 
 namespace Aminophenol {
 
@@ -23,7 +24,7 @@ namespace Aminophenol {
 	/// It holds all the necessary objects to render :
 	/// Instance, PhysicalDevice, LogicalDevice, Surface, Swapchain, Pipeline, CommandPool
 	/// </summary>
-	class AMINOPHENOL_API RenderingEngine
+	class AMINOPHENOL_API RenderingEngine : NonCopyable
 	{
 	public:
 

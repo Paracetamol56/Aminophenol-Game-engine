@@ -10,7 +10,8 @@ namespace Aminophenol {
 	};
 
 	SubRenderer::SubRenderer(const LogicalDevice& logicalDevice, VkRenderPass renderPass, std::vector<VkDescriptorSetLayout> descriptorSetLayouts)
-		: m_logicalDevice{ logicalDevice }
+		: NonCopyable()
+		, m_logicalDevice{ logicalDevice }
 		, m_pipelineLayout{ VK_NULL_HANDLE }
 		, m_pipeline{ nullptr }
 	{

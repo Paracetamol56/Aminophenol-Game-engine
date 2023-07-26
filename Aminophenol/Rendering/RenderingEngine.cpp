@@ -7,7 +7,8 @@
 namespace Aminophenol {
 
 	RenderingEngine::RenderingEngine(const Window& window, const std::string& appName)
-		: m_window{ window }
+		: NonCopyable()
+		, m_window{ window }
 		, m_instance{ std::make_unique<Instance>(appName) }
 		, m_physicalDevice{ std::make_unique<PhysicalDevice>(*m_instance) }
 		, m_logicalDevice{ std::make_unique<LogicalDevice>(*m_instance, *m_physicalDevice) }
@@ -262,12 +263,8 @@ namespace Aminophenol {
 		}
 		else
 		{
-			VkClearValue clearColor = { 
-				m_activeScene->getBackgroundColor().r,
-				m_activeScene->getBackgroundColor().g,
-				m_activeScene->getBackgroundColor().b,
-				m_activeScene->getBackgroundColor().a,
-			};
+			VkClearValue clearColor = m_activeScene->getBackgroundColor();
+
 			renderPassInfo.clearValueCount = 1;
 			renderPassInfo.pClearValues = &clearColor;
 
