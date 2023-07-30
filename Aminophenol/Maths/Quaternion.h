@@ -7,11 +7,14 @@
 namespace Aminophenol::Maths
 {
 
-	template <typename T>
+	template<typename T>
 	class Vector3;
 
-	template <typename T>
+	template<typename T>
 	class Vector4;
+
+	template<typename T>
+	class Matrix4;
 
 	template<typename T>
 	class Quaternion
@@ -46,6 +49,11 @@ namespace Aminophenol::Maths
 
 		operator Vector3<T>() const;
 
+		// Conversion to Matrix4
+		Matrix4<T> toMatrix4() const;
+
+		operator Matrix4<T>() const;
+
 		// Transformations
 		Quaternion<T>& normalize();
 
@@ -68,23 +76,13 @@ namespace Aminophenol::Maths
 		Quaternion<T>& rotateZ(T angle);
 
 		// operation methods
-		Quaternion<T> add(const Quaternion<T>& other) const;
-
-		Quaternion<T> subtract(const Quaternion<T>& other) const;
-
 		Quaternion<T> multiply(const Quaternion<T>& other) const;
 
 		Quaternion<T> multiplyInverse(const Quaternion<T>& other) const;
 
-		Quaternion<T> dot(const Quaternion<T>& other) const;
+		T dot(const Quaternion<T>& other) const;
 
 		// Opperator overloads
-		Quaternion<T> operator-() const;
-
-		Quaternion<T> operator+(const Quaternion<T>& other) const;
-
-		Quaternion<T> operator-(const Quaternion<T>& other) const;
-
 		Quaternion<T> operator*(const Quaternion<T>& other) const;
 
 		Quaternion<T> operator*(T scalar) const;
@@ -106,17 +104,8 @@ namespace Aminophenol::Maths
 		T operator[](int index) const;
 		T operator[](int index);
 
-		T getX() const;
-		void setX(T x);
-
-		T getY() const;
-		void setY(T y);
-
-		T getZ() const;
-		void setZ(T z);
-
-		T getW() const;
-		void setW(T w);
+		T getMinComponent() const;
+		T getMaxComponent() const;
 
 		friend std::ostream& operator<<(std::ostream& stream, const Quaternion<T>& quaternion);
 
@@ -124,12 +113,14 @@ namespace Aminophenol::Maths
 		static const Quaternion<T> zero;
 		static const Quaternion<T> identity;
 		
-	private:
-		
 		T x;
 		T y;
 		T z;
 		T w;
+
+	private:
+
+		// Nothing here
 		
 	};
 

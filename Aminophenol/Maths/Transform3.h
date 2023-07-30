@@ -3,6 +3,8 @@
 #define TRANSFORM3_H
 
 #include "pch.h"
+#include "Vector3.h"
+#include "Quaternion.h"
 
 namespace Aminophenol::Maths
 {
@@ -15,7 +17,9 @@ namespace Aminophenol::Maths
 
 	private:
 
-		// Nothing here
+		Vector3f m_position;
+		Quaternionf m_rotation;
+		Vector3f m_scale;
 
 	};
 
