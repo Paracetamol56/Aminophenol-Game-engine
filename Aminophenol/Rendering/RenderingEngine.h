@@ -24,8 +24,7 @@ namespace Aminophenol {
 
 	struct PushConstantData
 	{
-		alignas(0) Maths::Vector3f offset;
-		alignas(16) Maths::Vector3f color;
+		alignas(0) Maths::Matrix4f modelTransform;
 	};
 
 	/// <summary>

@@ -1,6 +1,7 @@
 
 #include "pch.h"
 #include "RenderingEngine.h"
+#include "Maths/Matrix4.h"
 
 #include "Logging/Logger.h"
 
@@ -289,11 +290,13 @@ namespace Aminophenol {
 			vkCmdSetScissor(m_commandBuffers[imageIndex]->getCommandBuffer(), 0, 1, &scissor);
 			
 			static int frame = 0;
-			frame = (frame + 1) % 1000;
+			++frame;
 
 			PushConstantData push{};
-			push.offset = Maths::Vector3f{ 0.0f, 0.0f, 0.0f };
-			push.color = Maths::Vector3f{ 0.0f, 0.0f, frame / 1000.0f };
+			push.modelTransform =
+				Maths::Matrix4f::translation({ 0.0f, 0.0f, 0.5f }) *
+				Maths::Matrix4f::rotation({ {0.2f, 0.7f, 0.6f}, frame / 5000.0f }) *
+				Maths::Matrix4f::scale({ 0.5f, 0.5f, 0.5f });
 			
 			vkCmdPushConstants(
 				m_commandBuffers[imageIndex]->getCommandBuffer(),
