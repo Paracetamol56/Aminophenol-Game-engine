@@ -14,9 +14,19 @@ namespace Aminophenol {
 	Scene::~Scene()
 	{}
 
+	Camera* Scene::getActiveCamera() const
+	{
+		return m_activeCamera;
+	}
+
 	const Maths::Color& Scene::getBackgroundColor() const
 	{
 		return m_backgroundColor;
+	}
+
+	void Scene::setActiveCamera(Camera* camera)
+	{
+		m_activeCamera = camera;
 	}
 
 	void Scene::setBackgroundColor(const Maths::Color& backgroundColor)

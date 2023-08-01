@@ -18,8 +18,6 @@ namespace Aminophenol {
 	Node::~Node()
 	{
 		onDestroy();
-
-		Logger::log(LogLevel::Trace, "Node destroyed: %s (%s)", m_name.c_str(), m_uuid.toString().c_str());
 	}
 
 	const Utils::UUID Aminophenol::Node::getUUID() const

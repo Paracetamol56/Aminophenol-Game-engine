@@ -4,7 +4,8 @@
 
 #include "pch.h"
 
-#include "Scene/Node.h"
+#include "Node.h"
+#include "Components/Camera.h"
 #include "Maths/Color.h"
 
 namespace Aminophenol {
@@ -17,14 +18,16 @@ namespace Aminophenol {
 		Scene(const std::string name = "Scene", const Maths::Color backgroundColor = Maths::Color{ 0.0f, 0.0f, 0.0f, 1.0f });
 		~Scene();
 
-		// Getters
+		
+		Camera* getActiveCamera() const;
 		const Maths::Color& getBackgroundColor() const;
-		// Setters
+		
+		void setActiveCamera(Camera* activeCamera);
 		void setBackgroundColor(const Maths::Color& backgroundColor);
 
 	private:
 		
-		Node* m_activeCamera{ nullptr };
+		Camera* m_activeCamera{ nullptr };
 		Maths::Color m_backgroundColor;
 		
 	};
