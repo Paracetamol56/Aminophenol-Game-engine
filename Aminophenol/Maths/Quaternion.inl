@@ -36,46 +36,30 @@ namespace Aminophenol::Maths
 	template<typename U>
 	Quaternion<T>::Quaternion(const Vector3<T>& axis, const U angle)
 	{
-		// Calculate half angle and its sine
-		U halfAngle = static_cast<U>(0.5) * angle;
-		U sinHalfAngle = std::sin(halfAngle);
-
-		// Normalize the axis vector
+		T sinHalfAngle = std::sin(static_cast<T>(angle) * static_cast<T>(0.5));
 		Vector3<T> normalizedAxis = axis.normalize();
 
-		// Calculate the quaternion components
-		x = static_cast<T>(sinHalfAngle) * normalizedAxis.x;
-		y = static_cast<T>(sinHalfAngle) * normalizedAxis.y;
-		z = static_cast<T>(sinHalfAngle) * normalizedAxis.z;
-		w = static_cast<T>(std::cos(halfAngle));
+		x = normalizedAxis.x * sinHalfAngle;
+		y = normalizedAxis.y * sinHalfAngle;
+		z = normalizedAxis.z * sinHalfAngle;
+		w = std::cos(static_cast<T>(angle) * static_cast<T>(0.5));
 	}
 
 	template<typename T>
 	template<typename U>
 	Quaternion<T>::Quaternion(const Vector3<U>& eulerAngles)
 	{
-		// Convert Euler angles to radians
-		U rollRad = eulerAngles.x * Constant::piOverOneEighty<U>();
-		U pitchRad = eulerAngles.y * Constant::piOverOneEighty<U>();
-		U yawRad = eulerAngles.z * Constant::piOverOneEighty<U>();
+		T sinHalfX = std::sin(static_cast<T>(eulerAngles.x) * static_cast<T>(0.5));
+		T sinHalfY = std::sin(static_cast<T>(eulerAngles.y) * static_cast<T>(0.5));
+		T sinHalfZ = std::sin(static_cast<T>(eulerAngles.z) * static_cast<T>(0.5));
+		T cosHalfX = std::cos(static_cast<T>(eulerAngles.x) * static_cast<T>(0.5));
+		T cosHalfY = std::cos(static_cast<T>(eulerAngles.y) * static_cast<T>(0.5));
+		T cosHalfZ = std::cos(static_cast<T>(eulerAngles.z) * static_cast<T>(0.5));
 
-		// Calculate half angles and their sines and cosines
-		U halfRoll = static_cast<U>(0.5) * rollRad;
-		U halfPitch = static_cast<U>(0.5) * pitchRad;
-		U halfYaw = static_cast<U>(0.5) * yawRad;
-
-		U sinHalfRoll = std::sin(halfRoll);
-		U cosHalfRoll = std::cos(halfRoll);
-		U sinHalfPitch = std::sin(halfPitch);
-		U cosHalfPitch = std::cos(halfPitch);
-		U sinHalfYaw = std::sin(halfYaw);
-		U cosHalfYaw = std::cos(halfYaw);
-
-		// Calculate the quaternion components
-		x = static_cast<T>(cosHalfRoll * cosHalfPitch * sinHalfYaw - sinHalfRoll * sinHalfPitch * cosHalfYaw);
-		y = static_cast<T>(sinHalfRoll * cosHalfPitch * cosHalfYaw + cosHalfRoll * sinHalfPitch * sinHalfYaw);
-		z = static_cast<T>(cosHalfRoll * sinHalfPitch * cosHalfYaw - sinHalfRoll * cosHalfPitch * sinHalfYaw);
-		w = static_cast<T>(cosHalfRoll * cosHalfPitch * cosHalfYaw + sinHalfRoll * sinHalfPitch * sinHalfYaw);
+		x = sinHalfX * cosHalfY * cosHalfZ + cosHalfX * sinHalfY * sinHalfZ;
+		y = cosHalfX * sinHalfY * cosHalfZ - sinHalfX * cosHalfY * sinHalfZ;
+		z = cosHalfX * cosHalfY * sinHalfZ + sinHalfX * sinHalfY * cosHalfZ;
+		w = cosHalfX * cosHalfY * cosHalfZ - sinHalfX * sinHalfY * sinHalfZ;
 	}
 
 	template<typename T>
@@ -105,17 +89,12 @@ namespace Aminophenol::Maths
 	template<typename T>
 	Vector3<T> Quaternion<T>::toEulerAngles() const
 	{
-		// Calculate the roll, pitch, and yaw
-		T roll = static_cast<T>(std::atan2(2 * (w * x + y * z), 1 - 2 * (x * x + y * y)));
-		T pitch = static_cast<T>(std::asin(2 * (w * y - z * x)));
-		T yaw = static_cast<T>(std::atan2(2 * (w * z + x * y), 1 - 2 * (y * y + z * z)));
+		Vector3<T> result;
+		result.x = std::atan2(static_cast<T>(2) * (x * w - y * z), static_cast<T>(1) - static_cast<T>(2) * (x * x + y * y));
+		result.y = std::asin(static_cast<T>(2) * (x * z + y * w));
+		result.z = std::atan2(static_cast<T>(2) * (z * w - x * y), static_cast<T>(1) - static_cast<T>(2) * (y * y + z * z));
 
-		// Convert to degrees
-		roll *= Constant::oneEightyOverPi<T>();
-		pitch *= Constant::oneEightyOverPi<T>();
-		yaw *= Constant::oneEightyOverPi<T>();
-
-		return Vector3<T>(roll, pitch, yaw);
+		return result;
 	}
 
 	template<typename T>
@@ -127,16 +106,16 @@ namespace Aminophenol::Maths
 	template<typename T>
 	Matrix4<T> Quaternion<T>::toMatrix4() const
 	{
-		T w2 = w * w;
-		T x2 = x * x;
-		T y2 = y * y;
-		T z2 = z * z;
 		T zw = z * w;
 		T xy = x * y;
 		T xz = x * z;
 		T yw = y * w;
 		T yz = y * z;
 		T xw = x * w;
+		T x2 = x * x;
+		T y2 = y * y;
+		T z2 = z * z;
+		T w2 = w * w;
 
 		Matrix4<T> result;
 		result[0][0] = w2 + x2 - z2 - y2;
@@ -156,6 +135,39 @@ namespace Aminophenol::Maths
 	Quaternion<T>::operator Matrix4<T>() const
 	{
 		return toMatrix4();
+	}
+
+	template<typename T>
+	Matrix3<T> Quaternion<T>::toMatrix3() const
+	{
+		T xy = x * y;
+		T xz = x * z;
+		T xw = x * w;
+		T yz = y * z;
+		T yw = y * w;
+		T zw = z * w;
+		T x2 = x * x;
+		T y2 = y * y;
+		T z2 = z * z;
+
+		Matrix3<T> result;
+		result[0][0] = static_cast<T>(1) - static_cast<T>(2) * (y2 + z2);
+		result[0][1] = static_cast<T>(2) * (xy + zw);
+		result[0][2] = static_cast<T>(2) * (xz - yw);
+		result[1][0] = static_cast<T>(2) * (xy - zw);
+		result[1][1] = static_cast<T>(1) - static_cast<T>(2) * (x2 + z2);
+		result[1][2] = static_cast<T>(2) * (yz + xw);
+		result[2][0] = static_cast<T>(2) * (xz + yw);
+		result[2][1] = static_cast<T>(2) * (yz - xw);
+		result[2][2] = static_cast<T>(1) - static_cast<T>(2) * (x2 + y2);
+
+		return result;
+	}
+
+	template<typename T>
+	Quaternion<T>::operator Matrix3<T>() const
+	{
+		return toMatrix3();
 	}
 
 	template<typename T>

@@ -14,6 +14,9 @@ namespace Aminophenol::Maths
 	class Vector4;
 
 	template<typename T>
+	class Matrix3;
+
+	template<typename T>
 	class Matrix4;
 
 	template<typename T>
@@ -44,10 +47,15 @@ namespace Aminophenol::Maths
 
 		operator Vector4<T>() const;
 
-		// conversion to euler angles
+		// Conversion to euler angles
 		Vector3<T> toEulerAngles() const;
 
 		operator Vector3<T>() const;
+
+		// Conversion to Matrix3
+		Matrix3<T> toMatrix3() const;
+
+		operator Matrix3<T>() const;
 
 		// Conversion to Matrix4
 		Matrix4<T> toMatrix4() const;
