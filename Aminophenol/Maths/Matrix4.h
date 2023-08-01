@@ -8,10 +8,16 @@ namespace Aminophenol::Maths
 {
 
 	template<typename T>
+	class Vector3;
+
+	template<typename T>
 	class Vector4;
 
 	template<typename T>
 	class Matrix3;
+
+	template<typename T>
+	class Quaternion;
 
 	template<typename T>
 	class Matrix4
@@ -337,6 +343,21 @@ namespace Aminophenol::Maths
 		/// Static infinity matrix.
 		/// </summary>
 		static const Matrix4<T> infinity;
+
+		/// <summary>
+		/// Static translation matrix.
+		/// </summary>
+		static const Matrix4<T> translation(Vector3<T> translation);
+
+		/// <summary>
+		/// Static rotation matrix.
+		/// </summary>
+		static const Matrix4<T> rotation(Quaternion<T> rotation);
+
+		/// <summary>
+		/// Static scale matrix.
+		/// </summary>
+		static const Matrix4<T> scale(Vector3<T> scaling);
 
 	private:
 

@@ -1,6 +1,8 @@
 
+#include "Maths/Vector3.h"
 #include "Maths/Vector4.h"
 #include "Maths/Matrix3.h"
+#include "Maths/Quaternion.h"
 
 namespace Aminophenol::Maths
 {
@@ -514,6 +516,37 @@ namespace Aminophenol::Maths
 		os << matrix.m[2][0] << " " << matrix.m[2][1] << " " << matrix.m[2][2] << " " << matrix.m[2][3] << std::endl;
 		os << matrix.m[3][0] << " " << matrix.m[3][1] << " " << matrix.m[3][2] << " " << matrix.m[3][3] << std::endl;
 		return os;
+	}
+
+	// Translation matrix method
+	template<typename T>
+	const Matrix4<T> Matrix4<T>::translation(Vector3<T> translation)
+	{
+		return {
+			1, 0, 0, translation.x,
+			0, 1, 0, translation.y,
+			0, 0, 1, translation.z,
+			0, 0, 0, 1
+		};
+	}
+
+	// Rotation matrix method
+	template<typename T>
+	const Matrix4<T> Matrix4<T>::rotation(Quaternion<T> rotation)
+	{
+		return rotation.toMatrix4();
+	}
+
+	// Scale matrix method
+	template<typename T>
+	const Matrix4<T> Matrix4<T>::scale(Vector3<T> scale)
+	{
+		return {
+			scale.x, 0, 0, 0,
+			0, scale.y, 0, 0,
+			0, 0, scale.z, 0,
+			0, 0, 0, 1
+		};
 	}
 
 } // namespace Aminophenol::Maths

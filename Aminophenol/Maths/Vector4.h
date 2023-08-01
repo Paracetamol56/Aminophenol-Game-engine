@@ -337,7 +337,7 @@ namespace Aminophenol::Maths
 		
 	private:
 		
-		// // Nothing here
+		// Nothing here
 		
 	};
 

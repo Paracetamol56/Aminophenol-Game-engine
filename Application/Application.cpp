@@ -26,6 +26,8 @@ int main(int argc, char* argv[])
 		engine.getRenderingEngine().getLogicalDevice(),
 		engine.getRenderingEngine().getCommandPool()
 	));
+	cube->transform.position = { -1.0f, -1.0f, 1.0f };
+	cube->transform.scale = { 0.5f, 0.5f, 0.5f };
 	Node* camera = scene->addChild("Camera");
 	Camera* cameraComponent = camera->addComponent<Camera>();
 	cameraComponent->setPerspectiveProjection(45.0f, 1.0f, 0.1f, 100.0f);

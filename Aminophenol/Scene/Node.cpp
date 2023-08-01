@@ -55,11 +55,6 @@ namespace Aminophenol {
 		return m_enabled;
 	}
 
-	const glm::mat4& Node::getTransform() const
-	{
-		return m_transform;
-	}
-
 	Node* Node::addChild(const std::string& name)
 	{
 		std::unique_ptr<Node> child = std::make_unique<Node>(name, this);
