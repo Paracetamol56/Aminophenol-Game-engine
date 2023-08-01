@@ -6,36 +6,36 @@ namespace Aminophenol::Maths
 {
 
 	Transform3::Transform3()
-		: m_position(0.0f, 0.0f, 0.0f)
-		, m_rotation(0.0f, 0.0f, 0.0f, 1.0f)
-		, m_scale(1.0f, 1.0f, 1.0f)
+		: position(0.0f, 0.0f, 0.0f)
+		, rotation(0.0f, 0.0f, 0.0f, 1.0f)
+		, scale(1.0f, 1.0f, 1.0f)
 	{}
 
 	Transform3::Transform3(const Vector3f& position, const Quaternionf& rotation, const Vector3f& scale)
-		: m_position(position)
-		, m_rotation(rotation)
-		, m_scale(scale)
+		: position(position)
+		, rotation(rotation)
+		, scale(scale)
 	{}
 
 	Transform3::Transform3(const Transform3& other)
-		: m_position(other.m_position)
-		, m_rotation(other.m_rotation)
-		, m_scale(other.m_scale)
+		: position(other.position)
+		, rotation(other.rotation)
+		, scale(other.scale)
 	{}
 
 	Transform3::Transform3(Transform3&& other)
-		: m_position(std::move(other.m_position))
-		, m_rotation(std::move(other.m_rotation))
-		, m_scale(std::move(other.m_scale))
+		: position(std::move(other.position))
+		, rotation(std::move(other.rotation))
+		, scale(std::move(other.scale))
 	{}
 
 	Matrix4f Transform3::getMatrix() const
 	{
 		Matrix4f result = Matrix4f::identity;
 
-		result *= Matrix4f::translation(m_position);
-		result *= Matrix4f::rotation(m_rotation);
-		result *= Matrix4f::scale(m_scale);
+		result *= Matrix4f::translation(position);
+		result *= Matrix4f::rotation(rotation);
+		result *= Matrix4f::scale(scale);
 
 		return result;
 	}
