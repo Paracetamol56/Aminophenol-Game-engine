@@ -263,7 +263,7 @@ namespace Aminophenol {
 		}
 		else
 		{
-			VkClearValue clearColor = m_activeScene->getBackgroundColor();
+			VkClearValue clearColor{0.0f, 0.0f, 0.0f, 1.0f};
 
 			renderPassInfo.clearValueCount = 1;
 			renderPassInfo.pClearValues = &clearColor;
@@ -271,6 +271,22 @@ namespace Aminophenol {
 			vkCmdBeginRenderPass(m_commandBuffers[imageIndex]->getCommandBuffer(), &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 			vkCmdBindPipeline(m_commandBuffers[imageIndex]->getCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, *m_pipeline);
+			
+			// Update viewport and scissor
+			VkViewport viewport{};
+			viewport.x = 0.0f;
+			viewport.y = 0.0f;
+			viewport.width = (float)m_swapchain->getExtent().width;
+			viewport.height = (float)m_swapchain->getExtent().height;
+			viewport.minDepth = 0.0f;
+			viewport.maxDepth = 1.0f;
+
+			VkRect2D scissor{};
+			scissor.offset = { 0, 0 };
+			scissor.extent = m_swapchain->getExtent();
+
+			vkCmdSetViewport(m_commandBuffers[imageIndex]->getCommandBuffer(), 0, 1, &viewport);
+			vkCmdSetScissor(m_commandBuffers[imageIndex]->getCommandBuffer(), 0, 1, &scissor);
 			
 			// Iterate through all renderables in the active scene and draw them
 			for (std::vector<std::unique_ptr<Node>>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)

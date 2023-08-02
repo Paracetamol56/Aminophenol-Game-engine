@@ -42,10 +42,6 @@ namespace Aminophenol {
 		VkSurfaceFormatKHR m_surfaceFormat;
 		VkSurfaceTransformFlagsKHR m_preTransform;
 		VkCompositeAlphaFlagBitsKHR m_compositeAlpha;
-		std::vector<VkImage> images;
-		std::vector<VkImageView> imageViews;
-		VkFence fenceImage{ VK_NULL_HANDLE };
-		uint32_t activeImageIndex;
 		
 		void getSwapchainDetails();
 		void createSwapchain();

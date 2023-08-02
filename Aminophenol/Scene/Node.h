@@ -7,6 +7,8 @@
 #include "Utils/NonCopyable.h"
 #include "Utils/UUIDv4Generator.h"
 #include "Scene/Component.h"
+#include "Maths/Transform3.h"
+#include "Components/Camera.h"
 #include "Components/MeshRenderer.h"
 
 namespace Aminophenol {
@@ -26,7 +28,6 @@ namespace Aminophenol {
 		void enable();
 		void disable();
 		const bool isEnabled() const;
-		const glm::mat4& getTransform() const;
 
 		// Node hierarchy accessors
 		Node* addChild(const std::string& name);
@@ -58,6 +59,9 @@ namespace Aminophenol {
 		void onFixedUpdate();
 		void onUpdate();
 
+		// Transform
+		Maths::Transform3 transform;
+
 	protected:
 		
 		// Events
@@ -70,7 +74,6 @@ namespace Aminophenol {
 		const Utils::UUID m_uuid;
 		Node* m_parent;
 		bool m_enabled{ true };
-		glm::mat4 m_transform; // TODO: Make a custom transform class
 		std::vector<std::unique_ptr<Node>> m_children;
 		std::vector<std::unique_ptr<Component>> m_components;
 		

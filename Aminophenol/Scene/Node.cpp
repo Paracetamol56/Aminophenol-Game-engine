@@ -18,8 +18,6 @@ namespace Aminophenol {
 	Node::~Node()
 	{
 		onDestroy();
-
-		Logger::log(LogLevel::Trace, "Node destroyed: %s (%s)", m_name.c_str(), m_uuid.toString().c_str());
 	}
 
 	const Utils::UUID Aminophenol::Node::getUUID() const
@@ -55,11 +53,6 @@ namespace Aminophenol {
 	const bool Node::isEnabled() const
 	{
 		return m_enabled;
-	}
-
-	const glm::mat4& Node::getTransform() const
-	{
-		return m_transform;
 	}
 
 	Node* Node::addChild(const std::string& name)

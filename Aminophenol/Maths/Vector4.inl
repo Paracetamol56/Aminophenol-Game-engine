@@ -29,7 +29,7 @@ namespace Aminophenol::Maths
 		, w(values[3])
 	{}
 
-	// Three value constructor
+	// Four value constructor
 	template<typename T>
 	Vector4<T>::Vector4(const T& xValue, const T& yValue, const T& zValue, const T& wValue)
 		: x(xValue)

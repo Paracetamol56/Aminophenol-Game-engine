@@ -144,6 +144,12 @@
     <ClInclude Include="Rendering\Renderer\SubRenderer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Maths\Constant.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Maths\EulerAngle.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -248,9 +254,6 @@
     <ClCompile Include="Mesh\Vertex.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\HashCombine.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\UUIDv4Generator.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -293,6 +296,12 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </None>
     <None Include="Maths\Vector4.inl">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </None>
+    <None Include="Maths\Quaternion.inl">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </None>
+    <None Include="Maths\Constant.inl">
       <Filter>Fichiers d%27en-tête</Filter>
     </None>
   </ItemGroup>

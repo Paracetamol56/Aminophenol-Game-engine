@@ -16,7 +16,6 @@ namespace Aminophenol {
 
 	MeshRenderer::~MeshRenderer()
 	{
-		Logger::log(LogLevel::Trace, "MeshRenderer destroyed: %s (%s)", m_node->getName().c_str(), m_node->getUUID().toString().c_str());
 		m_mesh.reset();
 	}
 

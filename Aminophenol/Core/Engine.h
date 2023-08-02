@@ -30,8 +30,8 @@ namespace Aminophenol
 	private:
 
 		const std::string _appName;
-		const int _WIDTH{ 480 };
-		const int _HEIGHT{ 480 };
+		const int _WIDTH{ 800 };
+		const int _HEIGHT{ 800 };
 
 		std::unique_ptr<Window> m_window;
 		Utils::UUIDv4Generator32 m_uuidGenerator;
