@@ -11,7 +11,7 @@ namespace Aminophenol::Maths
 		: x(0)
 		, y(0)
 		, z(0)
-		, w(0)
+		, w(1)
 	{}
 
 	// Four value constructor
@@ -33,33 +33,68 @@ namespace Aminophenol::Maths
 	{}
 
 	template<typename T>
-	template<typename U>
-	Quaternion<T>::Quaternion(const Vector3<T>& axis, const U angle)
+	Quaternion<T>::Quaternion(const T angle, const Vector3<T>& axis)
 	{
-		T sinHalfAngle = std::sin(static_cast<T>(angle) * static_cast<T>(0.5));
+		T sinHalfAngle = std::sin(angle * static_cast<T>(0.5));
 		Vector3<T> normalizedAxis = axis.normalize();
 
 		x = normalizedAxis.x * sinHalfAngle;
 		y = normalizedAxis.y * sinHalfAngle;
 		z = normalizedAxis.z * sinHalfAngle;
-		w = std::cos(static_cast<T>(angle) * static_cast<T>(0.5));
+		w = std::cos(angle * static_cast<T>(0.5));
 	}
 
 	template<typename T>
-	template<typename U>
-	Quaternion<T>::Quaternion(const Vector3<U>& eulerAngles)
+	Quaternion<T>::Quaternion(const Vector3<T>& eulerAngles, const EulerAngle order)
 	{
-		T sinHalfX = std::sin(static_cast<T>(eulerAngles.x) * static_cast<T>(0.5));
-		T sinHalfY = std::sin(static_cast<T>(eulerAngles.y) * static_cast<T>(0.5));
-		T sinHalfZ = std::sin(static_cast<T>(eulerAngles.z) * static_cast<T>(0.5));
-		T cosHalfX = std::cos(static_cast<T>(eulerAngles.x) * static_cast<T>(0.5));
-		T cosHalfY = std::cos(static_cast<T>(eulerAngles.y) * static_cast<T>(0.5));
-		T cosHalfZ = std::cos(static_cast<T>(eulerAngles.z) * static_cast<T>(0.5));
+		T s1 = std::sin(static_cast<T>(eulerAngles.x) * static_cast<T>(0.5));
+		T s2 = std::sin(static_cast<T>(eulerAngles.y) * static_cast<T>(0.5));
+		T s3 = std::sin(static_cast<T>(eulerAngles.z) * static_cast<T>(0.5));
+		T c1 = std::cos(static_cast<T>(eulerAngles.x) * static_cast<T>(0.5));
+		T c2 = std::cos(static_cast<T>(eulerAngles.y) * static_cast<T>(0.5));
+		T c3 = std::cos(static_cast<T>(eulerAngles.z) * static_cast<T>(0.5));
 
-		x = sinHalfX * cosHalfY * cosHalfZ + cosHalfX * sinHalfY * sinHalfZ;
-		y = cosHalfX * sinHalfY * cosHalfZ - sinHalfX * cosHalfY * sinHalfZ;
-		z = cosHalfX * cosHalfY * sinHalfZ + sinHalfX * sinHalfY * cosHalfZ;
-		w = cosHalfX * cosHalfY * cosHalfZ - sinHalfX * sinHalfY * sinHalfZ;
+		switch (order)
+		{
+		case Aminophenol::Maths::EulerAngle::XYZ:
+			x = s1 * c2 * c3 + c1 * s2 * s3;
+			y = c1 * s2 * c3 - s1 * c2 * s3;
+			z = c1 * c2 * s3 + s1 * s2 * c3;
+			w = c1 * c2 * c3 - s1 * s2 * s3;
+			break;
+		case Aminophenol::Maths::EulerAngle::XZY:
+			x = s1 * c2 * c3 - c1 * s2 * s3;
+			y = c1 * s2 * c3 - s1 * c2 * s3;
+			z = c1 * c2 * s3 + s1 * s2 * c3;
+			w = c1 * c2 * c3 + s1 * s2 * s3;
+			break;
+		case Aminophenol::Maths::EulerAngle::YXZ:
+			x = s1 * c2 * c3 + c1 * s2 * s3;
+			y = c1 * s2 * c3 - s1 * c2 * s3;
+			z = c1 * c2 * s3 - s1 * s2 * c3;
+			w = c1 * c2 * c3 + s1 * s2 * s3;
+			break;
+		case Aminophenol::Maths::EulerAngle::YZX:
+			x = s1 * c2 * c3 + c1 * s2 * s3;
+			y = c1 * s2 * c3 + s1 * c2 * s3;
+			z = c1 * c2 * s3 - s1 * s2 * c3;
+			w = c1 * c2 * c3 - s1 * s2 * s3;
+			break;
+		case Aminophenol::Maths::EulerAngle::ZXY:
+			x = s1 * c2 * c3 - c1 * s2 * s3;
+			y = c1 * s2 * c3 + s1 * c2 * s3;
+			z = c1 * c2 * s3 + s1 * s2 * c3;
+			w = c1 * c2 * c3 - s1 * s2 * s3;
+			break;
+		case Aminophenol::Maths::EulerAngle::ZYX:
+			x = s1 * c2 * c3 - c1 * s2 * s3;
+			y = c1 * s2 * c3 + s1 * c2 * s3;
+			z = c1 * c2 * s3 - s1 * s2 * c3;
+			w = c1 * c2 * c3 + s1 * s2 * s3;
+			break;
+		default:
+			break;
+		}
 	}
 
 	template<typename T>
@@ -87,54 +122,54 @@ namespace Aminophenol::Maths
 	}
 
 	template<typename T>
-	Vector3<T> Quaternion<T>::toEulerAngles() const
+	Vector3<T> Quaternion<T>::toEulerAngles(EulerAngle order) const
 	{
-		Vector3<T> result;
-		result.x = std::atan2(static_cast<T>(2) * (x * w - y * z), static_cast<T>(1) - static_cast<T>(2) * (x * x + y * y));
-		result.y = std::asin(static_cast<T>(2) * (x * z + y * w));
-		result.z = std::atan2(static_cast<T>(2) * (z * w - x * y), static_cast<T>(1) - static_cast<T>(2) * (y * y + z * z));
+		Vector3<T> eulerAngles;
 
-		return result;
+		switch (order)
+		{
+		case EulerAngle::XYZ:
+			eulerAngles.x = std::atan2(static_cast<T>(2) * (x * w - y * z), (w * w - x * x - y * y + z * z));
+			eulerAngles.y = std::asin(static_cast<T>(2) * (x * z + y * w));
+			eulerAngles.z = std::atan2(static_cast<T>(2) * (z * w - x * y), (w * w + x * x - y * y - z * z));
+			break;
+		case EulerAngle::XZY:
+			eulerAngles.x = std::atan2(static_cast<T>(2) * (x * w + y * z), (w * w - x * x + y * y - z * z));
+			eulerAngles.z = std::asin(static_cast<T>(2) * (z * w - x * y));
+			eulerAngles.y = std::atan2(static_cast<T>(2) * (x * z + y * w), (w * w + x * x - y * y - z * z));
+			break;
+		case EulerAngle::YXZ:
+			eulerAngles.y = std::atan2(static_cast<T>(2) * (x * z + y * w), (w * w - x * x - y * y + z * z));
+			eulerAngles.x = std::asin(static_cast<T>(2) * (x * w - y * z));
+			eulerAngles.z = std::atan2(static_cast<T>(2) * (x * y + z * w), (w * w - x * x + y * y - z * z));
+			break;
+		case EulerAngle::YZX:
+			eulerAngles.y = std::atan2(static_cast<T>(2) * (y * w - x * z), (w * w + x * x - y * y - z * z));
+			eulerAngles.z = std::asin(static_cast<T>(2) * (x * y + z * w));
+			eulerAngles.x = std::atan2(static_cast<T>(2) * (x * w - z * y), (w * w - x * x + y * y - z * z));
+			break;
+		case EulerAngle::ZXY:
+			eulerAngles.z = std::atan2(static_cast<T>(2) * (z * w - x * y), (w * w - x * x + y * y - z * z));
+			eulerAngles.x = std::asin(static_cast<T>(2) * (x * w + y * z));
+			eulerAngles.y = std::atan2(static_cast<T>(2) * (y * w - z * x), (w * w - x * x - y * y + z * z));
+			break;
+		case EulerAngle::ZYX:
+			eulerAngles.z = std::atan2(static_cast<T>(2) * (x * y + z * w), (w * w + x * x - y * y - z * z));
+			eulerAngles.y = std::asin(static_cast<T>(2) * (y * w - x * z));
+			eulerAngles.x = std::atan2(static_cast<T>(2) * (x * w + z * y), (w * w - x * x - y * y + z * z));
+			break;
+		default:
+			throw std::invalid_argument("Invalid Euler angle order");
+			break;
+		}
+
+		return eulerAngles;
 	}
 
 	template<typename T>
 	Quaternion<T>::operator Vector3<T>() const
 	{
 		return toEulerAngles();
-	}
-
-	template<typename T>
-	Matrix4<T> Quaternion<T>::toMatrix4() const
-	{
-		T zw = z * w;
-		T xy = x * y;
-		T xz = x * z;
-		T yw = y * w;
-		T yz = y * z;
-		T xw = x * w;
-		T x2 = x * x;
-		T y2 = y * y;
-		T z2 = z * z;
-		T w2 = w * w;
-
-		Matrix4<T> result;
-		result[0][0] = w2 + x2 - z2 - y2;
-		result[0][1] = xy + zw + zw + xy;
-		result[0][2] = xz - yw + xz - yw;
-		result[1][0] = -zw + xy - zw + xy;
-		result[1][1] = y2 - z2 + w2 - x2;
-		result[1][2] = yz + yz + xw + xw;
-		result[2][0] = yw + xz + xz + yw;
-		result[2][1] = yz + yz - xw - xw;
-		result[2][2] = z2 - y2 - x2 + w2;
-
-		return result;
-	}
-
-	template<typename T>
-	Quaternion<T>::operator Matrix4<T>() const
-	{
-		return toMatrix4();
 	}
 
 	template<typename T>
@@ -146,20 +181,20 @@ namespace Aminophenol::Maths
 		T yz = y * z;
 		T yw = y * w;
 		T zw = z * w;
-		T x2 = x * x;
-		T y2 = y * y;
-		T z2 = z * z;
+		T xx = x * x;
+		T yy = y * y;
+		T zz = z * z;
 
 		Matrix3<T> result;
-		result[0][0] = static_cast<T>(1) - static_cast<T>(2) * (y2 + z2);
-		result[0][1] = static_cast<T>(2) * (xy + zw);
-		result[0][2] = static_cast<T>(2) * (xz - yw);
-		result[1][0] = static_cast<T>(2) * (xy - zw);
-		result[1][1] = static_cast<T>(1) - static_cast<T>(2) * (x2 + z2);
-		result[1][2] = static_cast<T>(2) * (yz + xw);
-		result[2][0] = static_cast<T>(2) * (xz + yw);
-		result[2][1] = static_cast<T>(2) * (yz - xw);
-		result[2][2] = static_cast<T>(1) - static_cast<T>(2) * (x2 + y2);
+		result[0][0] = static_cast<T>(1) - static_cast<T>(2) * (yy + zz);
+		result[0][1] = static_cast<T>(2) * (xy - zw);
+		result[0][2] = static_cast<T>(2) * (xz + yw);
+		result[1][0] = static_cast<T>(2) * (xy + zw);
+		result[1][1] = static_cast<T>(1) - static_cast<T>(2) * (xx + zz);
+		result[1][2] = static_cast<T>(2) * (yz - xw);
+		result[2][0] = static_cast<T>(2) * (xz - yw);
+		result[2][1] = static_cast<T>(2) * (yz + xw);
+		result[2][2] = static_cast<T>(1) - static_cast<T>(2) * (xx + yy);
 
 		return result;
 	}
@@ -168,6 +203,39 @@ namespace Aminophenol::Maths
 	Quaternion<T>::operator Matrix3<T>() const
 	{
 		return toMatrix3();
+	}
+
+	template<typename T>
+	Matrix4<T> Quaternion<T>::toMatrix4() const
+	{
+		T xy = x * y;
+		T xz = x * z;
+		T xw = x * w;
+		T yz = y * z;
+		T yw = y * w;
+		T zw = z * w;
+		T xx = x * x;
+		T yy = y * y;
+		T zz = z * z;
+
+		Matrix4<T> result;
+		result[0][0] = static_cast<T>(1) - static_cast<T>(2) * (yy + zz);
+		result[0][1] = static_cast<T>(2) * (xy - zw);
+		result[0][2] = static_cast<T>(2) * (xz + yw);
+		result[1][0] = static_cast<T>(2) * (xy + zw);
+		result[1][1] = static_cast<T>(1) - static_cast<T>(2) * (xx + zz);
+		result[1][2] = static_cast<T>(2) * (yz - xw);
+		result[2][0] = static_cast<T>(2) * (xz - yw);
+		result[2][1] = static_cast<T>(2) * (yz + xw);
+		result[2][2] = static_cast<T>(1) - static_cast<T>(2) * (xx + yy);
+
+		return result;
+	}
+
+	template<typename T>
+	Quaternion<T>::operator Matrix4<T>() const
+	{
+		return toMatrix4();
 	}
 
 	template<typename T>
@@ -255,42 +323,61 @@ namespace Aminophenol::Maths
 	template<typename T>
 	Quaternion<T>& Quaternion<T>::rotate(const Vector3<T>& axis, T angle)
 	{
-		// Calculate half angle and its sine
-		T halfAngle = static_cast<T>(0.5) * angle;
-		T sinHalfAngle = std::sin(halfAngle);
+		T sinHalfAngle = std::sin(angle * static_cast<T>(0.5));
 
 		// Normalize the axis vector
-		Vector3<T> normalizedAxis = axis.normalized();
+		Vector3<T> normalizedAxis = axis.normalize();
 
 		// Calculate the quaternion components
 		x = sinHalfAngle * normalizedAxis.x;
 		y = sinHalfAngle * normalizedAxis.y;
 		z = sinHalfAngle * normalizedAxis.z;
-		w = std::cos(halfAngle);
+		w = std::cos(angle * static_cast<T>(0.5));
 
 		return *this;
 	}
 
 	template<typename T>
-	Quaternion<T>& Quaternion<T>::rotate(const Vector3<T>& eulerAngles)
+	Quaternion<T>& Quaternion<T>::rotate(
+		const Vector3<T>& eulerAngles,
+		EulerAngle order
+	)
 	{
-		// Convert Euler angles to radians
-		T angleX = eulerAngles.x;
-		T angleY = eulerAngles.y;
-		T angleZ = eulerAngles.z;
-
-		// Convert angles to radians (if they are not already in radians)
-		if (angleX != 0)
-			angleX = static_cast<T>(Constant::piOverOneEighty()) * angleX;
-		if (angleY != 0)
-			angleY = static_cast<T>(Constant::piOverOneEighty()) * angleY;
-		if (angleZ != 0)
-			angleZ = static_cast<T>(Constant::piOverOneEighty()) * angleZ;
-
-		// Rotate around X, Y, and Z axes
-		rotateX(angleX);
-		rotateY(angleY);
-		rotateZ(angleZ);
+		switch (order)
+		{
+		case EulerAngle::XYZ:
+			rotateX(eulerAngles.x);
+			rotateY(eulerAngles.y);
+			rotateZ(eulerAngles.z);
+			break;
+		case EulerAngle::XZY:
+			rotateX(eulerAngles.x);
+			rotateZ(eulerAngles.y);
+			rotateY(eulerAngles.z);
+			break;
+		case EulerAngle::YXZ:
+			rotateY(eulerAngles.x);
+			rotateX(eulerAngles.y);
+			rotateZ(eulerAngles.z);
+			break;
+		case EulerAngle::YZX:
+			rotateY(eulerAngles.x);
+			rotateZ(eulerAngles.y);
+			rotateX(eulerAngles.z);
+			break;
+		case EulerAngle::ZXY:
+			rotateZ(eulerAngles.x);
+			rotateX(eulerAngles.y);
+			rotateY(eulerAngles.z);
+			break;
+		case EulerAngle::ZYX:
+			rotateZ(eulerAngles.x);
+			rotateY(eulerAngles.y);
+			rotateX(eulerAngles.z);
+			break;
+		default:
+			break;
+		}
 
 		return *this;
 	}
@@ -298,12 +385,8 @@ namespace Aminophenol::Maths
 	template<typename T>
 	Quaternion<T>& Quaternion<T>::rotateX(T angle)
 	{
-		// Convert the rotation angle to half the angle
-		T halfAngle = angle * static_cast<T>(0.5);
-
-		// Calculate the sine and cosine of half the angle
-		T sinHalfAngle = std::sin(halfAngle);
-		T cosHalfAngle = std::cos(halfAngle);
+		T sinHalfAngle = std::sin(angle * static_cast<T>(0.5));
+		T cosHalfAngle = std::cos(angle * static_cast<T>(0.5));
 
 		// Calculate the new quaternion components based on the X-axis rotation
 		T nw = this->w * cosHalfAngle - this->x * sinHalfAngle;
@@ -323,12 +406,8 @@ namespace Aminophenol::Maths
 	template<typename T>
 	Quaternion<T>& Quaternion<T>::rotateY(T angle)
 	{
-		// Convert the rotation angle to half the angle
-		T halfAngle = angle * static_cast<T>(0.5);
-
-		// Calculate the sine and cosine of half the angle
-		T sinHalfAngle = std::sin(halfAngle);
-		T cosHalfAngle = std::cos(halfAngle);
+		T sinHalfAngle = std::sin(angle * static_cast<T>(0.5));
+		T cosHalfAngle = std::cos(angle * static_cast<T>(0.5));
 
 		// Calculate the new quaternion components based on the Y-axis rotation
 		T nw = this->w * cosHalfAngle + this->y * sinHalfAngle;
@@ -348,18 +427,14 @@ namespace Aminophenol::Maths
 	template<typename T>
 	Quaternion<T>& Quaternion<T>::rotateZ(T angle)
 	{
-		// Convert the rotation angle to half the angle
-		T halfAngle = angle * static_cast<T>(0.5);
-
-		// Calculate the sine and cosine of half the angle
-		T sinHalfAngle = std::sin(halfAngle);
-		T cosHalfAngle = std::cos(halfAngle);
+		T sinHalfAngle = std::sin(angle * static_cast<T>(0.5));
+		T cosHalfAngle = std::cos(angle * static_cast<T>(0.5));
 
 		// Calculate the new quaternion components based on the Z-axis rotation
-		T nw = this->w * cosHalfAngle - this->x * sinHalfAngle;
-		T nx = this->x * cosHalfAngle + this->w * sinHalfAngle;
-		T ny = this->y * cosHalfAngle + this->z * sinHalfAngle;
-		T nz = this->z * cosHalfAngle - this->y * sinHalfAngle;
+		T nw = this->w * cosHalfAngle - this->z * sinHalfAngle;
+		T nx = this->x * cosHalfAngle + this->y * sinHalfAngle;
+		T ny = this->y * cosHalfAngle - this->x * sinHalfAngle;
+		T nz = this->z * cosHalfAngle + this->w * sinHalfAngle;
 
 		// Update the current quaternion with the new values
 		this->w = nw;
@@ -371,74 +446,113 @@ namespace Aminophenol::Maths
 	}
 
 	template<typename T>
-	Quaternion<T> Quaternion<T>::multiply(const Quaternion<T>& other) const
+	Quaternion<T> Quaternion<T>::add(const Quaternion<T>& other) const
 	{
-		Quaternion<T> result;
-
-		result.w = this->w * other.w - this->x * other.x - this->y * other.y - this->z * other.z;
-		result.x = this->w * other.x + this->x * other.w + this->y * other.z - this->z * other.y;
-		result.y = this->w * other.y - this->x * other.z + this->y * other.w + this->z * other.x;
-		result.z = this->w * other.z + this->x * other.y - this->y * other.x + this->z * other.w;
-
-		return result;
+		return {
+			this->x + other.x,
+			this->y + other.y,
+			this->z + other.z,
+			this->w + other.w
+		};
 	}
 
 	template<typename T>
-	Quaternion<T> Quaternion<T>::multiplyInverse(const Quaternion<T>& other) const
+	Quaternion<T> Quaternion<T>::subtract(const Quaternion<T>& other) const
 	{
-		T n = other.magnitudeSquared();
-		if (n != static_cast<T>(0))
-			n = static_cast<T>(1) / n;
+		return {
+			this->x - other.x,
+			this->y - other.y,
+			this->z - other.z,
+			this->w - other.w
+		};
+	}
 
-		return
-		{
-			(other.w * this->x - other.x * this->w - other.y * this->z + other.z * this->y)* n,
-			(other.w * this->y + other.x * this->z - other.y * this->w - other.z * this->x)* n,
-			(other.w * this->z - other.x * this->y + other.y * this->x - other.z * this->w)* n,
-			(other.w * this->w + other.x * this->x + other.y * this->y + other.z * this->z)* n
+	template<typename T>
+	Quaternion<T> Quaternion<T>::multiply(const Quaternion<T>& other) const
+	{
+		return {
+			this->w * other.x + this->x * other.w + this->y * other.z - this->z * other.y,
+			this->w * other.y - this->x * other.z + this->y * other.w + this->z * other.x,
+			this->w * other.z + this->x * other.y - this->y * other.x + this->z * other.w,
+			this->w * other.w - this->x * other.x - this->y * other.y - this->z * other.z
+		};
+	}
+
+	template<typename T>
+	Quaternion<T> Quaternion<T>::multiply(T scalar) const
+	{
+		return {
+			this->x * scalar,
+			this->y * scalar,
+			this->z * scalar,
+			this->w * scalar
 		};
 	}
 
 	template<typename T>
 	T Quaternion<T>::dot(const Quaternion<T>& other) const
 	{
-		return T();
+		return this->x * other.x + this->y * other.y + this->z * other.z + this->w * other.w;
+	}
+
+	template<typename T>
+	inline Quaternion<T> Aminophenol::Maths::Quaternion<T>::operator-() const
+	{
+		return Quaternion<T>(-x, -y, -z, -w);
+	}
+
+	template<typename T>
+	Quaternion<T> Quaternion<T>::operator+(const Quaternion<T>& other) const
+	{
+		return add(other);
+	}
+
+	template<typename T>
+	Quaternion<T> Quaternion<T>::operator-(const Quaternion<T>& other) const
+	{
+		return subtract(other);
 	}
 
 	template<typename T>
 	Quaternion<T> Quaternion<T>::operator*(const Quaternion<T>& other) const
 	{
-		return Quaternion<T>();
+		return multiply(other);
 	}
 
 	template<typename T>
 	Quaternion<T> Quaternion<T>::operator*(T scalar) const
 	{
-		return Quaternion<T>();
+		return multiply(scalar);
+	}
+
+	template<typename U>
+	Quaternion<U> operator*(U scalar, const Quaternion<U>& quaternion)
+	{
+		return quaternion.multiply(scalar);
 	}
 
 	template<typename T>
 	Quaternion<T>& Quaternion<T>::operator+=(const Quaternion<T>& other)
 	{
-		// TODO: insert return statement here
+		return *this = add(other);
 	}
 
 	template<typename T>
 	Quaternion<T>& Quaternion<T>::operator-=(const Quaternion<T>& other)
 	{
-		// TODO: insert return statement here
+		return *this = subtract(other);
 	}
 
 	template<typename T>
 	Quaternion<T>& Quaternion<T>::operator*=(const Quaternion<T>& other)
 	{
-		// TODO: insert return statement here
+		return *this = multiply(other);
 	}
 
 	template<typename T>
 	Quaternion<T>& Quaternion<T>::operator*=(T scalar)
 	{
-		// TODO: insert return statement here
+		return *this = multiply(scalar);
 	}
 
 	template<typename T>
