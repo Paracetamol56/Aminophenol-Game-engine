@@ -33,33 +33,68 @@ namespace Aminophenol::Maths
 	{}
 
 	template<typename T>
-	template<typename U>
-	Quaternion<T>::Quaternion(const Vector3<T>& axis, const U angle)
+	Quaternion<T>::Quaternion(const T angle, const Vector3<T>& axis)
 	{
-		T sinHalfAngle = std::sin(static_cast<T>(angle) * static_cast<T>(0.5));
+		T sinHalfAngle = std::sin(angle * static_cast<T>(0.5));
 		Vector3<T> normalizedAxis = axis.normalize();
 
 		x = normalizedAxis.x * sinHalfAngle;
 		y = normalizedAxis.y * sinHalfAngle;
 		z = normalizedAxis.z * sinHalfAngle;
-		w = std::cos(static_cast<T>(angle) * static_cast<T>(0.5));
+		w = std::cos(angle * static_cast<T>(0.5));
 	}
 
 	template<typename T>
-	template<typename U>
-	Quaternion<T>::Quaternion(const Vector3<U>& eulerAngles)
+	Quaternion<T>::Quaternion(const Vector3<T>& eulerAngles, const EulerAngle order)
 	{
-		T sinHalfX = std::sin(static_cast<T>(eulerAngles.x) * static_cast<T>(0.5));
-		T sinHalfY = std::sin(static_cast<T>(eulerAngles.y) * static_cast<T>(0.5));
-		T sinHalfZ = std::sin(static_cast<T>(eulerAngles.z) * static_cast<T>(0.5));
-		T cosHalfX = std::cos(static_cast<T>(eulerAngles.x) * static_cast<T>(0.5));
-		T cosHalfY = std::cos(static_cast<T>(eulerAngles.y) * static_cast<T>(0.5));
-		T cosHalfZ = std::cos(static_cast<T>(eulerAngles.z) * static_cast<T>(0.5));
+		T s1 = std::sin(static_cast<T>(eulerAngles.x) * static_cast<T>(0.5));
+		T s2 = std::sin(static_cast<T>(eulerAngles.y) * static_cast<T>(0.5));
+		T s3 = std::sin(static_cast<T>(eulerAngles.z) * static_cast<T>(0.5));
+		T c1 = std::cos(static_cast<T>(eulerAngles.x) * static_cast<T>(0.5));
+		T c2 = std::cos(static_cast<T>(eulerAngles.y) * static_cast<T>(0.5));
+		T c3 = std::cos(static_cast<T>(eulerAngles.z) * static_cast<T>(0.5));
 
-		x = sinHalfX * cosHalfY * cosHalfZ + cosHalfX * sinHalfY * sinHalfZ;
-		y = cosHalfX * sinHalfY * cosHalfZ - sinHalfX * cosHalfY * sinHalfZ;
-		z = cosHalfX * cosHalfY * sinHalfZ + sinHalfX * sinHalfY * cosHalfZ;
-		w = cosHalfX * cosHalfY * cosHalfZ - sinHalfX * sinHalfY * sinHalfZ;
+		switch (order)
+		{
+		case Aminophenol::Maths::EulerAngle::XYZ:
+			x = s1 * c2 * c3 + c1 * s2 * s3;
+			y = c1 * s2 * c3 - s1 * c2 * s3;
+			z = c1 * c2 * s3 + s1 * s2 * c3;
+			w = c1 * c2 * c3 - s1 * s2 * s3;
+			break;
+		case Aminophenol::Maths::EulerAngle::XZY:
+			x = s1 * c2 * c3 - c1 * s2 * s3;
+			y = c1 * s2 * c3 - s1 * c2 * s3;
+			z = c1 * c2 * s3 + s1 * s2 * c3;
+			w = c1 * c2 * c3 + s1 * s2 * s3;
+			break;
+		case Aminophenol::Maths::EulerAngle::YXZ:
+			x = s1 * c2 * c3 + c1 * s2 * s3;
+			y = c1 * s2 * c3 - s1 * c2 * s3;
+			z = c1 * c2 * s3 - s1 * s2 * c3;
+			w = c1 * c2 * c3 + s1 * s2 * s3;
+			break;
+		case Aminophenol::Maths::EulerAngle::YZX:
+			x = s1 * c2 * c3 + c1 * s2 * s3;
+			y = c1 * s2 * c3 + s1 * c2 * s3;
+			z = c1 * c2 * s3 - s1 * s2 * c3;
+			w = c1 * c2 * c3 - s1 * s2 * s3;
+			break;
+		case Aminophenol::Maths::EulerAngle::ZXY:
+			x = s1 * c2 * c3 - c1 * s2 * s3;
+			y = c1 * s2 * c3 + s1 * c2 * s3;
+			z = c1 * c2 * s3 + s1 * s2 * c3;
+			w = c1 * c2 * c3 - s1 * s2 * s3;
+			break;
+		case Aminophenol::Maths::EulerAngle::ZYX:
+			x = s1 * c2 * c3 - c1 * s2 * s3;
+			y = c1 * s2 * c3 + s1 * c2 * s3;
+			z = c1 * c2 * s3 - s1 * s2 * c3;
+			w = c1 * c2 * c3 + s1 * s2 * s3;
+			break;
+		default:
+			break;
+		}
 	}
 
 	template<typename T>
@@ -87,14 +122,9 @@ namespace Aminophenol::Maths
 	}
 
 	template<typename T>
-	Vector3<T> Quaternion<T>::toEulerAngles() const
+	Vector3<T> Quaternion<T>::toEulerAngles(EulerAngle order) const
 	{
-		Vector3<T> result;
-		result.x = std::atan2(static_cast<T>(2) * (x * w - y * z), static_cast<T>(1) - static_cast<T>(2) * (x * x + y * y));
-		result.y = std::asin(static_cast<T>(2) * (x * z + y * w));
-		result.z = std::atan2(static_cast<T>(2) * (z * w - x * y), static_cast<T>(1) - static_cast<T>(2) * (y * y + z * z));
-
-		return result;
+		throw std::exception("Not implemented");
 	}
 
 	template<typename T>
@@ -272,25 +302,46 @@ namespace Aminophenol::Maths
 	}
 
 	template<typename T>
-	Quaternion<T>& Quaternion<T>::rotate(const Vector3<T>& eulerAngles)
+	Quaternion<T>& Quaternion<T>::rotate(
+		const Vector3<T>& eulerAngles,
+		EulerAngle order
+	)
 	{
-		// Convert Euler angles to radians
-		T angleX = eulerAngles.x;
-		T angleY = eulerAngles.y;
-		T angleZ = eulerAngles.z;
-
-		// Convert angles to radians (if they are not already in radians)
-		if (angleX != 0)
-			angleX = static_cast<T>(Constant::piOverOneEighty()) * angleX;
-		if (angleY != 0)
-			angleY = static_cast<T>(Constant::piOverOneEighty()) * angleY;
-		if (angleZ != 0)
-			angleZ = static_cast<T>(Constant::piOverOneEighty()) * angleZ;
-
-		// Rotate around X, Y, and Z axes
-		rotateX(angleX);
-		rotateY(angleY);
-		rotateZ(angleZ);
+		switch (order)
+		{
+		case EulerAngle::XYZ:
+			rotateX(eulerAngles.x);
+			rotateY(eulerAngles.y);
+			rotateZ(eulerAngles.z);
+			break;
+		case EulerAngle::XZY:
+			rotateX(eulerAngles.x);
+			rotateZ(eulerAngles.y);
+			rotateY(eulerAngles.z);
+			break;
+		case EulerAngle::YXZ:
+			rotateY(eulerAngles.x);
+			rotateX(eulerAngles.y);
+			rotateZ(eulerAngles.z);
+			break;
+		case EulerAngle::YZX:
+			rotateY(eulerAngles.x);
+			rotateZ(eulerAngles.y);
+			rotateX(eulerAngles.z);
+			break;
+		case EulerAngle::ZXY:
+			rotateZ(eulerAngles.x);
+			rotateX(eulerAngles.y);
+			rotateY(eulerAngles.z);
+			break;
+		case EulerAngle::ZYX:
+			rotateZ(eulerAngles.x);
+			rotateY(eulerAngles.y);
+			rotateX(eulerAngles.z);
+			break;
+		default:
+			break;
+		}
 
 		return *this;
 	}

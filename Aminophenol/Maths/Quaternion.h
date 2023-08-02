@@ -3,6 +3,7 @@
 #define QUATERNION_H
 
 #include "pch.h"
+#include "EulerAngle.h"
 
 namespace Aminophenol::Maths
 {
@@ -30,11 +31,9 @@ namespace Aminophenol::Maths
 
 		Quaternion(const Vector4<T>& vector);
 
-		template<typename U>
-		Quaternion(const Vector3<T>& axis, const U angle);
+		Quaternion(const T angle, const Vector3<T>& axis);
 
-		template<typename U>
-		Quaternion(const Vector3<U>& eulerAngles);
+		Quaternion(const Vector3<T>& eulerAngles, const EulerAngle order = EulerAngle::XYZ);
 
 		template<typename U>
 		Quaternion(Quaternion<U>& other);
@@ -48,7 +47,7 @@ namespace Aminophenol::Maths
 		operator Vector4<T>() const;
 
 		// Conversion to euler angles
-		Vector3<T> toEulerAngles() const;
+		Vector3<T> toEulerAngles(EulerAngle order = EulerAngle::XYZ) const;
 
 		operator Vector3<T>() const;
 
@@ -75,7 +74,10 @@ namespace Aminophenol::Maths
 
 		Quaternion<T>& rotate(const Vector3<T>& axis, T angle);
 
-		Quaternion<T>& rotate(const Vector3<T>& eulerAngles);
+		Quaternion<T>& rotate(
+			const Vector3<T>& eulerAngles,
+			EulerAngle order = EulerAngle::XYZ
+		);
 
 		Quaternion<T>& rotateX(T angle);
 

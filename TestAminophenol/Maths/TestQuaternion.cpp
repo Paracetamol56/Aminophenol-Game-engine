@@ -53,7 +53,7 @@ namespace Maths
 		TEST_METHOD(TestConstructorVector3Angle)
 		{
 			Vector3<double> v1{ 0.0, 0.5, 1.0 };
-			Quaternion<double> q1{ v1, degreesToRadians(45.0) };
+			Quaternion<double> q1{ degreesToRadians(45.0), v1 };
 
 			Assert::AreEqual(q1.x, 0.0, 0.0001);
 			Assert::AreEqual(q1.y, 0.1711412, 0.0001);
@@ -61,7 +61,7 @@ namespace Maths
 			Assert::AreEqual(q1.w, 0.9238795, 0.0001);
 		}
 
-		TEST_METHOD(TestConstructorEulerAngles)
+		TEST_METHOD(TestConstructorEulerAnglesDefault)
 		{
 			Quaternion<double> q1{ Vector3<double>{ degreesToRadians(45.0), degreesToRadians(30.0), degreesToRadians(60.0) } };
 
@@ -69,6 +69,84 @@ namespace Maths
 			Assert::AreEqual(q1.y, 0.02226, 0.0001);
 			Assert::AreEqual(q1.z, 0.5319757, 0.0001);
 			Assert::AreEqual(q1.w, 0.7233174, 0.0001);
+		}
+
+		TEST_METHOD(TestConstructorEulerAnglesXYZ)
+		{
+			Quaternion<double> q1{
+				Vector3<double>{ degreesToRadians(45.0), degreesToRadians(30.0), degreesToRadians(60.0) },
+				EulerAngle::XYZ
+			};
+
+			Assert::AreEqual(q1.x, 0.4396797, 0.0001);
+			Assert::AreEqual(q1.y, 0.02226, 0.0001);
+			Assert::AreEqual(q1.z, 0.5319757, 0.0001);
+			Assert::AreEqual(q1.w, 0.7233174, 0.0001);
+		}
+
+		TEST_METHOD(TestConstructorEulerAnglesXZY)
+		{
+			Quaternion<double> q1{
+				Vector3<double>{ degreesToRadians(45.0), degreesToRadians(30.0), degreesToRadians(60.0) },
+					EulerAngle::XZY
+			};
+
+			Assert::AreEqual(q1.x, 0.2005621, 0.0001);
+			Assert::AreEqual(q1.y, 0.02226, 0.0001);
+			Assert::AreEqual(q1.z, 0.5319757, 0.0001);
+			Assert::AreEqual(q1.w, 0.8223632, 0.0001);
+		}
+
+		TEST_METHOD(TestConstructorEulerAnglesYXZ)
+		{
+			Quaternion<double> q1{
+				Vector3<double>{ degreesToRadians(45.0), degreesToRadians(30.0), degreesToRadians(60.0) },
+					EulerAngle::YXZ
+			};
+
+			Assert::AreEqual(q1.x, 0.4396797, 0.0001);
+			Assert::AreEqual(q1.y, 0.02226, 0.0001);
+			Assert::AreEqual(q1.z, 0.3604234, 0.0001);
+			Assert::AreEqual(q1.w, 0.8223632, 0.0001);
+		}
+
+		TEST_METHOD(TestConstructorEulerAnglesYZX)
+		{
+			Quaternion<double> q1{
+				Vector3<double>{ degreesToRadians(45.0), degreesToRadians(30.0), degreesToRadians(60.0) },
+					EulerAngle::YZX
+			};
+
+			Assert::AreEqual(q1.x, 0.4396797, 0.0001);
+			Assert::AreEqual(q1.y, 0.3919038, 0.0001);
+			Assert::AreEqual(q1.z, 0.3604234, 0.0001);
+			Assert::AreEqual(q1.w, 0.7233174, 0.0001);
+		}
+
+		TEST_METHOD(TestConstructorEulerAnglesZXY)
+		{
+			Quaternion<double> q1{
+				Vector3<double>{ degreesToRadians(45.0), degreesToRadians(30.0), degreesToRadians(60.0) },
+					EulerAngle::ZXY
+			};
+
+			Assert::AreEqual(q1.x, 0.2005621, 0.0001);
+			Assert::AreEqual(q1.y, 0.3919038, 0.0001);
+			Assert::AreEqual(q1.z, 0.5319757, 0.0001);
+			Assert::AreEqual(q1.w, 0.7233174, 0.0001);
+		}
+
+		TEST_METHOD(TestConstructorEulerAnglesZYX)
+		{
+			Quaternion<double> q1{
+				Vector3<double>{ degreesToRadians(45.0), degreesToRadians(30.0), degreesToRadians(60.0) },
+					EulerAngle::ZYX
+			};
+
+			Assert::AreEqual(q1.x, 0.2005621, 0.0001);
+			Assert::AreEqual(q1.y, 0.3919038, 0.0001);
+			Assert::AreEqual(q1.z, 0.3604234, 0.0001);
+			Assert::AreEqual(q1.w, 0.8223632, 0.0001);
 		}
 
 		TEST_METHOD(TestCopyConstructorFromDifferentType)
@@ -115,7 +193,7 @@ namespace Maths
 			Assert::AreEqual(v.w, 4.0);
 		}
 
-		TEST_METHOD(TestToEulerAngles)
+		TEST_METHOD(TestToEulerAnglesDefault)
 		{
 			Quaternion<double> q1{ 0.4396797, 0.02226, 0.5319757, 0.7233174 };
 			Vector3<double> v = q1.toEulerAngles();
@@ -123,6 +201,66 @@ namespace Maths
 			Assert::AreEqual(radiansToDegrees(v.x), 45.0, 0.0001);
 			Assert::AreEqual(radiansToDegrees(v.y), 30.0, 0.0001);
 			Assert::AreEqual(radiansToDegrees(v.z), 60.0, 0.0001);
+		}
+
+		TEST_METHOD(TestToEulerAnglesXYZ)
+		{
+			Quaternion<double> q1{ 0.4396797, 0.02226, 0.5319757, 0.7233174 };
+			Vector3<double> v = q1.toEulerAngles(EulerAngle::XYZ);
+
+			Assert::AreEqual(radiansToDegrees(v.x), 45.0, 0.0001);
+			Assert::AreEqual(radiansToDegrees(v.y), 30.0, 0.0001);
+			Assert::AreEqual(radiansToDegrees(v.z), 60.0, 0.0001);
+		}
+
+		TEST_METHOD(TestToEulerAnglesXZY)
+		{
+			Quaternion<double> q1{ 0.4396797, 0.02226, 0.5319757, 0.7233174 };
+			Vector3<double> v = q1.toEulerAngles(EulerAngle::XZY);
+
+			Assert::AreEqual(radiansToDegrees(v.x), 85.8933946, 0.0001);
+			Assert::AreEqual(radiansToDegrees(v.y), 49.1066059, 0.0001);
+			Assert::AreEqual(radiansToDegrees(v.z), 48.5903779, 0.0001);
+		}
+
+		TEST_METHOD(TestToEulerAnglesYXZ)
+		{
+			Quaternion<double> q1{ 0.4396797, 0.02226, 0.5319757, 0.7233174 };
+			Vector3<double> v = q1.toEulerAngles(EulerAngle::YXZ);
+
+			Assert::AreEqual(radiansToDegrees(v.x), 37.7612455, 0.0001);
+			Assert::AreEqual(radiansToDegrees(v.y), 39.2315195, 0.0001);
+			Assert::AreEqual(radiansToDegrees(v.z), 86.565051, 0.0001);
+		}
+
+		TEST_METHOD(TestToEulerAnglesYZX)
+		{
+			Quaternion<double> q1{ 0.4396797, 0.02226, 0.5319757, 0.7233174 };
+			Vector3<double> v = q1.toEulerAngles(EulerAngle::YZX);
+
+			Assert::AreEqual(radiansToDegrees(v.x), 85.5769631, 0.0001);
+			Assert::AreEqual(radiansToDegrees(v.y), -45.170385, 0.0001);
+			Assert::AreEqual(radiansToDegrees(v.z), 52.106065, 0.0001);
+		}
+
+		TEST_METHOD(TestToEulerAnglesZXY)
+		{
+			Quaternion<double> q1{ 0.4396797, 0.02226, 0.5319757, 0.7233174 };
+			Vector3<double> v = q1.toEulerAngles(EulerAngle::ZXY);
+
+			Assert::AreEqual(radiansToDegrees(v.x), 41.2800173, 0.0001);
+			Assert::AreEqual(radiansToDegrees(v.y), -35.4251881, 0.0001);
+			Assert::AreEqual(radiansToDegrees(v.z), 86.3862141, 0.0001);
+		}
+
+		TEST_METHOD(TestToEulerAnglesZYX)
+		{
+			Quaternion<double> q1{ 0.4396797, 0.02226, 0.5319757, 0.7233174 };
+			Vector3<double> v = q1.toEulerAngles(EulerAngle::ZYX);
+
+			Assert::AreEqual(radiansToDegrees(v.x), 47.132426, 0.0001);
+			Assert::AreEqual(radiansToDegrees(v.y), -25.8232085, 0.0001);
+			Assert::AreEqual(radiansToDegrees(v.z), 61.2460563, 0.0001);
 		}
 
 		TEST_METHOD(TestToEulerAnglesOperator)
