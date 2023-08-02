@@ -295,7 +295,7 @@ namespace Aminophenol {
 			PushConstantData push{};
 			push.modelTransform =
 				Maths::Matrix4f::translation({ 0.0f, 0.0f, 0.5f }) *
-				Maths::Matrix4f::rotation({ {0.2f, 0.7f, 0.6f}, frame / 5000.0f }) *
+				Maths::Matrix4f::rotation(Maths::Quaternionf{ frame / 5000.0f, Maths::Vector3f{0.2f, 0.7f, 0.6f} }) *
 				Maths::Matrix4f::scale({ 0.5f, 0.5f, 0.5f });
 			
 			vkCmdPushConstants(
