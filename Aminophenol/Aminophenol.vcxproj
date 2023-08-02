@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Maths\Constant.h" />
+    <ClInclude Include="Maths\EulerAngle.h" />
     <ClInclude Include="Maths\Transform2.h" />
     <ClInclude Include="Maths\Transform3.h" />
     <ClInclude Include="Mesh\Vertex.h" />
@@ -238,7 +239,6 @@
     <ClCompile Include="Rendering\Swapchain\RenderPass.cpp" />
     <ClCompile Include="Rendering\Renderer\RenderStage.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
-    <ClCompile Include="Utils\HashCombine.cpp" />
     <ClCompile Include="Utils\UUIDv4Generator.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>

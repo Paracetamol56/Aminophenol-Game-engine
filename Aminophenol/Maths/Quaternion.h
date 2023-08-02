@@ -86,16 +86,29 @@ namespace Aminophenol::Maths
 		Quaternion<T>& rotateZ(T angle);
 
 		// operation methods
+		Quaternion<T> add(const Quaternion<T>& other) const;
+
+		Quaternion<T> subtract(const Quaternion<T>& other) const;
+
 		Quaternion<T> multiply(const Quaternion<T>& other) const;
 
-		Quaternion<T> multiplyInverse(const Quaternion<T>& other) const;
+		Quaternion<T> multiply(T scalar) const;
 
 		T dot(const Quaternion<T>& other) const;
 
 		// Opperator overloads
+		Quaternion<T> operator-() const;
+
+		Quaternion<T> operator+(const Quaternion<T>& other) const;
+
+		Quaternion<T> operator-(const Quaternion<T>& other) const;
+
 		Quaternion<T> operator*(const Quaternion<T>& other) const;
 
 		Quaternion<T> operator*(T scalar) const;
+
+		template<typename U>
+		friend Quaternion<U> operator*(U scalar, const Quaternion<U>& quaternion);
 
 		Quaternion<T>& operator+=(const Quaternion<T>& other);
 
@@ -110,7 +123,7 @@ namespace Aminophenol::Maths
 
 		bool operator!=(const Quaternion<T>& other) const;
 
-		// Accessors and mutators
+		// Accessors
 		T operator[](int index) const;
 		T operator[](int index);
 
@@ -138,7 +151,7 @@ namespace Aminophenol::Maths
 	using Quaterniond = Quaternion<double>;
 	using Quaternioni = Quaternion<int>;
 
-}
+} // Aminophenol::Maths
 
 #include "Quaternion.inl"
 
