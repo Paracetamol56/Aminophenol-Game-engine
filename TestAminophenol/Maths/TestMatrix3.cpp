@@ -2,8 +2,10 @@
 #include "CppUnitTest.h"
 
 #define AMINOPHENOL_API __declspec(dllexport)
+#include <Maths/Utils.h>
 #include <Maths/Matrix3.h>
 #include <Maths/Vector3.h>
+#include <Maths/Quaternion.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace Aminophenol::Maths;
@@ -625,6 +627,114 @@ namespace Maths
 			Assert::AreEqual(m0[2][0], 0.0);
 			Assert::AreEqual(m0[2][1], 0.0);
 			Assert::AreEqual(m0[2][2], 0.0);
+		}
+
+		// Test the static zero matrix creation method
+		TEST_METHOD(zeroMatrix)
+		{
+			Matrix3<double> m0 = Matrix3<double>::zero();
+
+			Assert::IsTrue(m0.isZero());
+		}
+
+		// Test the static identity matrix creation method
+		TEST_METHOD(identityMatrix)
+		{
+			Matrix3<double> m0 = Matrix3<double>::identity();
+
+			Assert::IsTrue(m0.isIdentity());
+		}
+
+		// Test the static 2D translation matrix creation method
+		TEST_METHOD(translationMatrix2D)
+		{
+			Matrix3<double> m0 = Matrix3<double>::translation({ 1.0, 2.0 });
+
+			Assert::AreEqual(m0[0][0], 1.0);
+			Assert::AreEqual(m0[0][1], 0.0);
+			Assert::AreEqual(m0[0][2], 1.0);
+			Assert::AreEqual(m0[1][0], 0.0);
+			Assert::AreEqual(m0[1][1], 1.0);
+			Assert::AreEqual(m0[1][2], 2.0);
+			Assert::AreEqual(m0[2][0], 0.0);
+			Assert::AreEqual(m0[2][1], 0.0);
+			Assert::AreEqual(m0[2][2], 1.0);
+		}
+
+		// Test the static 3D translation matrix creation method
+		TEST_METHOD(translationMatrix3D)
+		{
+			Matrix3<double> m0 = Matrix3<double>::translation({ 1.0, 2.0, 3.0 });
+			Matrix3<double> m1{
+				1.0, 0.0, 1.0,
+				0.0, 1.0, 2.0,
+				0.0, 0.0, 3.0
+			};
+
+			Assert::IsTrue(m0 == m1);
+		}
+
+		// Test the static 2D rotation matrix creation method
+		TEST_METHOD(rotationMatrix2D)
+		{
+			Matrix3<double> m0 = Matrix3<double>::rotation(degreesToRadians(-90.0));
+			Matrix3<double> m1{
+				0.0, 1.0, 0.0,
+				-1.0, 0.0, 0.0,
+				0.0, 0.0, 1.0
+			};
+
+			Assert::AreEqual(m0[0][0], 0.0, 0.0001);
+			Assert::AreEqual(m0[0][1], 1.0, 0.0001);
+			Assert::AreEqual(m0[0][2], 0.0, 0.0001);
+			Assert::AreEqual(m0[1][0], -1.0, 0.0001);
+			Assert::AreEqual(m0[1][1], 0.0, 0.0001);
+			Assert::AreEqual(m0[1][2], 0.0, 0.0001);
+			Assert::AreEqual(m0[2][0], 0.0, 0.0001);
+			Assert::AreEqual(m0[2][1], 0.0, 0.0001);
+			Assert::AreEqual(m0[2][2], 1.0, 0.0001);
+		}
+
+		// Test the static 3D rotation matrix creation method
+		TEST_METHOD(rotationMatrix3D)
+		{
+			Matrix3<double> m0 = Matrix3<double>::rotation({ 0.4396797, 0.02226, 0.5319757, 0.7233174 });
+
+			Assert::AreEqual(m0[0][0], 0.4330127, 0.0001);
+			Assert::AreEqual(m0[0][1], -0.7500000, 0.0001);
+			Assert::AreEqual(m0[0][2], 0.5000000, 0.0001);
+			Assert::AreEqual(m0[1][0], 0.7891491, 0.0001);
+			Assert::AreEqual(m0[1][1], 0.0473672, 0.0001);
+			Assert::AreEqual(m0[1][2], -0.6123725, 0.0001);
+			Assert::AreEqual(m0[2][0], 0.4355958, 0.0001);
+			Assert::AreEqual(m0[2][1], 0.6597396, 0.0001);
+			Assert::AreEqual(m0[2][2], 0.6123725, 0.0001);
+		}
+
+		// Test the static 2D scale matrix creation method
+		TEST_METHOD(scaleMatrix2D)
+		{
+			Matrix3<double> m0 = Matrix3<double>::scale({ 1.0, 2.0 });
+			Matrix3<double> m1{
+				1.0, 0.0, 0.0,
+				0.0, 2.0, 0.0,
+				0.0, 0.0, 1.0
+			};
+
+			Assert::IsTrue(m0 == m1);
+		}
+
+		// Test the static 3D scale matrix creation method
+		TEST_METHOD(scaleMatrix3D)
+		{
+			Matrix3<double> m0 = Matrix3<double>::scale({ 1.0, 2.0, 3.0 });
+			Matrix3<double> m1{
+				1.0, 0.0, 0.0,
+				0.0, 2.0, 0.0,
+				0.0, 0.0, 3.0
+			};
+
+			Assert::IsTrue(m0 == m1);
 		}
 
 	};
