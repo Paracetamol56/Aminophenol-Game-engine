@@ -8,7 +8,13 @@ namespace Aminophenol::Maths
 {
 
 	template<typename T>
+	class Vector2;
+
+	template<typename T>
 	class Vector3;
+
+	template<typename T>
+	class Quaternion;
 
 	template<typename T>
 	class Matrix3
@@ -302,17 +308,42 @@ namespace Aminophenol::Maths
 		/// <summary>
 		/// Static zero matrix.
 		/// </summary>
-		static const Matrix3<T> zero;
+		static const Matrix3<T> zero();
 
 		/// <summary>
 		/// Static unit matrix.
 		/// </summary>
-		static const Matrix3<T> identity;
+		static const Matrix3<T> identity();
 
 		/// <summary>
-		/// Static infinity matrix.
+		/// Static 2D translation matrix.
 		/// </summary>
-		static const Matrix3<T> infinity;
+		static const Matrix3<T> translation(Vector2<T> translation);
+
+		/// <summary>
+		/// Static 3D translation matrix.
+		/// </summary>
+		static const Matrix3<T> translation(Vector3<T> translation);
+
+		/// <summary>
+		/// Static 2D rotation matrix.
+		/// </summary>
+		static const Matrix3<T> rotation(T rotation);
+
+		/// <summary>
+		/// Static 3D rotation matrix.
+		/// </summary>
+		static const Matrix3<T> rotation(Quaternion<T> rotation);
+
+		/// <summary>
+		/// Static 2D scale matrix.
+		/// </summary>
+		static const Matrix3<T> scale(Vector2<T> scale);
+
+		/// <summary>
+		/// Static 3D scale matrix.
+		/// </summary>
+		static const Matrix3<T> scale(Vector3<T> scale);
 
 	private:
 
