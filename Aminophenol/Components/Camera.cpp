@@ -13,7 +13,7 @@ namespace Aminophenol {
 
 	void Camera::setOrthographicProjection(float left, float right, float bottom, float top, float near, float far)
 	{
-		m_projectionMatrix = Maths::Matrix4f::identity;
+		m_projectionMatrix = Maths::Matrix4f::identity();
 
 		m_projectionMatrix[0][0] = 2.0f / (right - left);
 		m_projectionMatrix[1][1] = 2.0f / (top - bottom);
@@ -28,7 +28,7 @@ namespace Aminophenol {
 		assert(aspect != 0.0f);
 		const float tanHalfFovy = tanf(fov / 2.0f);
 
-		m_projectionMatrix = Maths::Matrix4f::zero;
+		m_projectionMatrix = Maths::Matrix4f::zero();
 
 		m_projectionMatrix[0][0] = 1.0f / (aspect * tanHalfFovy);
 		m_projectionMatrix[1][1] = 1.0f / tanHalfFovy;

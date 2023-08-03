@@ -1105,6 +1105,73 @@ namespace Maths
 			Assert::IsTrue(m0.isZero());
 		}
 
+		// Test the static zero matrix creation method
+		TEST_METHOD(zeroMatrix)
+		{
+			Matrix4<double> m0 = Matrix4<double>::zero();
+			
+			Assert::IsTrue(m0.isZero());
+		}
+
+		// Test the static identity matrix creation method
+		TEST_METHOD(identityMatrix)
+		{
+			Matrix4<double> m0 = Matrix4<double>::identity();
+			
+			Assert::IsTrue(m0.isIdentity());
+		}
+
+		// Test the static translation matrix creation method
+		TEST_METHOD(translationMatrix)
+		{
+			Matrix4<double> m0 = Matrix4<double>::translation({ 1.0, 2.0, 3.0 });
+			Matrix4<double> m1(
+				1.0, 0.0, 0.0, 1.0,
+				0.0, 1.0, 0.0, 2.0,
+				0.0, 0.0, 1.0, 3.0,
+				0.0, 0.0, 0.0, 1.0
+			);
+
+			Assert::IsTrue(m0 == m1);
+		}
+
+		// Test the static rotation
+		TEST_METHOD(rotationMatrix)
+		{
+			Matrix4<double> m0 = Matrix4<double>::rotation({ 0.4396797, 0.02226, 0.5319757, 0.7233174 });
+
+			Assert::AreEqual(m0[0][0], 0.4330127, 0.0001);
+			Assert::AreEqual(m0[0][1], -0.7500000, 0.0001);
+			Assert::AreEqual(m0[0][2], 0.5000000, 0.0001);
+			Assert::AreEqual(m0[0][3], 0.0, 0.0001);
+			Assert::AreEqual(m0[1][0], 0.7891491, 0.0001);
+			Assert::AreEqual(m0[1][1], 0.0473672, 0.0001);
+			Assert::AreEqual(m0[1][2], -0.6123725, 0.0001);
+			Assert::AreEqual(m0[1][3], 0.0, 0.0001);
+			Assert::AreEqual(m0[2][0], 0.4355958, 0.0001);
+			Assert::AreEqual(m0[2][1], 0.6597396, 0.0001);
+			Assert::AreEqual(m0[2][2], 0.6123725, 0.0001);
+			Assert::AreEqual(m0[2][3], 0.0, 0.0001);
+			Assert::AreEqual(m0[3][0], 0.0, 0.0001);
+			Assert::AreEqual(m0[3][1], 0.0, 0.0001);
+			Assert::AreEqual(m0[3][2], 0.0, 0.0001);
+			Assert::AreEqual(m0[3][3], 1.0, 0.0001);
+		}
+
+		// Test the static scale matrix creation method
+		TEST_METHOD(scaleMatrix)
+		{
+			Matrix4<double> m0 = Matrix4<double>::scale({ 1.0, 2.0, 3.0 });
+			Matrix4<double> m1(
+				1.0, 0.0, 0.0, 0.0,
+				0.0, 2.0, 0.0, 0.0,
+				0.0, 0.0, 3.0, 0.0,
+				0.0, 0.0, 0.0, 1.0
+			);
+
+			Assert::IsTrue(m0 == m1);
+		}
+
 	};
 
 }

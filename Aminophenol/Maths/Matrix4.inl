@@ -518,6 +518,20 @@ namespace Aminophenol::Maths
 		return os;
 	}
 
+	// Zero matrix method
+	template<typename T>
+	const Matrix4<T> Matrix4<T>::zero()
+	{
+		return { static_cast<T>(0) };
+	}
+
+	// Identity matrix method
+	template<typename T>
+	const Matrix4<T> Matrix4<T>::identity()
+	{
+		return { static_cast<T>(1) };
+	}
+
 	// Translation matrix method
 	template<typename T>
 	const Matrix4<T> Matrix4<T>::translation(Vector3<T> translation)
