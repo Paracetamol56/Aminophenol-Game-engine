@@ -17,7 +17,15 @@
 #include "Rendering/Commands/CommandBuffer.h"
 #include "Mesh/Mesh.h"
 
+#include "Maths/Vector2.h"
+#include "Maths/Color.h"
+
 namespace Aminophenol {
+
+	struct PushConstantData
+	{
+		alignas(0) Maths::Matrix4f modelTransform;
+	};
 
 	/// <summary>
 	/// This class handles the rendering engine.

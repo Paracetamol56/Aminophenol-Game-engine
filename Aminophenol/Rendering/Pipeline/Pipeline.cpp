@@ -4,6 +4,7 @@
 
 #include "Logging/Logger.h"
 #include "Mesh/Mesh.h"
+#include "Rendering/RenderingEngine.h"
 
 namespace Aminophenol {
 	
@@ -17,13 +18,19 @@ namespace Aminophenol {
 	{
 		Logger::log(LogLevel::Trace, "Creating pipeline...");
 		
+		// Push constant range
+		VkPushConstantRange pushConstantRange{};
+		pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+		pushConstantRange.offset = 0;
+		pushConstantRange.size = sizeof(PushConstantData);
+
 		// Create the pipeline layout
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
 		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutInfo.setLayoutCount = 0;
 		pipelineLayoutInfo.pSetLayouts = nullptr;
-		pipelineLayoutInfo.pushConstantRangeCount = 0;
-		pipelineLayoutInfo.pPushConstantRanges = nullptr;
+		pipelineLayoutInfo.pushConstantRangeCount = 1;
+		pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
 
 		if (vkCreatePipelineLayout(m_logicalDevice, &pipelineLayoutInfo, nullptr, &m_pipelineLayout) != VK_SUCCESS) {
 			throw std::runtime_error("Failed to create pipeline layout!");
@@ -59,6 +66,11 @@ namespace Aminophenol {
 	Pipeline::operator const VkPipeline& () const
 	{
 		return m_graphicsPipeline;
+	}
+
+	const VkPipelineLayout& Pipeline::getPipelineLayout() const
+	{
+		return m_pipelineLayout;
 	}
 
 	const RenderPass& Pipeline::getRenderPass() const

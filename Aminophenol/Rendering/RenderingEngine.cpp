@@ -1,6 +1,7 @@
 
 #include "pch.h"
 #include "RenderingEngine.h"
+#include "Maths/Matrix4.h"
 
 #include "Logging/Logger.h"
 
@@ -288,6 +289,24 @@ namespace Aminophenol {
 			vkCmdSetViewport(m_commandBuffers[imageIndex]->getCommandBuffer(), 0, 1, &viewport);
 			vkCmdSetScissor(m_commandBuffers[imageIndex]->getCommandBuffer(), 0, 1, &scissor);
 			
+			static int frame = 0;
+			++frame;
+
+			PushConstantData push{};
+			push.modelTransform =
+				Maths::Matrix4f::translation({ 0.0f, 0.0f, 0.5f }) *
+				Maths::Matrix4f::rotation(Maths::Quaternionf{ frame / 5000.0f, Maths::Vector3f{0.2f, 0.7f, 0.6f} }) *
+				Maths::Matrix4f::scale({ 0.5f, 0.5f, 0.5f });
+			
+			vkCmdPushConstants(
+				m_commandBuffers[imageIndex]->getCommandBuffer(),
+				m_pipeline->getPipelineLayout(),
+				VK_SHADER_STAGE_VERTEX_BIT,
+				0,
+				sizeof(PushConstantData),
+				&push
+			);
+		
 			// Iterate through all renderables in the active scene and draw them
 			for (std::vector<std::unique_ptr<Node>>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
 			{
@@ -298,7 +317,7 @@ namespace Aminophenol {
 					(*it2)->renderMesh(m_commandBuffers[imageIndex]->getCommandBuffer());
 				}
 			}
-		
+
 			vkCmdEndRenderPass(m_commandBuffers[imageIndex]->getCommandBuffer());
 		}
 		
