@@ -433,4 +433,82 @@ namespace Aminophenol::Maths
 		return os;
 	}
 
+	// Zero matrix method
+	template<typename T>
+	const Matrix3<T> Matrix3<T>::zero()
+	{
+		return { static_cast<T>(0) };
+	}
+
+	// Identity matrix method
+	template<typename T>
+	const Matrix3<T> Matrix3<T>::identity()
+	{
+		return { static_cast<T>(1) };
+	}
+
+	// Translation matrix method
+	template<typename T>
+	const Matrix3<T> Matrix3<T>::translation(Vector2<T> translation)
+	{
+		Matrix3<T> result = identity();
+		result.m[0][2] = translation.x;
+		result.m[1][2] = translation.y;
+		return result;
+	}
+
+	// Translation matrix method
+	template<typename T>
+	const Matrix3<T> Matrix3<T>::translation(Vector3<T> translation)
+	{
+		Matrix3<T> result = identity();
+		result.m[0][2] = translation.x;
+		result.m[1][2] = translation.y;
+		result.m[2][2] = translation.z;
+		return result;
+	}
+
+	// Rotation matrix method
+	template<typename T>
+	const Matrix3<T> Matrix3<T>::rotation(Quaternion<T> rotation)
+	{
+		return rotation.toMatrix3();
+	}
+
+	// Rotation matrix method
+	template<typename T>
+	const Matrix3<T> Matrix3<T>::rotation(T rotation)
+	{
+		// Create a rotation matrix from an angle in radians
+		Matrix3<T> result = identity();
+		T c = cos(rotation);
+		T s = sin(rotation);
+		result.m[0][0] = c;
+		result.m[0][1] = -s;
+		result.m[1][0] = s;
+		result.m[1][1] = c;
+		return result;
+	}
+
+	// Scale matrix method
+	template<typename T>
+	const Matrix3<T> Matrix3<T>::scale(Vector2<T> scale)
+	{
+		Matrix3<T> result = identity();
+		result.m[0][0] = scale.x;
+		result.m[1][1] = scale.y;
+		return result;
+	}
+
+	// Scale matrix method
+	template<typename T>
+	const Matrix3<T> Matrix3<T>::scale(Vector3<T> scale)
+	{
+		Matrix3<T> result = identity();
+		result.m[0][0] = scale.x;
+		result.m[1][1] = scale.y;
+		result.m[2][2] = scale.z;
+		return result;
+	}
+
 } // namespace Aminophenol::Maths
