@@ -31,7 +31,7 @@ namespace Aminophenol::Maths
 
 	Matrix4f Transform3::getMatrix() const
 	{
-		Matrix4f result = Matrix4f::identity;
+		Matrix4f result = Matrix4f::identity();
 
 		result *= Matrix4f::translation(position);
 		result *= Matrix4f::rotation(rotation);
