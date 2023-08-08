@@ -4,16 +4,19 @@
 
 namespace Aminophenol {
 	
-	Engine::Engine(std::string appName)
+	Engine::Engine(std::string appName, const unsigned int width, const unsigned int height)
 		: _appName{ appName }
 		, m_uuidGenerator{}
 	{
 		try {
-			m_window = std::make_unique<Window>(_WIDTH, _HEIGHT, _appName.c_str());
+			m_window = std::make_unique<Window>(width, height, _appName.c_str());
 			Logger::log(LogLevel::Trace, "Window initialized.");
 
 			m_renderingEngine = std::make_unique<RenderingEngine>(*m_window, _appName);
 			Logger::log(LogLevel::Trace, "Rendering engine initialized.");
+
+			m_inputSystem = std::make_unique<InputSystem>(*m_window);
+			Logger::log(LogLevel::Trace, "Input system initialized.");
 		}
 		catch (const std::exception& e)
 		{
@@ -28,6 +31,7 @@ namespace Aminophenol {
 			m_activeScene.reset();
 			m_renderingEngine.reset();
 			m_window.reset();
+			m_inputSystem.reset();
 		}
 		catch (const std::exception& e)
 		{
@@ -43,6 +47,7 @@ namespace Aminophenol {
 		while (!m_window->shouldClose())
 		{
 			glfwPollEvents();
+			m_inputSystem->update();
 			m_renderingEngine->update();
 		}
 
@@ -77,6 +82,11 @@ namespace Aminophenol {
 	RenderingEngine& Engine::getRenderingEngine() const
 	{
 		return *m_renderingEngine;
+	}
+
+	InputSystem& Engine::getInputSystem() const
+	{
+		return *m_inputSystem;
 	}
 
 } // namespace Aminophenol
