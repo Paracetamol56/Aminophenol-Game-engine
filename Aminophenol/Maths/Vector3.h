@@ -311,11 +311,6 @@ namespace Aminophenol::Maths
 		static const Vector3<T> zero();
 
 		/// <summary>
-		/// Static unit vector.
-		/// </summary>
-		static const Vector3<T> unit();
-
-		/// <summary>
 		/// Static unit vector in the left direction.
 		/// </summary>
 		static const Vector3<T> left();

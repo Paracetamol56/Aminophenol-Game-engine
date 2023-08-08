@@ -207,16 +207,9 @@
     <ClCompile Include="Input\InputButton.cpp" />
     <ClCompile Include="Input\InputSystem.cpp" />
     <ClCompile Include="Maths\Color.cpp" />
-    <ClCompile Include="Maths\Matrix2.cpp" />
-    <ClCompile Include="Maths\Matrix3.cpp" />
-    <ClCompile Include="Maths\Matrix4.cpp" />
-    <ClCompile Include="Maths\Quaternion.cpp" />
     <ClCompile Include="Maths\Transform2.cpp" />
     <ClCompile Include="Maths\Transform3.cpp" />
     <ClCompile Include="Maths\Utils.cpp" />
-    <ClCompile Include="Maths\Vector2.cpp" />
-    <ClCompile Include="Maths\Vector3.cpp" />
-    <ClCompile Include="Maths\Vector4.cpp" />
     <ClCompile Include="Mesh\Mesh.cpp" />
     <ClCompile Include="Mesh\OBJMesh.cpp" />
     <ClCompile Include="Mesh\Vertex.cpp" />

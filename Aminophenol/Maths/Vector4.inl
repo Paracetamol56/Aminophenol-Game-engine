@@ -364,4 +364,11 @@ namespace Aminophenol::Maths
 		return stream;
 	}
 
+	// Zero vector method
+	template<typename T>
+	const Vector4<T> Vector4<T>::zero()
+	{
+		return { static_cast<T>(0) };
+	}
+
 } // namespace Aminophenol::Maths
