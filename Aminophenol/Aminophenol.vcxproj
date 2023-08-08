@@ -149,6 +149,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Input\InputSystem.h" />
+    <ClInclude Include="Input\KeyCodes.h" />
     <ClInclude Include="Maths\Constant.h" />
     <ClInclude Include="Maths\EulerAngle.h" />
     <ClInclude Include="Maths\Transform2.h" />
@@ -199,6 +201,7 @@
     <ClCompile Include="Components\Camera.cpp" />
     <ClCompile Include="Components\MeshRenderer.cpp" />
     <ClCompile Include="Components\PointLight.cpp" />
+    <ClCompile Include="Input\InputSystem.cpp" />
     <ClCompile Include="Maths\Color.cpp" />
     <ClCompile Include="Maths\Matrix2.cpp" />
     <ClCompile Include="Maths\Matrix3.cpp" />

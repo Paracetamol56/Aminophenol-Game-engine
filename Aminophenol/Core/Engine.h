@@ -9,6 +9,7 @@
 #include "Utils/UUIDv4Generator.h"
 #include "Scene/Scene.h"
 #include "Rendering/RenderingEngine.h"
+#include "Input/InputSystem.h"
 
 namespace Aminophenol
 {
@@ -17,7 +18,7 @@ namespace Aminophenol
 	{
 	public:
 
-		Engine(std::string appName = "Aminophenol");
+		Engine(std::string appName = "Aminophenol", const unsigned int width = 800, const unsigned int height = 800);
 		~Engine();
 
 		void run();
@@ -26,17 +27,17 @@ namespace Aminophenol
 		std::string getAppName() const;
 		Window& getWindow() const;
 		RenderingEngine& getRenderingEngine() const;
+		InputSystem& getInputSystem() const;
 
 	private:
 
 		const std::string _appName;
-		const int _WIDTH{ 800 };
-		const int _HEIGHT{ 800 };
 
 		std::unique_ptr<Window> m_window;
 		Utils::UUIDv4Generator32 m_uuidGenerator;
 		std::shared_ptr<Scene> m_activeScene{ nullptr };
 		std::unique_ptr<RenderingEngine> m_renderingEngine;
+		std::unique_ptr<InputSystem> m_inputSystem;
 
 	};
 
