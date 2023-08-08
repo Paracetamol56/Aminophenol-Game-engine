@@ -297,17 +297,12 @@ namespace Aminophenol::Maths
 		/// <summary>
 		/// Static zero matrix.
 		/// </summary>
-		static const Matrix2<T> zero;
+		static const Matrix2<T> zero();
 
 		/// <summary>
 		/// Static unit matrix.
 		/// </summary>
-		static const Matrix2<T> identity;
-
-		/// <summary>
-		/// Static infinity matrix.
-		/// </summary>
-		static const Matrix2<T> infinity;
+		static const Matrix2<T> identity();
 
 	private:
 

@@ -347,13 +347,6 @@ namespace Aminophenol::Maths
 		return Vector3<T>{ static_cast<T>(0) };
 	}
 
-	// Unit vector method
-	template<typename T>
-	const Vector3<T> Vector3<T>::unit()
-	{
-		return Vector3<T>{ static_cast<T>(1) };
-	}
-
 	// Left vector method
 	template<typename T>
 	const Vector3<T> Vector3<T>::left()

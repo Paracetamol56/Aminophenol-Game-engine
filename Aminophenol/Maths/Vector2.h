@@ -305,37 +305,27 @@ namespace Aminophenol::Maths
 		/// <summary>
 		/// Static zero vector.
 		/// </summary>
-		static const Vector2<T> zero;
-
-		/// <summary>
-		/// Static unit vector.
-		/// </summary>
-		static const Vector2<T> unit;
-
-		/// <summary>
-		/// Static infinity vector.
-		/// </summary>
-		static const Vector2<T> infinity;
+		static const Vector2<T> zero();
 
 		/// <summary>
 		/// Static unit vector in the left direction.
 		/// </summary>
-		static const Vector2<T> left;
+		static const Vector2<T> left();
 
 		/// <summary>
 		/// Static unit vector in the right direction.
 		/// </summary>
-		static const Vector2<T> right;
+		static const Vector2<T> right();
 
 		/// <summary>
 		/// Static unit vector in the up direction.
 		/// </summary>
-		static const Vector2<T> up;
+		static const Vector2<T> up();
 		
 		/// <summary>
 		/// Static unit vector in the down direction.
 		/// </summary>
-		static const Vector2<T> down;
+		static const Vector2<T> down();
 		
 		T x;
 		T y;

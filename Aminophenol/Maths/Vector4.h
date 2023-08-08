@@ -318,17 +318,7 @@ namespace Aminophenol::Maths
 		/// <summary>
 		/// Static zero vector.
 		/// </summary>
-		static const Vector4<T> zero;
-
-		/// <summary>
-		/// Static unit vector.
-		/// </summary>
-		static const Vector4<T> unit;
-
-		/// <summary>
-		/// Static infinity vector.
-		/// </summary>
-		static const Vector4<T> infinity;
+		static const Vector4<T> zero();
 		
 		T x;
 		T y;

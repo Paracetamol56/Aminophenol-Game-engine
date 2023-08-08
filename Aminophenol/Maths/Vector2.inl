@@ -322,4 +322,39 @@ namespace Aminophenol::Maths
 		return stream;
 	}
 
+	// Zero vector method
+	template<typename T>
+	const Vector2<T> Vector2<T>::zero()
+	{
+		return { static_cast<T>(0) };
+	}
+
+	// Left vector method
+	template<typename T>
+	const Vector2<T> Vector2<T>::left()
+	{
+		return { static_cast<T>(-1), static_cast<T>(0) };
+	}
+
+	// Right vector method
+	template<typename T>
+	const Vector2<T> Vector2<T>::right()
+	{
+		return { static_cast<T>(1), static_cast<T>(0) };
+	}
+
+	// Up vector method
+	template<typename T>
+	const Vector2<T> Vector2<T>::up()
+	{
+		return { static_cast<T>(0), static_cast<T>(1) };
+	}
+
+	// Down vector method
+	template<typename T>
+	const Vector2<T> Vector2<T>::down()
+	{
+		return { static_cast<T>(0), static_cast<T>(-1) };
+	}
+
 } // namespace Aminophenol::Maths
