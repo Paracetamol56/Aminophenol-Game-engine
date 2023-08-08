@@ -264,7 +264,12 @@ namespace Aminophenol {
 		}
 		else
 		{
-			VkClearValue clearColor{0.0f, 0.0f, 0.0f, 1.0f};
+			VkClearValue clearColor{
+				m_activeScene->getBackgroundColor().r,
+				m_activeScene->getBackgroundColor().g,
+				m_activeScene->getBackgroundColor().b,
+				m_activeScene->getBackgroundColor().a
+			};
 
 			renderPassInfo.clearValueCount = 1;
 			renderPassInfo.pClearValues = &clearColor;
@@ -291,25 +296,28 @@ namespace Aminophenol {
 			
 			static int frame = 0;
 			++frame;
-
-			PushConstantData push{};
-			push.modelTransform =
-				Maths::Matrix4f::translation({ 0.0f, 0.0f, 0.5f }) *
-				Maths::Matrix4f::rotation(Maths::Quaternionf{ frame / 5000.0f, Maths::Vector3f{0.2f, 0.7f, 0.6f} }) *
-				Maths::Matrix4f::scale({ 0.5f, 0.5f, 0.5f });
-			
-			vkCmdPushConstants(
-				m_commandBuffers[imageIndex]->getCommandBuffer(),
-				m_pipeline->getPipelineLayout(),
-				VK_SHADER_STAGE_VERTEX_BIT,
-				0,
-				sizeof(PushConstantData),
-				&push
-			);
 		
 			// Iterate through all renderables in the active scene and draw them
 			for (std::vector<std::unique_ptr<Node>>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
 			{
+				(*it)->transform.rotation.rotate({ 0.25f, 0.75f, 0.0f }, frame / 5000.0f);
+
+				PushConstantData push{};
+				push.modelTransform =
+					m_activeScene->getActiveCamera()->getProjectionMatrix()
+					* m_activeScene->getActiveCamera()->getViewMatrix()
+					* (*it)->transform.getMatrix()
+					;
+
+				vkCmdPushConstants(
+					m_commandBuffers[imageIndex]->getCommandBuffer(),
+					m_pipeline->getPipelineLayout(),
+					VK_SHADER_STAGE_VERTEX_BIT,
+					0,
+					sizeof(PushConstantData),
+					&push
+				);
+
 				// If the Node has a MeshRenderer component, draw it
 				std::vector<MeshRenderer*> renderers = (*it)->getComponentsOfType<MeshRenderer>();
 				for (std::vector<MeshRenderer*>::iterator it2 = renderers.begin(); it2 != renderers.end(); ++it2)

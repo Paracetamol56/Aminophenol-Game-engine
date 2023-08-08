@@ -340,4 +340,60 @@ namespace Aminophenol::Maths
 		return stream;
 	}
 
+	// Zero vector method
+	template<typename T>
+	const Vector3<T> Vector3<T>::zero()
+	{
+		return Vector3<T>{ static_cast<T>(0) };
+	}
+
+	// Unit vector method
+	template<typename T>
+	const Vector3<T> Vector3<T>::unit()
+	{
+		return Vector3<T>{ static_cast<T>(1) };
+	}
+
+	// Left vector method
+	template<typename T>
+	const Vector3<T> Vector3<T>::left()
+	{
+		return Vector3<T>{ static_cast<T>(-1), static_cast<T>(0), static_cast<T>(0) };
+	}
+
+	// Right vector method
+	template<typename T>
+	const Vector3<T> Vector3<T>::right()
+	{
+		return Vector3<T>{ static_cast<T>(1), static_cast<T>(0), static_cast<T>(0) };
+	}
+
+	// Up vector method
+	template<typename T>
+	const Vector3<T> Vector3<T>::up()
+	{
+		return Vector3<T>{ static_cast<T>(0), static_cast<T>(1), static_cast<T>(0) };
+	}
+
+	// Down vector method
+	template<typename T>
+	const Vector3<T> Vector3<T>::down()
+	{
+		return Vector3<T>{ static_cast<T>(0), static_cast<T>(-1), static_cast<T>(0) };
+	}
+
+	// Forward vector method
+	template<typename T>
+	const Vector3<T> Vector3<T>::forward()
+	{
+		return Vector3<T>{ static_cast<T>(0), static_cast<T>(0), static_cast<T>(1) };
+	}
+
+	// Backward vector method
+	template<typename T>
+	const Vector3<T> Vector3<T>::backward()
+	{
+		return Vector3<T>{ static_cast<T>(0), static_cast<T>(0), static_cast<T>(-1) };
+	}
+
 } // namespace Aminophenol::Maths
