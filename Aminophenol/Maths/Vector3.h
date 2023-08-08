@@ -308,47 +308,42 @@ namespace Aminophenol::Maths
 		/// <summary>
 		/// Static zero vector.
 		/// </summary>
-		static const Vector3<T> zero;
+		static const Vector3<T> zero();
 
 		/// <summary>
 		/// Static unit vector.
 		/// </summary>
-		static const Vector3<T> unit;
-
-		/// <summary>
-		/// Static infinity vector.
-		/// </summary>
-		static const Vector3<T> infinity;
+		static const Vector3<T> unit();
 
 		/// <summary>
 		/// Static unit vector in the left direction.
 		/// </summary>
-		static const Vector3<T> left;
+		static const Vector3<T> left();
 
 		/// <summary>
 		/// Static unit vector in the right direction.
 		/// </summary>
-		static const Vector3<T> right;
+		static const Vector3<T> right();
 
 		/// <summary>
 		/// Static unit vector in the up direction.
 		/// </summary>
-		static const Vector3<T> up;
+		static const Vector3<T> up();
 
 		/// <summary>
 		/// Static unit vector in the down direction.
 		/// </summary>
-		static const Vector3<T> down;
+		static const Vector3<T> down();
 
 		/// <summary>
 		/// Static unit vector in the forward direction.
 		/// </summary>
-		static const Vector3<T> forward;
+		static const Vector3<T> forward();
 
 		/// <summary>
 		/// Static unit vector in the backward direction.
 		/// </summary>
-		static const Vector3<T> backward;
+		static const Vector3<T> backward();
 		
 		T x;
 		T y;

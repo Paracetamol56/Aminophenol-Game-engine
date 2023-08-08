@@ -21,6 +21,7 @@ namespace Aminophenol {
 
 		operator const VkPipeline& () const;
 		
+		const VkPipelineLayout& getPipelineLayout() const;
 		const RenderPass& getRenderPass() const;
 
 	private:
