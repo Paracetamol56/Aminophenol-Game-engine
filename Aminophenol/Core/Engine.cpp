@@ -47,6 +47,7 @@ namespace Aminophenol {
 		while (!m_window->shouldClose())
 		{
 			glfwPollEvents();
+			m_inputSystem->update();
 			m_renderingEngine->update();
 		}
 

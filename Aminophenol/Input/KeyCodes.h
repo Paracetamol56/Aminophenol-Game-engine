@@ -6,7 +6,7 @@
 
 namespace Aminophenol {
 
-	typedef enum class KeyCode : uint16_t
+	typedef enum class AMINOPHENOL_API KeyCode : uint16_t
 	{
 		// From glfw3.h (https://github.com/glfw/glfw/blob/master/include/GLFW/glfw3.h)
 
@@ -142,7 +142,7 @@ namespace Aminophenol {
 		Menu = 348,			/* Menu */
 	} Key;
 
-	enum class KeyState
+	enum class AMINOPHENOL_API KeyState
 	{
 		None = -1,
 		Pressed = 0,
@@ -150,14 +150,14 @@ namespace Aminophenol {
 		Released = 2
 	};
 
-	enum class CursorMode
+	enum class AMINOPHENOL_API CursorMode
 	{
 		Normal = 0,
 		Hidden = 1,
 		Locked = 2
 	};
 
-	typedef enum class MouseButton : uint16_t
+	typedef enum class AMINOPHENOL_API MouseButton : uint16_t
 	{
 		Button0 = 0,
 		Button1 = 1,

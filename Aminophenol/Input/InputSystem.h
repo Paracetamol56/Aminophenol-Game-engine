@@ -4,18 +4,21 @@
 #include "pch.h"
 #include "Window/Window.h"
 #include "Maths/Vector2.h"
+#include "InputAxis.h"
 #include "KeyCodes.h"
 
 namespace Aminophenol
 {
-	class InputSystem
+	class AMINOPHENOL_API InputSystem
 	{
 	public:
 
 		InputSystem(const Window& window);
 		~InputSystem() = default;
 
-		// Key state functions
+		void update();
+
+		// Key state methods
 		bool isKeyPressed(KeyCode key);
 		bool isMouseButtonPressed(MouseButton button);
 		Maths::Vector2<double> getMousePosition();
@@ -25,6 +28,7 @@ namespace Aminophenol
 
 		const Window& m_window;
 
+		std::vector<std::shared_ptr<InputAxis>> m_axes;
 	};
 
 } // namespace Aminophenol

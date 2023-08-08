@@ -8,6 +8,12 @@ namespace Aminophenol {
 		: m_window{ window }
 	{}
 
+	void InputSystem::update()
+	{
+		for (std::vector<std::shared_ptr<InputAxis>>::iterator it = m_axes.begin(); it != m_axes.end(); ++it)
+			(*it)->update();
+	}
+
 	bool InputSystem::isKeyPressed(KeyCode keycode)
 	{
 		int state = glfwGetKey(m_window, static_cast<int>(keycode));
