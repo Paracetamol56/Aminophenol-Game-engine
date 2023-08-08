@@ -5,6 +5,7 @@
 #include "Window/Window.h"
 #include "Maths/Vector2.h"
 #include "InputAxis.h"
+#include "InputButton.h"
 #include "KeyCodes.h"
 
 namespace Aminophenol
@@ -29,6 +30,8 @@ namespace Aminophenol
 		const Window& m_window;
 
 		std::vector<std::shared_ptr<InputAxis>> m_axes;
+		std::vector<std::shared_ptr<InputButton>> m_buttons;
+
 	};
 
 } // namespace Aminophenol
