@@ -170,7 +170,7 @@ namespace Aminophenol
 		return m_transferQueue;
 	}
 
-	uint32_t LogicalDevice::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) const
+	uint32_t LogicalDevice::findMemoryType(uint32_t typeFilter, const VkMemoryPropertyFlags &properties) const
 	{
 		VkPhysicalDeviceMemoryProperties memProperties;
 		vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &memProperties);

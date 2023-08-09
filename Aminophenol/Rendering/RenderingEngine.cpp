@@ -198,6 +198,15 @@ namespace Aminophenol {
 
 			Logger::log(LogLevel::Trace, "FrameBuffer %d initialized", i);
 
+			// Create a depth buffer
+			m_frames[i].depthBuffer = std::make_unique<ImageDepth>(
+				*m_logicalDevice, *m_physicalDevice,
+				VkExtent3D{ m_swapchain->getExtent().height, m_swapchain->getExtent().width, 1 }
+			);
+
+			Logger::log(LogLevel::Trace, "DepthBuffer %d initialized", i);
+
+			// Create a command buffer
 			m_frames[i].commandBuffer = std::make_unique<CommandBuffer>(*m_logicalDevice, m_commandPool);
 
 			Logger::log(LogLevel::Trace, "CommandBuffer %d initialized", i);
@@ -225,9 +234,10 @@ namespace Aminophenol {
 
 	void RenderingEngine::destroyFrameObjects()
 	{
-		for (size_t i = 0; i < m_maxFramesInFlight; i++)
+		for (size_t i = 0; i < m_maxFramesInFlight; ++i)
 		{
 			vkDestroyFramebuffer(m_logicalDevice->getDevice(), m_frames[i].frameBuffer, nullptr);
+			m_frames[i].depthBuffer.reset();
 			vkDestroySemaphore(m_logicalDevice->getDevice(), m_frames[i].imageAvailableSemaphore, nullptr);
 			vkDestroySemaphore(m_logicalDevice->getDevice(), m_frames[i].renderFinishedSemaphore, nullptr);
 			vkDestroyFence(m_logicalDevice->getDevice(), m_frames[i].inFlightFence, nullptr);

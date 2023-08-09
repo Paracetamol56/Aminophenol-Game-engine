@@ -4,19 +4,22 @@
 
 #include "pch.h"
 #include "Rendering/Commands/CommandBuffer.h"
+#include "Rendering/Image/ImageDepth.h"
 
 namespace Aminophenol
 {
 
 	struct AMINOPHENOL_API Frame {
 
+		// Frame size
+		uint32_t width;
+		uint32_t height;
+
 		// Frame buffer
 		VkFramebuffer frameBuffer;
 
 		// Depth buffer
-		VkImage depthImage;
-		VkDeviceMemory depthImageMemory;
-		VkImageView depthImageView;
+		std::unique_ptr<ImageDepth> depthBuffer;
 
 		// Command buffer
 		std::unique_ptr<CommandBuffer> commandBuffer;

@@ -32,7 +32,7 @@ namespace Aminophenol
 		const VkQueue& getComputeQueue() const;
 		const VkQueue& getTransferQueue() const;
 
-		uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) const;
+		uint32_t findMemoryType(uint32_t typeFilter, const VkMemoryPropertyFlags &properties) const;
 
 	private:
 
