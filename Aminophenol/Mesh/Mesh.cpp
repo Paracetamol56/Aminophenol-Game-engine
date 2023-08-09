@@ -11,8 +11,9 @@ namespace Aminophenol {
 		: m_logicalDevice(logicalDevice)
 		, m_commandPool(commandPool)
 	{
+		/*
 		// Create a cube
-		m_vertices = {
+		vertices = {
 			// Front
 			{ { -0.5f, -0.5f,  0.5f }, { 1.0f, 1.0f, 0.0f } },
 			{ {  0.5f, -0.5f,  0.5f }, { 0.0f, 1.0f, 1.0f } },
@@ -26,7 +27,7 @@ namespace Aminophenol {
 			{ { -0.5f,  0.5f, -0.5f }, { 1.0f, 1.0f, 1.0f } }
 		};
 
-		m_indices = {
+		indices = {
 			// Front
 			0, 1, 2, 2, 3, 0,
 			// Back
@@ -40,15 +41,19 @@ namespace Aminophenol {
 			// Bottom
 			4, 5, 1, 1, 0, 4
 		};
-
-		createVertexBuffer();
-		createIndexBuffer();
+		*/
 	}
 
 	Mesh::~Mesh()
 	{
 		m_vertexBuffer.reset();
 		m_indexBuffer.reset();
+	}
+
+	void Mesh::create()
+	{
+		createVertexBuffer();
+		createIndexBuffer();
 	}
 
 	void Mesh::bind(VkCommandBuffer commandBuffer)
@@ -61,20 +66,20 @@ namespace Aminophenol {
 
 	void Mesh::draw(VkCommandBuffer commandBuffer)
 	{
-		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(m_indices.size()), 1, 0, 0, 0);
+		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
 	}
 
 	void Mesh::createVertexBuffer()
 	{
 		// Assert that the size is at least 3
-		if (m_vertices.size() < 3)
+		if (vertices.size() < 3)
 		{
 			Logger::log(LogLevel::Error, "The size of the vertices is less than 3.");
 			return;
 		}
-		VkDeviceSize bufferSize = sizeof(m_vertices[0]) * m_vertices.size();
+		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
 
-		Buffer stagingBuffer(m_logicalDevice, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vertices.data());
+		Buffer stagingBuffer(m_logicalDevice, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, vertices.data());
 
 		m_vertexBuffer = std::make_unique<Buffer>(m_logicalDevice, bufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
@@ -110,14 +115,14 @@ namespace Aminophenol {
 	void Mesh::createIndexBuffer()
 	{
 		// Assert that the size is at least 3
-		if (m_indices.size() < 3)
+		if (indices.size() < 3)
 		{
 			Logger::log(LogLevel::Error, "The size of the indices is less than 3.");
 			return;
 		}
-		VkDeviceSize bufferSize = sizeof(m_indices[0]) * m_indices.size();
+		VkDeviceSize bufferSize = sizeof(indices[0]) * indices.size();
 
-		Buffer stagingBuffer(m_logicalDevice, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_indices.data());
+		Buffer stagingBuffer(m_logicalDevice, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, indices.data());
 
 		m_indexBuffer = std::make_unique<Buffer>(m_logicalDevice, bufferSize, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
