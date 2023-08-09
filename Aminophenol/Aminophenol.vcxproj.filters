@@ -84,9 +84,6 @@
     <ClInclude Include="Mesh\Mesh.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh\OBJMesh.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="Components\Camera.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -160,6 +157,12 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Input\KeyCodes.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\OBJLoader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\ExecutionTimingBenchmark.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -239,9 +242,6 @@
     <ClCompile Include="Mesh\Mesh.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh\OBJMesh.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Mesh\Vertex.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -270,6 +270,12 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Input\InputButton.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh\OBJLoader.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\ExecutionTimingBenchmark.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

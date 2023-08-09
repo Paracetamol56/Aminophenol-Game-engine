@@ -4,6 +4,7 @@
 
 #include <Core/Engine.h>
 #include <Maths/Utils.h>
+#include <Mesh/OBJLoader.h>
 
 using namespace Aminophenol;
 
@@ -22,16 +23,17 @@ int main(int argc, char* argv[])
 	std::shared_ptr<Scene> scene = std::make_shared<Scene>("Basic scene");
 	engine.setActiveScene(scene);
 
-	Node* cube = scene->addChild("Cube");
-	cube->addComponent<MeshRenderer>(std::make_shared<Mesh>(
+	Node* object = scene->addChild("Dragon");
+	object->addComponent<MeshRenderer>(OBJLoader::loadMesh(
 		engine.getRenderingEngine().getLogicalDevice(),
-		engine.getRenderingEngine().getCommandPool()
+		engine.getRenderingEngine().getCommandPool(),
+		"C:\\Users\\mathe\\Downloads\\xyzrgb_dragon.obj"
 	));
-	cube->transform.position = { 0.0f, 0.0f, 5.0f };
-	cube->transform.scale = { 0.5f, 0.5f, 0.5f };
+	object->transform.position = { 0.0f, 0.0f, 5.0f };
+	object->transform.scale = { 0.01f };
 
 	Node* camera = scene->addChild("Camera");
-	camera->transform.position = { 1.0f, 1.0f, -4.0f };
+	camera->transform.position = { 0.0f, 0.0f, -4.0f };
 	Camera* cameraComponent = camera->addComponent<Camera>();
 	// cameraComponent->setOrthographicProjection(-1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 10.0f);
 	cameraComponent->setPerspectiveProjection(Maths::degreesToRadians(20.0f), 1.0f, 0.1f, 10.0f);

@@ -18,8 +18,12 @@ namespace Aminophenol {
 		Mesh(const LogicalDevice& logicalDevice, const std::shared_ptr<CommandPool> commandPool);
 		~Mesh();
 
+		void create();
 		void bind(VkCommandBuffer commandBuffer);
 		void draw(VkCommandBuffer commandBuffer);
+
+		std::vector<Vertex> vertices;
+		std::vector<uint32_t> indices;
 
 	private:
 		
@@ -27,11 +31,6 @@ namespace Aminophenol {
 
 		std::unique_ptr<Buffer> m_vertexBuffer;
 		std::unique_ptr<Buffer> m_indexBuffer;
-		
-	protected:
-
-		std::vector<Vertex> m_vertices;
-		std::vector<uint32_t> m_indices;
 
 		std::shared_ptr<CommandPool> m_commandPool;
 

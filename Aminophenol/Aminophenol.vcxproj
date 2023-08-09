@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Utils\ExecutionTimingBenchmark.h" />
     <ClInclude Include="Input\InputAxis.h" />
     <ClInclude Include="Input\InputButton.h" />
     <ClInclude Include="Input\InputSystem.h" />
@@ -158,11 +159,11 @@
     <ClInclude Include="Maths\Transform2.h" />
     <ClInclude Include="Maths\Transform3.h" />
     <ClInclude Include="Mesh\Vertex.h" />
+    <ClInclude Include="Mesh\OBJLoader.h" />
     <ClInclude Include="Rendering\Buffers\Buffer.h" />
     <ClInclude Include="Components\Camera.h" />
     <ClInclude Include="Components\MeshRenderer.h" />
     <ClInclude Include="Mesh\Mesh.h" />
-    <ClInclude Include="Mesh\OBJMesh.h" />
     <ClInclude Include="Components\PointLight.h" />
     <ClInclude Include="Rendering\Renderer\RenderStage.h" />
     <ClInclude Include="Rendering\Renderer\SubRenderer.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="Components\Camera.cpp" />
     <ClCompile Include="Components\MeshRenderer.cpp" />
     <ClCompile Include="Components\PointLight.cpp" />
+    <ClCompile Include="Utils\ExecutionTimingBenchmark.cpp" />
     <ClCompile Include="Input\InputAxis.cpp" />
     <ClCompile Include="Input\InputButton.cpp" />
     <ClCompile Include="Input\InputSystem.cpp" />
@@ -211,8 +213,8 @@
     <ClCompile Include="Maths\Transform3.cpp" />
     <ClCompile Include="Maths\Utils.cpp" />
     <ClCompile Include="Mesh\Mesh.cpp" />
-    <ClCompile Include="Mesh\OBJMesh.cpp" />
     <ClCompile Include="Mesh\Vertex.cpp" />
+    <ClCompile Include="Mesh\OBJLoader.cpp" />
     <ClCompile Include="Rendering\Buffers\Buffer.cpp" />
     <ClCompile Include="Rendering\Renderer\Renderer.cpp" />
     <ClCompile Include="Rendering\Renderer\SubRenderer.cpp" />
