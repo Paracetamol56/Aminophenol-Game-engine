@@ -5,6 +5,8 @@
 #include "pch.h"
 
 #include "Utils/HashCombine.h"
+#include "Maths/Vector2.h"
+#include "Maths/Vector3.h"
 
 namespace Aminophenol {
 
@@ -19,10 +21,10 @@ namespace Aminophenol {
 		bool operator!=(const Vertex& other) const;
 
 		// Vertex data
-		glm::vec3 position;
-		glm::vec3 color;
-		glm::vec2 textureCoordinate;
-		glm::vec3 normal;
+		Maths::Vector3f position;
+		Maths::Vector3f color;
+		Maths::Vector2f textureCoordinate;
+		Maths::Vector3f normal;
 
 	};
 

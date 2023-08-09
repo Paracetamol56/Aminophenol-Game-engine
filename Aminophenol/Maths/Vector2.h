@@ -344,4 +344,22 @@ namespace Aminophenol::Maths
 
 #include "Vector2.inl"
 
+#include "Utils/HashCombine.h"
+
+namespace std {
+
+	// Overload of the hash function from STD for the Vector2 class.
+	template <typename T>
+	struct hash<Aminophenol::Maths::Vector2<T>>
+	{
+		size_t operator()(const Aminophenol::Maths::Vector2<T>& vector) const noexcept
+		{
+			size_t seed = 0;
+			Aminophenol::Utils::hashCombine(seed, vector.x, vector.y);
+			return seed;
+		}
+	};
+
+} // namespace std
+
 #endif // Vector2_H

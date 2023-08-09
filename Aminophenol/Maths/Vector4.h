@@ -339,4 +339,22 @@ namespace Aminophenol::Maths
 
 #include "Vector4.inl"
 
+#include "Utils/HashCombine.h"
+
+namespace std {
+
+	// Overload of the hash function from STD for the Vector4 class.
+	template <typename T>
+	struct hash<Aminophenol::Maths::Vector4<T>>
+	{
+		size_t operator()(const Aminophenol::Maths::Vector4<T>& vector) const noexcept
+		{
+			size_t seed = 0;
+			Aminophenol::Utils::hashCombine(seed, vector.x, vector.y, vector.z, vector.w);
+			return seed;
+		}
+	};
+
+} // namespace std
+
 #endif // !Vector4_H
