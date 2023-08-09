@@ -124,19 +124,29 @@ namespace Aminophenol {
                     // Texture coordinates
                     if (std::getline(vertexIss, vertexToken, '/'))
                     {
-                        vertex.textureCoordinate = {
-							vertexTextureCoordinates[(std::stoi(vertexToken) - 1) * 2],
-							vertexTextureCoordinates[(std::stoi(vertexToken) - 1) * 2 + 1]
-						};
+                        if (vertexToken.empty())
+							vertex.textureCoordinate = { 0.0f, 0.0f };
+                        else
+                        {
+                            vertex.textureCoordinate = {
+                                vertexTextureCoordinates[(std::stoi(vertexToken) - 1) * 2],
+                                vertexTextureCoordinates[(std::stoi(vertexToken) - 1) * 2 + 1]
+                            };
+                        }
 					}
                     // Vertex normal
                     if (std::getline(vertexIss, vertexToken, '/'))
                     {
-                        vertex.normal = {
-                            vertexNormals[(std::stoi(vertexToken) - 1) * 3],
-                            vertexNormals[(std::stoi(vertexToken) - 1) * 3 + 1],
-                            vertexNormals[(std::stoi(vertexToken) - 1) * 3 + 2]
-                        };
+                        if (vertexToken.empty())
+                            vertex.normal = { 0.0f, 0.0f, 0.0f };
+                        else
+                        {
+                            vertex.normal = {
+								vertexNormals[(std::stoi(vertexToken) - 1) * 3],
+								vertexNormals[(std::stoi(vertexToken) - 1) * 3 + 1],
+								vertexNormals[(std::stoi(vertexToken) - 1) * 3 + 2]
+							};
+						}
                     }
 
                     faceVertices.push_back(vertex);
@@ -174,7 +184,7 @@ namespace Aminophenol {
 			// CASE: Unknown token
 			else
 			{
-				throw std::runtime_error{ "Unknown token: " + token };
+                continue;
 			}
 
         }

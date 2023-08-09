@@ -283,7 +283,7 @@ namespace Aminophenol::Maths
 	Vector3<T> Vector3<T>::normalize() const
 	{
 		T mag = magnitude();
-		if (mag == 0)
+		if (mag == static_cast<T>(0))
 		{
 			throw std::runtime_error("Cannot normalise a vector with a magnitude of 0.");
 		}

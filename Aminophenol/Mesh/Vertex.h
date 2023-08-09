@@ -15,7 +15,7 @@ namespace Aminophenol {
 	public:
 		
 		static VkVertexInputBindingDescription getBindingDescription();
-		static std::array<VkVertexInputAttributeDescription, 3> getAttributeDescriptions();
+		static std::array<VkVertexInputAttributeDescription, 4> getAttributeDescriptions();
 
 		bool operator==(const Vertex& other) const;
 		bool operator!=(const Vertex& other) const;
@@ -23,8 +23,8 @@ namespace Aminophenol {
 		// Vertex data
 		Maths::Vector3f position;
 		Maths::Vector3f color;
-		Maths::Vector2f textureCoordinate;
 		Maths::Vector3f normal;
+		Maths::Vector2f textureCoordinate;
 
 	};
 

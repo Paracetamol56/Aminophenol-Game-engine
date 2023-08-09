@@ -69,6 +69,27 @@ namespace Aminophenol {
 		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
 	}
 
+	void Mesh::recalculateNormals()
+	{
+		for (size_t i = 0; i < indices.size(); i += 3)
+		{
+
+			// The face orientation is clockwise
+			Vertex& v0 = vertices[indices[i]];
+			Vertex& v1 = vertices[indices[i + 1]];
+			Vertex& v2 = vertices[indices[i + 2]];
+
+			Maths::Vector3f edge1 = v1.position - v0.position;
+			Maths::Vector3f edge2 = v2.position - v0.position;
+
+			Maths::Vector3f normal = edge1.cross(edge2);
+			if (normal != Maths::Vector3f::zero())
+				v0.normal = v1.normal = v2.normal = normal.normalize();
+		}
+
+		create();
+	}
+
 	void Mesh::createVertexBuffer()
 	{
 		// Assert that the size is at least 3

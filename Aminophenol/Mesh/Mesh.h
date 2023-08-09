@@ -21,6 +21,7 @@ namespace Aminophenol {
 		void create();
 		void bind(VkCommandBuffer commandBuffer);
 		void draw(VkCommandBuffer commandBuffer);
+		void recalculateNormals();
 
 		std::vector<Vertex> vertices;
 		std::vector<uint32_t> indices;
