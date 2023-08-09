@@ -15,6 +15,7 @@
 #include "Rendering/Pipeline/Pipeline.h"
 #include "Rendering/Commands/CommandPool.h"
 #include "Rendering/Commands/CommandBuffer.h"
+#include "Rendering/Frame.h"
 #include "Mesh/Mesh.h"
 
 #include "Maths/Vector2.h"
@@ -77,15 +78,11 @@ namespace Aminophenol {
 		// Command Pool
 		std::shared_ptr<CommandPool> m_commandPool{ nullptr };
 		
-		// Buffers
-		std::vector<VkFramebuffer> m_frameBuffers{};
-		std::vector<std::unique_ptr<CommandBuffer>> m_commandBuffers{};
-		std::unique_ptr<CommandBuffer> m_globalCommandBuffer;
+		// Frames
+		std::vector<Frame> m_frames{};
 		
-		// Syncronization
-		std::vector<VkSemaphore> m_imageAvailableSemaphores{};
-		std::vector<VkSemaphore> m_renderFinishedSemaphores{};
-		std::vector<VkFence> m_inFlightFences{};
+		// Global command buffer
+		std::unique_ptr<CommandBuffer> m_globalCommandBuffer;
 
 		// Attachments
 		std::vector<VkImageView> m_attachments{};

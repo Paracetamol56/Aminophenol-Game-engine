@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Rendering\Frame.h" />
     <ClInclude Include="Utils\ExecutionTimingBenchmark.h" />
     <ClInclude Include="Input\InputAxis.h" />
     <ClInclude Include="Input\InputButton.h" />
