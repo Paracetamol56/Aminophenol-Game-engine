@@ -162,6 +162,9 @@
     <ClInclude Include="Input\KeyCodes.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\ExecutionTimingBenchmark.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -270,6 +273,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Input\InputButton.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\ExecutionTimingBenchmark.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
