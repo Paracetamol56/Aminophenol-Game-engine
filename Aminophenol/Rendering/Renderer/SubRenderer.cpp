@@ -2,11 +2,13 @@
 #include "pch.h"
 #include "SubRenderer.h"
 
+#include "Maths/Matrix4.h"
+
 namespace Aminophenol {
 
 	struct GameObjectPushConstantData {
-		glm::mat4 modelMatrix{ 1.f };
-		glm::mat4 normalMatrix{ 1.f };
+		Maths::Matrix4f modelMatrix{ 1.f };
+		Maths::Matrix4f normalMatrix{ 1.f };
 	};
 
 	SubRenderer::SubRenderer(const LogicalDevice& logicalDevice, VkRenderPass renderPass, std::vector<VkDescriptorSetLayout> descriptorSetLayouts)
