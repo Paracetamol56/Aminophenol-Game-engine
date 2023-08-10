@@ -9,6 +9,7 @@ namespace Aminophenol {
 	Image::Image(
 		const LogicalDevice& logicalDevice,
 		const PhysicalDevice& physicalDevice,
+		std::shared_ptr<CommandPool> commandPool,
 		VkExtent3D extent,
 		VkImageTiling tiling,
 		VkImageUsageFlags usage,
@@ -17,6 +18,7 @@ namespace Aminophenol {
 	)
 		: m_logicalDevice{ logicalDevice }
 		, m_physicalDevice{ physicalDevice }
+		, m_commandPool{ commandPool }
 		, m_extent{ extent }
 		, m_tiling{ tiling }
 		, m_usage{ usage }
@@ -197,13 +199,21 @@ namespace Aminophenol {
 
 	void Image::transitionImageLayout(
 		const LogicalDevice& logicalDevice,
+		std::shared_ptr<CommandPool> commandPool,
 		const VkImage& image,
 		VkFormat format,
 		VkImageLayout srcImageLayout,
-		VkImageLayout dstImageLayout
+		VkImageLayout dstImageLayout,
+		VkImageAspectFlags imageAspect,
+		uint32_t mipLevels,
+		uint32_t baseMipLevel,
+		uint32_t layerCount,
+		uint32_t baseArrayLayer
 	)
 	{
-		/*VkCommandBuffer commandBuffer = beginSingleTimeCommands(logicalDevice);
+		CommandBuffer commandBuffer{ logicalDevice, commandPool };
+		commandBuffer.begin();
+
 
 		VkImageMemoryBarrier barrier{};
 		barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -267,14 +277,14 @@ namespace Aminophenol {
 
 		vkCmdPipelineBarrier(
 			commandBuffer,
-			VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+			VK_PIPELINE_STAGE_ALL_COMMANDS_BIT, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
 			0,
 			0, nullptr,
 			0, nullptr,
 			1, &barrier
 		);
 
-		endSingleTimeCommands(logicalDevice, commandBuffer);*/
+		commandBuffer.submitIdle();
 	}
 	
 } // namespace Aminophenol

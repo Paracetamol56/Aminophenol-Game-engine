@@ -8,11 +8,13 @@ namespace Aminophenol
 	ImageDepth::ImageDepth(
 		const LogicalDevice& logicalDevice,
 		const PhysicalDevice& physicalDevice,
+		std::shared_ptr<CommandPool> commandPool,
 		const VkExtent3D& extent
 	)
 		: Image{
 			logicalDevice,
 			physicalDevice,
+			commandPool,
 			extent,
 			VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
@@ -30,6 +32,7 @@ namespace Aminophenol
 		createImage(logicalDevice, m_image, m_imageMemory, m_extent, m_format, m_tiling, m_usage, m_properties);
 		createSampler(logicalDevice, m_sampler, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, false, 1);
 		createImageView(logicalDevice, m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_DEPTH_BIT, 1, 0, 1, 0);
+		transitionImageLayout(logicalDevice, commandPool, m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL, aspectMask, 1, 0, 1, 0);
 	}
 
 } // namespace Aminophenol

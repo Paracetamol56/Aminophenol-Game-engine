@@ -64,6 +64,8 @@ namespace Aminophenol {
 
 		if (vkEndCommandBuffer(m_commandBuffer) != VK_SUCCESS)
 			throw std::runtime_error("Failed to end recording command buffer!");
+
+		m_isRecording = false;
 	}
 
 	void CommandBuffer::submit(const VkSemaphore& waitSemaphore, const VkSemaphore& signalSemaphore, VkFence fence)
@@ -89,7 +91,7 @@ namespace Aminophenol {
 			submitInfo.pSignalSemaphores = &signalSemaphore;
 		}
 
-		if (fence == VK_NULL_HANDLE) {
+		if (fence != VK_NULL_HANDLE) {
 			if (vkResetFences(m_logicalDevice, 1, &fence) != VK_SUCCESS)
 				throw std::runtime_error("Failed to reset fence!");
 		}

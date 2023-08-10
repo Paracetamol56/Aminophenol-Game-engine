@@ -17,6 +17,7 @@ namespace Aminophenol
 		Image(
 			const LogicalDevice& logicalDevice,
 			const PhysicalDevice& physicalDevice,
+			std::shared_ptr<CommandPool> commandPool,
 			VkExtent3D extent,
 			VkImageTiling tiling,
 			VkImageUsageFlags usage,
@@ -72,6 +73,7 @@ namespace Aminophenol
 		);
 		static void transitionImageLayout(
 			const LogicalDevice& logicalDevice,
+			std::shared_ptr<CommandPool> commandPool,
 			const VkImage& image,
 			VkFormat format,
 			VkImageLayout srcImageLayout,
@@ -87,6 +89,7 @@ namespace Aminophenol
 
 		const LogicalDevice& m_logicalDevice;
 		const PhysicalDevice& m_physicalDevice;
+		std::shared_ptr<CommandPool> m_commandPool;
 		VkExtent3D m_extent;
 		VkImageTiling m_tiling;
 		VkImageUsageFlags m_usage;

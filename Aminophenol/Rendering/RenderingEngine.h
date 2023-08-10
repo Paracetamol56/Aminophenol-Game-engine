@@ -89,7 +89,6 @@ namespace Aminophenol {
 		
 		void initFrameObjects();
 		void destroyFrameObjects();
-		void render();
 		void recordDrawCommand(uint32_t imageIndex);
 		void recreateSwapchain();
 
