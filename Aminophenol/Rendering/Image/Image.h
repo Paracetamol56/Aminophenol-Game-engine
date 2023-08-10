@@ -17,7 +17,7 @@ namespace Aminophenol
 		Image(
 			const LogicalDevice& logicalDevice,
 			const PhysicalDevice& physicalDevice,
-			const VkExtent3D& extent,
+			VkExtent3D extent,
 			VkImageTiling tiling,
 			VkImageUsageFlags usage,
 			VkMemoryPropertyFlags properties,
@@ -47,7 +47,8 @@ namespace Aminophenol
 			const VkExtent3D& extent,
 			VkFormat format,
 			VkImageTiling tiling,
-			VkImageUsageFlags usage
+			VkImageUsageFlags usage,
+			VkMemoryPropertyFlags properties
 		);
 		static void createSampler(
 			const LogicalDevice& logicalDevice,
@@ -56,12 +57,6 @@ namespace Aminophenol
 			VkSamplerAddressMode addressMode,
 			bool anisotropic,
 			uint32_t mipLevels
-		);
-		static void createImageMemory(
-			const LogicalDevice& logicalDevice,
-			VkImage& image,
-			VkDeviceMemory& memory,
-			VkMemoryPropertyFlags properties
 		);
 		static void createImageView(
 			const LogicalDevice& logicalDevice,
@@ -92,17 +87,17 @@ namespace Aminophenol
 
 		const LogicalDevice& m_logicalDevice;
 		const PhysicalDevice& m_physicalDevice;
-		const VkExtent3D& m_extent;
-		const VkImageTiling& m_tiling;
-		const VkImageUsageFlags& m_usage;
-		const VkMemoryPropertyFlags& m_properties;
-		const VkFormat& m_format;
+		VkExtent3D m_extent;
+		VkImageTiling m_tiling;
+		VkImageUsageFlags m_usage;
+		VkMemoryPropertyFlags m_properties;
+		VkFormat m_format;
 
 		// Ressources
-		VkImage m_image;
-		VkDeviceMemory m_imageMemory;
-		VkImageView m_imageView;
-		VkSampler m_sampler;
+		VkImage m_image{ VK_NULL_HANDLE };
+		VkDeviceMemory m_imageMemory{ VK_NULL_HANDLE };
+		VkImageView m_imageView{ VK_NULL_HANDLE };
+		VkSampler m_sampler{ VK_NULL_HANDLE };
 
 		// CommandBuffer m_commandBuffer;
 		// VkQueue m_queue;

@@ -27,8 +27,7 @@ namespace Aminophenol
 		if (hasStencilComponent(m_format))
 			aspectMask |= VK_IMAGE_ASPECT_STENCIL_BIT;
 
-		createImage(logicalDevice, m_image, m_imageMemory, m_extent, m_format, m_tiling, m_usage);
-		createImageMemory(logicalDevice, m_image, m_imageMemory, m_properties);
+		createImage(logicalDevice, m_image, m_imageMemory, m_extent, m_format, m_tiling, m_usage, m_properties);
 		createSampler(logicalDevice, m_sampler, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, false, 1);
 		createImageView(logicalDevice, m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_DEPTH_BIT, 1, 0, 1, 0);
 	}

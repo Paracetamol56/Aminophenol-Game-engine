@@ -11,7 +11,7 @@ namespace Aminophenol {
 	Image::Image(
 		const LogicalDevice& logicalDevice,
 		const PhysicalDevice& physicalDevice,
-		const VkExtent3D& extent,
+		VkExtent3D extent,
 		VkImageTiling tiling,
 		VkImageUsageFlags usage,
 		VkMemoryPropertyFlags properties,
@@ -65,12 +65,10 @@ namespace Aminophenol {
 			VkFormatProperties properties;
 			vkGetPhysicalDeviceFormatProperties(physicalDevice, format, &properties);
 
-			if (tiling == VK_IMAGE_TILING_LINEAR && (properties.linearTilingFeatures & features) == features) {
+			if (tiling == VK_IMAGE_TILING_LINEAR && (properties.linearTilingFeatures & features) == features)
 				return format;
-			}
-			else if (tiling == VK_IMAGE_TILING_OPTIMAL && (properties.optimalTilingFeatures & features) == features) {
+			else if (tiling == VK_IMAGE_TILING_OPTIMAL && (properties.optimalTilingFeatures & features) == features)
 				return format;
-			}
 		}
 
 		throw std::runtime_error("Failed to find supported format!");
@@ -97,7 +95,8 @@ namespace Aminophenol {
 		const VkExtent3D& extent,
 		VkFormat format,
 		VkImageTiling tiling,
-		VkImageUsageFlags usage
+		VkImageUsageFlags usage,
+		VkMemoryPropertyFlags properties
 	)
 	{
 		VkImageCreateInfo createInfo{};
@@ -116,6 +115,20 @@ namespace Aminophenol {
 		if (vkCreateImage(logicalDevice.getDevice(), &createInfo, nullptr, &image) != VK_SUCCESS) {
 			throw std::runtime_error("Failed to create image!");
 		}
+
+		VkMemoryRequirements memRequirements;
+		vkGetImageMemoryRequirements(logicalDevice.getDevice(), image, &memRequirements);
+
+		VkMemoryAllocateInfo allocInfo{};
+		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		allocInfo.allocationSize = memRequirements.size;
+		allocInfo.memoryTypeIndex = logicalDevice.findMemoryType(memRequirements.memoryTypeBits, properties);
+
+		if (vkAllocateMemory(logicalDevice.getDevice(), &allocInfo, nullptr, &memory) != VK_SUCCESS) {
+			throw std::runtime_error("Failed to allocate image memory!");
+		}
+
+		vkBindImageMemory(logicalDevice.getDevice(), image, memory, 0);
 	}
 
 
@@ -151,28 +164,6 @@ namespace Aminophenol {
 		}
 	}
 
-	void Image::createImageMemory(
-		const LogicalDevice& logicalDevice,
-		VkImage& image,
-		VkDeviceMemory& memory,
-		VkMemoryPropertyFlags properties
-	)
-	{
-		VkMemoryRequirements memRequirements;
-		vkGetImageMemoryRequirements(logicalDevice.getDevice(), image, &memRequirements);
-	
-		VkMemoryAllocateInfo allocInfo{};
-		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-		allocInfo.allocationSize = memRequirements.size;
-		allocInfo.memoryTypeIndex = logicalDevice.findMemoryType(memRequirements.memoryTypeBits, properties);
-
-		if (vkAllocateMemory(logicalDevice.getDevice(), &allocInfo, nullptr, &memory) != VK_SUCCESS) {
-			throw std::runtime_error("Failed to allocate image memory!");
-		}
-
-		vkBindImageMemory(logicalDevice.getDevice(), image, memory, 0);
-	}
-
 	void Image::createImageView(
 		const LogicalDevice& logicalDevice,
 		VkImage& image,
@@ -202,7 +193,7 @@ namespace Aminophenol {
 		createInfo.subresourceRange.layerCount = layerCount;
 
 		if (vkCreateImageView(logicalDevice.getDevice(), &createInfo, nullptr, &imageView) != VK_SUCCESS) {
-			throw std::runtime_error("Failed to create texture image view!");
+			throw std::runtime_error("Failed to create image view!");
 		}
 	}
 
