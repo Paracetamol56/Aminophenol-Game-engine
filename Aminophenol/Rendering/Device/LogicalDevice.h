@@ -2,14 +2,12 @@
 #ifndef LOGICAL_DEVICE_H
 #define LOGICAL_DEVICE_H
 
-#include "pch.h"
-
 #include "Rendering/Device/PhysicalDevice.h"
 
 namespace Aminophenol
 {
 
-	class AMINOPHENOL_API LogicalDevice
+	class LogicalDevice
 	{
 	public:
 

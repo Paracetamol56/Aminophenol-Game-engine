@@ -2,7 +2,7 @@
 #ifndef Vector4_H
 #define Vector4_H
 
-#include "pch.h"
+#include <iostream>
 
 namespace Aminophenol::Maths
 {

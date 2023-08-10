@@ -2,11 +2,12 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "pch.h"
+#include <vulkan/vulkan.hpp>
+#include <GLFW/glfw3.h>
 
 namespace Aminophenol {
 
-	class AMINOPHENOL_API Window
+	class Window
 	{
 	public:
 

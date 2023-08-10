@@ -2,14 +2,12 @@
 #ifndef PIPELINE_H
 #define PIPELINE_H
 
-#include "pch.h"
-
-#include "Rendering/Device/LogicalDevice.h"
+#include <filesystem>
 #include "Rendering/Swapchain/RenderPass.h"
 
 namespace Aminophenol {
 
-	class AMINOPHENOL_API Pipeline
+	class Pipeline
 	{
 	public:
 

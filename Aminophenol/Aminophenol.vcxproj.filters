@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -174,11 +171,11 @@
     <ClInclude Include="Rendering\Image\ImageDepth.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Engine.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -293,6 +290,9 @@
     <ClCompile Include="Rendering\Image\ImageDepth.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.frag.frag" />
@@ -325,5 +325,10 @@
     <None Include="Maths\Constant.inl">
       <Filter>Fichiers d%27en-tête</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Ressources\Icon.ico">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

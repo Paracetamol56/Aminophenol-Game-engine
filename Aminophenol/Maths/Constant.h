@@ -2,8 +2,6 @@
 #ifndef CONSTANT_H
 #define CONSTANT_H
 
-#include "pch.h"
-
 namespace Aminophenol::Maths::Constant
 {
 

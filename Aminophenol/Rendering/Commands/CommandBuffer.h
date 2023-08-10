@@ -2,8 +2,6 @@
 #ifndef COMMAND_BUFFER_H
 #define COMMAND_BUFFER_H
 
-#include "pch.h"
-
 #include "Rendering/Device/LogicalDevice.h"
 #include "Rendering/Commands/CommandPool.h"
 

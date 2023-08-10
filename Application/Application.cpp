@@ -2,9 +2,9 @@
 #include <memory>
 #include <string>
 
-#include <Core/Engine.h>
-#include <Maths/Utils.h>
-#include <Mesh/OBJLoader.h>
+#include "Core/Engine.h"
+#include "Logging/Logger.h"
+#include "Mesh/OBJLoader.h"
 
 #include "CustomComponents/ObjectRotationController.h"
 

@@ -2,8 +2,6 @@
 #ifndef SUB_RENDERER_H
 #define SUB_RENDERER_H
 
-#include "pch.h"
-
 #include "Utils/NonCopyable.h"
 #include "Rendering/Commands/CommandBuffer.h"
 #include "Rendering/Device/LogicalDevice.h"

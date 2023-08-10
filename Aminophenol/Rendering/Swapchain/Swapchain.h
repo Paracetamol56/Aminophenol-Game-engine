@@ -2,15 +2,13 @@
 #ifndef SWAPCHAIN_H
 #define SWAPCHAIN_H
 
-#include "pch.h"
-
 #include "Rendering/Device/LogicalDevice.h"
 #include "Rendering/Device/PhysicalDevice.h"
 #include "Rendering/Device/Surface.h"
 
 namespace Aminophenol {
 
-	class AMINOPHENOL_API Swapchain
+	class Swapchain
 	{
 	public:
 			

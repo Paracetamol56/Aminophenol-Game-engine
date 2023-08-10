@@ -2,14 +2,13 @@
 #ifndef FRAME_H
 #define FRAME_H
 
-#include "pch.h"
 #include "Rendering/Commands/CommandBuffer.h"
 #include "Rendering/Image/ImageDepth.h"
 
 namespace Aminophenol
 {
 
-	struct AMINOPHENOL_API Frame {
+	struct Frame {
 
 		// Frame size
 		uint32_t width;

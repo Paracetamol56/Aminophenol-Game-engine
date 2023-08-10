@@ -1,8 +1,6 @@
 
 #ifndef COMMAND_POOL_H
 #define COMMAND_POOL_H
-
-#include "pch.h"
 #include "Rendering/Device/LogicalDevice.h"
 
 namespace Aminophenol {

@@ -2,7 +2,6 @@
 #ifndef IMAGE_DEPTH_H
 #define IMAGE_DEPTH_H
 
-#include "pch.h"
 #include "Rendering/Image/Image.h"
 #include "Rendering/Device/LogicalDevice.h"
 #include "Rendering/Device/PhysicalDevice.h"

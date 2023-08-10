@@ -2,8 +2,6 @@
 #ifndef SURFACE_H
 #define SURFACE_H
 
-#include "pch.h"
-
 #include "Rendering/Device/Instance.h"
 #include "Window/Window.h"
 #include "Rendering/Device/LogicalDevice.h"
@@ -12,7 +10,7 @@
 namespace Aminophenol
 {
 
-	class AMINOPHENOL_API Surface
+	class Surface
 	{
 
 	public:

@@ -2,15 +2,14 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
-#include "pch.h"
-
 #include "Utils/HashCombine.h"
 #include "Maths/Vector2.h"
 #include "Maths/Vector3.h"
+#include <vulkan/vulkan.h>
 
 namespace Aminophenol {
 
-	class AMINOPHENOL_API Vertex
+	class Vertex
 	{
 	public:
 		

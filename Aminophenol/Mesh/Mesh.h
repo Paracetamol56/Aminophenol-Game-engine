@@ -2,8 +2,6 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include "pch.h"
-
 #include "Mesh/Vertex.h"
 #include "Rendering/Device/LogicalDevice.h"
 #include "Rendering/Commands/CommandPool.h"
@@ -11,7 +9,7 @@
 
 namespace Aminophenol {
 	
-	class AMINOPHENOL_API Mesh
+	class Mesh
 	{
 	public:
 		

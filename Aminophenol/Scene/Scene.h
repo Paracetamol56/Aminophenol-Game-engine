@@ -2,15 +2,13 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "pch.h"
-
 #include "Node.h"
 #include "Components/Camera.h"
 #include "Maths/Color.h"
 
 namespace Aminophenol {
 
-	class AMINOPHENOL_API Scene final
+	class Scene final
 		: public Node
 	{
 	public:

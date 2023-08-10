@@ -2,7 +2,6 @@
 #ifndef INPUT_BUTTON_H
 #define INPUT_BUTTON_H
 
-#include "pch.h"
 #include "Utils/UUIDv4Generator.h"
 #include "Window/Window.h"
 #include "KeyCodes.h"
@@ -10,7 +9,7 @@
 namespace Aminophenol
 {
 
-	class AMINOPHENOL_API InputButton
+	class InputButton
 	{
 	public:
 

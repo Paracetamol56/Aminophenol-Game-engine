@@ -2,13 +2,11 @@
 #ifndef RENDERPASS_H
 #define RENDERPASS_H
 
-#include "pch.h"
-
 #include "Rendering/Device/LogicalDevice.h"
 
 namespace Aminophenol {
 
-	class AMINOPHENOL_API RenderPass
+	class RenderPass
 	{
 	public:
 

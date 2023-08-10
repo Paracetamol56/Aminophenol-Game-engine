@@ -2,7 +2,6 @@
 #ifndef POINT_LIGHT_H
 #define POINT_LIGHT_H
 
-#include "pch.h"
 #include "Scene/Component.h"
 
 namespace Aminophenol {

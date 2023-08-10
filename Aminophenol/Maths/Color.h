@@ -2,8 +2,6 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-#include "pch.h"
-
 #include "Vector3.h"
 #include "Vector4.h"
 
@@ -11,14 +9,14 @@ namespace Aminophenol::Maths
 {
 
 	// Color format enum
-	enum class AMINOPHENOL_API ColorFormat
+	enum class ColorFormat
 	{
 		RGB,
 		RGBA,
 		ARGB,
 	};
 
-	class AMINOPHENOL_API Color
+	class Color
 	{
 	public:
 

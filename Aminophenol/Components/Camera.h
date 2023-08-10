@@ -2,13 +2,12 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "pch.h"
 #include "Scene/Component.h"
 #include "Maths/Matrix4.h"
 
 namespace Aminophenol {
 
-    class AMINOPHENOL_API Camera final
+    class Camera final
         : public Component
     {
     public:

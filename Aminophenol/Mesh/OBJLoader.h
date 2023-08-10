@@ -2,12 +2,11 @@
 #ifndef OBJLOADER_H
 #define OBJLOADER_H
 
-#include "pch.h"
 #include "Mesh/Mesh.h"
 
 namespace Aminophenol {
 
-	class AMINOPHENOL_API OBJLoader
+	class OBJLoader
 	{
 	public:
 		

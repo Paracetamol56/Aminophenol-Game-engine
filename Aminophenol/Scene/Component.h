@@ -2,8 +2,6 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "pch.h"
-
 #include "Utils/NonCopyable.h"
 #include "Utils/UUIDv4Generator.h"
 
@@ -11,7 +9,7 @@ namespace Aminophenol {
 
 	class Node;
 
-	class AMINOPHENOL_API Component : NonCopyable
+	class Component : NonCopyable
 	{
 	public:
 

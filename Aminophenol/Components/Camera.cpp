@@ -1,7 +1,6 @@
 
 #include "pch.h"
 #include "Camera.h"
-
 #include "Scene/Node.h"
 
 namespace Aminophenol {
@@ -27,7 +26,8 @@ namespace Aminophenol {
 
 	void Camera::setPerspectiveProjection(float fov, float aspect, float near, float far)
 	{
-		assert(aspect != 0.0f);
+		if (aspect == 0.0f)
+			throw std::runtime_error("Camera::setPerspectiveProjection() - aspect cannot be zero.");
 		const float tanHalfFovy = tanf(fov / 2.0f);
 
 		m_projectionMatrix = Maths::Matrix4f::identity();
@@ -43,9 +43,12 @@ namespace Aminophenol {
 	void Camera::setViewDirection(Maths::Vector3f direction, Maths::Vector3f up)
 	{
 		// Check that the direction and up vectors are not collinear and not zero
-		assert(direction != Maths::Vector3f::zero());
-		assert(up != Maths::Vector3f::zero());
-		assert(direction != up && direction != -up);
+		if (direction == Maths::Vector3f::zero())
+			throw std::runtime_error("Camera::setViewDirection() - direction cannot be zero.");
+		if (up == Maths::Vector3f::zero())
+			throw std::runtime_error("Camera::setViewDirection() - up cannot be zero.");
+		if (direction == up || direction == -up)
+			throw std::runtime_error("Camera::setViewDirection() - direction and up cannot be collinear.");
 
 		Maths::Vector3f position = m_node->transform.position;
 

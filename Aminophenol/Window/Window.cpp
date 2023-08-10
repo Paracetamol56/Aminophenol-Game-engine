@@ -1,7 +1,6 @@
 
 #include "pch.h"
 #include "Window.h"
-
 #include "Logging/Logger.h"
 
 namespace Aminophenol

@@ -2,7 +2,7 @@
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
-#include "pch.h"
+#include <iostream>
 
 namespace Aminophenol::Maths
 {

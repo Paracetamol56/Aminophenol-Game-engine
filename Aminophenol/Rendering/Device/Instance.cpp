@@ -1,9 +1,9 @@
 
 #include "pch.h"
 #include "Instance.h"
-
 #include "Logging/Logger.h"
 #include "Logging/DebugCallback.h"
+#include <GLFW/glfw3.h>
 
 namespace Aminophenol
 {

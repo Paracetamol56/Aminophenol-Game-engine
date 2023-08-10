@@ -2,8 +2,6 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "pch.h"
-
 #include "Utils/NonCopyable.h"
 #include "Rendering/Device/LogicalDevice.h"
 #include "Rendering/Pipeline/Pipeline.h"
@@ -12,7 +10,7 @@
 namespace Aminophenol
 {
 
-	class AMINOPHENOL_API Renderer : NonCopyable
+	class Renderer : NonCopyable
 	{
 	public:
 

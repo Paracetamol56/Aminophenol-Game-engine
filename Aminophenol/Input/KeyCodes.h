@@ -2,11 +2,9 @@
 #ifndef KEY_CODES_H
 #define KEY_CODES_H
 
-#include "pch.h"
-
 namespace Aminophenol {
 
-	typedef enum class AMINOPHENOL_API KeyCode : uint16_t
+	typedef enum class KeyCode : uint16_t
 	{
 		// From glfw3.h (https://github.com/glfw/glfw/blob/master/include/GLFW/glfw3.h)
 
@@ -142,7 +140,7 @@ namespace Aminophenol {
 		Menu = 348,			/* Menu */
 	} Key;
 
-	enum class AMINOPHENOL_API KeyState
+	enum class KeyState
 	{
 		None = -1,
 		Pressed = 0,
@@ -150,14 +148,14 @@ namespace Aminophenol {
 		Released = 2
 	};
 
-	enum class AMINOPHENOL_API CursorMode
+	enum class CursorMode
 	{
 		Normal = 0,
 		Hidden = 1,
 		Locked = 2
 	};
 
-	typedef enum class AMINOPHENOL_API MouseButton : uint16_t
+	typedef enum class MouseButton : uint16_t
 	{
 		Button0 = 0,
 		Button1 = 1,

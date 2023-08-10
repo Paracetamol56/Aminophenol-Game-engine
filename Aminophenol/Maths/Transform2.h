@@ -2,8 +2,6 @@
 #ifndef TRANSFORM2_H
 #define TRANSFORM2_H
 
-#include "pch.h"
-
 namespace Aminophenol::Maths
 {
 

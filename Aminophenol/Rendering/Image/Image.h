@@ -2,7 +2,6 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include "pch.h"
 #include "Rendering/Device/LogicalDevice.h"
 #include "Rendering/Device/PhysicalDevice.h"
 #include "Rendering/Commands/CommandPool.h"

@@ -2,7 +2,6 @@
 #ifndef MESH_RENDERER_H
 #define MESH_RENDERER_H
 
-#include "pch.h"
 #include "Rendering/Renderer/SubRenderer.h"
 #include "Scene/Component.h"
 #include "Scene/Node.h"
@@ -10,7 +9,7 @@
 
 namespace Aminophenol {
 	
-	class AMINOPHENOL_API MeshRenderer final
+	class MeshRenderer final
 		: public Component
 	{
 	public:

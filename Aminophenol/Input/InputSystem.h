@@ -1,7 +1,6 @@
 #ifndef INPUTSYSTEM_H
 #define INPUTSYSTEM_H
 
-#include "pch.h"
 #include "Window/Window.h"
 #include "Maths/Vector2.h"
 #include "InputAxis.h"
@@ -10,7 +9,7 @@
 
 namespace Aminophenol
 {
-	class AMINOPHENOL_API InputSystem
+	class InputSystem
 	{
 	public:
 

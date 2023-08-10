@@ -2,8 +2,6 @@
 #ifndef RENDERING_ENGINE_H
 #define RENDERING_ENGINE_H
 
-#include "pch.h"
-
 #include "Utils/NonCopyable.h"
 #include "Window/Window.h"
 #include "Scene/Scene.h"
@@ -33,7 +31,7 @@ namespace Aminophenol {
 	/// It holds all the necessary objects to render :
 	/// Instance, PhysicalDevice, LogicalDevice, Surface, Swapchain, Pipeline, CommandPool
 	/// </summary>
-	class AMINOPHENOL_API RenderingEngine : NonCopyable
+	class RenderingEngine : NonCopyable
 	{
 	public:
 

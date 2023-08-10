@@ -2,8 +2,6 @@
 #ifndef EULER_ANGLE_H
 #define EULER_ANGLE_H
 
-#include "pch.h"
-
 namespace Aminophenol::Maths
 {
 

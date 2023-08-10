@@ -2,10 +2,6 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include "pch.h"
-
-#include "Utils/NonCopyable.h"
-#include "Utils/UUIDv4Generator.h"
 #include "Scene/Component.h"
 #include "Maths/Transform3.h"
 #include "Components/Camera.h"
@@ -13,7 +9,7 @@
 
 namespace Aminophenol {
 
-	class AMINOPHENOL_API Node : NonCopyable
+	class Node : NonCopyable
 	{
 	public:
 

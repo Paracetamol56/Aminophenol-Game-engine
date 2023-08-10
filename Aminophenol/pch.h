@@ -2,7 +2,20 @@
 #ifndef PCH_H
 #define PCH_H
 
-// Precompiled header
-#include "framework.h"
+// C/C++ headers
+#include <iostream>
+#include <stdexcept>
+#include <vector>
+#include <array>
+#include <map>
+#include <unordered_map>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <chrono>
+#include <random>
+#include <memory>
+#include <functional>
+#include <filesystem>
 
 #endif //PCH_H

@@ -2,13 +2,11 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
-#include "pch.h"
-
 #include "Rendering/Device/LogicalDevice.h"
 
 namespace Aminophenol {
 
-	class AMINOPHENOL_API Buffer
+	class Buffer
 	{
 	public:
 

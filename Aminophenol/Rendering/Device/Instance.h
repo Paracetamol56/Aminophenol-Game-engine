@@ -2,12 +2,12 @@
 #ifndef INSTANCE_H
 #define INSTANCE_H
 
-#include "pch.h"
+#include <vulkan/vulkan.h>
 
 namespace Aminophenol
 {
 
-	class AMINOPHENOL_API Instance
+	class Instance
 	{
 	public:
 

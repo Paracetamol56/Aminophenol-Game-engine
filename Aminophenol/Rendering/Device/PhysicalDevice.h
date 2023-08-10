@@ -2,14 +2,12 @@
 #ifndef PHYSICAL_DEVICE_H
 #define PHYSICAL_DEVICE_H
 
-#include "pch.h"
-
 #include "Rendering/Device/Instance.h"
 
 namespace Aminophenol
 {
 
-	class AMINOPHENOL_API PhysicalDevice
+	class PhysicalDevice
 	{
 	public:
 

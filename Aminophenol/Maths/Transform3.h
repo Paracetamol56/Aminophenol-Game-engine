@@ -2,7 +2,6 @@
 #ifndef TRANSFORM3_H
 #define TRANSFORM3_H
 
-#include "pch.h"
 #include "Vector3.h"
 #include "Matrix4.h"
 #include "Quaternion.h"

@@ -2,8 +2,6 @@
 #ifndef MATRIX4_H
 #define MATRIX4_H
 
-#include "pch.h"
-
 namespace Aminophenol::Maths
 {
 

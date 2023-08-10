@@ -2,7 +2,6 @@
 #ifndef QUATERNION_H
 #define QUATERNION_H
 
-#include "pch.h"
 #include "EulerAngle.h"
 
 namespace Aminophenol::Maths

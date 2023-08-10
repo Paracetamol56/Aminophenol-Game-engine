@@ -2,11 +2,11 @@
 #ifndef UUID_V4_GENERATOR_H
 #define UUID_V4_GENERATOR_H
 
-#include "pch.h"
+#include <random>
 
 namespace Aminophenol::Utils {
 	
-	class AMINOPHENOL_API UUID
+	class UUID
 	{
 	public:
 
@@ -32,7 +32,7 @@ namespace Aminophenol::Utils {
 	};
 	
 	template <typename Engine>
-	class AMINOPHENOL_API UUIDv4Generator
+	class UUIDv4Generator
 	{
 	public:
 

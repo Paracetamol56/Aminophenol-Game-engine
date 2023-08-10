@@ -2,9 +2,6 @@
 #ifndef DEBUG_CALLBACK_H
 #define DEBUG_CALLBACK_H
 
-#include "pch.h"
-
-// C/C++ headers
 #include <windows.h>
 
 namespace Aminophenol

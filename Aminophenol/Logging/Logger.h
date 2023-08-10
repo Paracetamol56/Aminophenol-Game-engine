@@ -1,11 +1,9 @@
 #pragma once
 
-#include "pch.h"
-
 namespace Aminophenol
 {
 
-	enum class AMINOPHENOL_API LogLevel
+	enum class LogLevel
 	{
 		Trace,
 		Info,
@@ -14,7 +12,7 @@ namespace Aminophenol
 		Critical
 	};
 
-	class AMINOPHENOL_API Logger
+	class Logger
 	{
 	public:
 		

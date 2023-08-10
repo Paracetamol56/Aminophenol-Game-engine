@@ -2,7 +2,11 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include "pch.h"
+// Remove unusual windows stuff
+#define WIN32_LEAN_AND_MEAN
+
+// STB definitions
+#define STB_IMAGE_IMPLEMENTATION
 
 #include "Window/Window.h"
 #include "Logging/Logger.h"
@@ -14,7 +18,7 @@
 namespace Aminophenol
 {
 
-	class AMINOPHENOL_API Engine : public NonCopyable
+	class Engine : public NonCopyable
 	{
 	public:
 

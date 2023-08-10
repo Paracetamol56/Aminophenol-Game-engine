@@ -2,7 +2,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "pch.h"
 #include "Constant.h"
 
 namespace Aminophenol::Maths

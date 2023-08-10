@@ -2,8 +2,6 @@
 #ifndef RENDER_STAGE_H
 #define RENDER_STAGE_H
 
-#include "pch.h"
-
 class RenderStage
 {
 public:
