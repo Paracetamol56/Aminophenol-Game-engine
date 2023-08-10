@@ -15,12 +15,12 @@ namespace Aminophenol {
 	{
 	public:
 
-		Component(const Node* node);
+		Component(Node* node);
 		virtual ~Component();
 
 		// Accessors
 		const Utils::UUID getUUID() const;
-		const Node* getNode() const;
+		Node* getNode() const;
 		void enable();
 		void disable();
 		const bool isEnabled() const;
@@ -33,7 +33,7 @@ namespace Aminophenol {
 	protected:
 
 		const Utils::UUID m_uuid;
-		const Node* m_node;
+		Node* m_node;
 		bool m_enabled{ true };
 
 	};

@@ -164,11 +164,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="CustomComponents\ObjectRotationController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aminophenol\Aminophenol.vcxproj">
       <Project>{59c3cb0c-e690-4b7e-92da-f657bb38d880}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CustomComponents\ObjectRotationController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

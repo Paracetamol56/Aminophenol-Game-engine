@@ -6,7 +6,7 @@
 
 namespace Aminophenol {
 
-	Component::Component(const Node* node)
+	Component::Component(Node* node)
 		: m_uuid{ Utils::UUIDv4Generator32::getUUID() }
 		, m_node{ node }
 	{}
@@ -21,7 +21,7 @@ namespace Aminophenol {
 		return m_uuid;
 	}
 	
-	const Node* Component::getNode() const
+	Node* Component::getNode() const
 	{
 		return m_node;
 	}

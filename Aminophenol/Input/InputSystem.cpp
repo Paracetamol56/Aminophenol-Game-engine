@@ -38,18 +38,20 @@ namespace Aminophenol {
 		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL + static_cast<int>(mode));
 	}
 
-	void InputSystem::addAxis(
+	std::shared_ptr<InputAxis> InputSystem::addAxis(
 		const std::string name,
 		const KeyCode keyNegative, const KeyCode keyPositive,
 		const float acceleration, const float deceleration
 	)
 	{
 		m_axes.push_back(std::make_shared<InputAxis>(m_window, name, keyNegative, keyPositive, acceleration, deceleration));
+		return m_axes.back();
 	}
 
-	void InputSystem::addButton(const std::string name, const KeyCode key)
+	std::shared_ptr<InputButton> InputSystem::addButton(const std::string name, const KeyCode key)
 	{
 		m_buttons.push_back(std::make_shared<InputButton>(m_window, name, key));
+		return m_buttons.back();
 	}
 
 	float InputSystem::getAxis(const std::string& name) const

@@ -282,20 +282,14 @@ namespace Aminophenol {
 		vkCmdSetViewport(m_frames[imageIndex].commandBuffer->getCommandBuffer(), 0, 1, &viewport);
 		vkCmdSetScissor(m_frames[imageIndex].commandBuffer->getCommandBuffer(), 0, 1, &scissor);
 
-		static int frame = 0;
-		++frame;
-
 		// Iterate through all renderables in the active scene and draw them
 		for (std::vector<std::unique_ptr<Node>>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
 		{
-			(*it)->transform.rotation.rotate({ 0.25f, 0.75f, 0.0f }, frame / 5000.0f);
-
 			PushConstantData push{};
 			push.modelTransform =
 				m_activeScene->getActiveCamera()->getProjectionMatrix()
 				* m_activeScene->getActiveCamera()->getViewMatrix()
-				* (*it)->transform.getMatrix()
-				;
+				* (*it)->transform.getMatrix();
 
 			vkCmdPushConstants(
 				m_frames[imageIndex].commandBuffer->getCommandBuffer(),
@@ -317,6 +311,8 @@ namespace Aminophenol {
 		vkCmdEndRenderPass(m_frames[imageIndex].commandBuffer->getCommandBuffer());
 		
 		m_frames[imageIndex].commandBuffer->end();
+
+		m_activeScene->onUpdate();
 	}
 
 	void RenderingEngine::recreateSwapchain()

@@ -28,10 +28,6 @@ namespace Aminophenol::Maths
 		Quaternionf rotation;
 		Vector3f scale;
 
-	private:
-
-		// Nothing here
-
 	};
 
 }

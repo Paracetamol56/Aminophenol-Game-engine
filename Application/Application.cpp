@@ -6,6 +6,8 @@
 #include <Maths/Utils.h>
 #include <Mesh/OBJLoader.h>
 
+#include "CustomComponents/ObjectRotationController.h"
+
 using namespace Aminophenol;
 
 int main(int argc, char* argv[])
@@ -29,19 +31,20 @@ int main(int argc, char* argv[])
 		engine.getRenderingEngine().getCommandPool(),
 		"C:\\Users\\mathe\\Downloads\\xyzrgb_dragon_normal.obj"
 	));
-	object->transform.position = { 0.0f, 0.0f, 50.0f };
+	object->transform.position = { 0.0f, 0.0f, 0.0f };
 	object->transform.scale = { 0.01f };
 
+	object->addComponent<ObjectRotationController>();
+
 	Node* camera = scene->addChild("Camera");
-	camera->transform.position = { 0.0f, 0.0f, -40.0f };
+	camera->transform.position = { 0.0f, 0.0f, -3.0f };
 	Camera* cameraComponent = camera->addComponent<Camera>();
-	cameraComponent->setOrthographicProjection(-1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 100.0f);
-	// cameraComponent->setPerspectiveProjection(Maths::degreesToRadians(20.0f), 1.0f, 0.1f, 100.0f);
+	// cameraComponent->setOrthographicProjection(-1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 100.0f);
+	cameraComponent->setPerspectiveProjection(Maths::degreesToRadians(45.0f), 1.0f, 0.1f, 100.0f);
 	cameraComponent->setViewDirection({ 0.0f, 0.0f, 1.0f }, { 0.0f, -1.0f, 0.0f });
 
 	scene->setBackgroundColor(Maths::Color{0.43f, 0.75f, 0.93f, 1.0f});
 	scene->setActiveCamera(cameraComponent);
-
 	scene.reset();
 
 	try

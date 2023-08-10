@@ -14,12 +14,14 @@
 namespace Aminophenol
 {
 
-	class AMINOPHENOL_API Engine
+	class AMINOPHENOL_API Engine : public NonCopyable
 	{
 	public:
 
 		Engine(std::string appName = "Aminophenol", const unsigned int width = 800, const unsigned int height = 800);
 		~Engine();
+
+		static Engine* get();
 
 		void run();
 		void setActiveScene(const std::shared_ptr<Scene> scene);
@@ -31,6 +33,7 @@ namespace Aminophenol
 
 	private:
 
+		static Engine* s_instance;
 		const std::string _appName;
 
 		std::unique_ptr<Window> m_window;

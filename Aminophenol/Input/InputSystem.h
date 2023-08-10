@@ -26,12 +26,12 @@ namespace Aminophenol
 		void setCursorMode(CursorMode mode);
 
 		// Axis & buttons methods
-		void addAxis(
+		std::shared_ptr<InputAxis> addAxis(
 			const std::string name,
 			const KeyCode keyNegative, const KeyCode keyPositive,
 			const float acceleration = 0.1f, const float deceleration = 0.1f
 		);
-		void addButton(
+		std::shared_ptr<InputButton> addButton(
 			const std::string name, const KeyCode key
 		);
 		float getAxis(const std::string& name) const;

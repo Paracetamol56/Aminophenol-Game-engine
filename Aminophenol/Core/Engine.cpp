@@ -4,8 +4,10 @@
 
 namespace Aminophenol {
 	
+	Engine* Engine::s_instance = nullptr;
+
 	Engine::Engine(std::string appName, const unsigned int width, const unsigned int height)
-		: _appName{ appName }
+		:  _appName{ appName }
 		, m_uuidGenerator{}
 	{
 		try {
@@ -23,6 +25,8 @@ namespace Aminophenol {
 			Logger::log(LogLevel::Critical, "Failed to initialize engine.");
 			Logger::log(LogLevel::Critical, e.what());
 		}
+
+		s_instance = this;
 	}
 
 	Engine::~Engine()
@@ -40,9 +44,16 @@ namespace Aminophenol {
 		}
 	}
 
+	Engine* Engine::get()
+	{
+		return s_instance;
+	}
+
 	void Engine::run()
 	{
 		Logger::log(LogLevel::Info, "Running %s...", _appName.c_str());
+
+		m_activeScene->onStart();
 
 		while (!m_window->shouldClose())
 		{
