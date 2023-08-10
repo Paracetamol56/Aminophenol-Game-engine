@@ -149,6 +149,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Rendering\Image\ImageDepth.h" />
+    <ClInclude Include="Rendering\Image\Image.h" />
+    <ClInclude Include="Rendering\Frame.h" />
     <ClInclude Include="Utils\ExecutionTimingBenchmark.h" />
     <ClInclude Include="Input\InputAxis.h" />
     <ClInclude Include="Input\InputButton.h" />
@@ -204,6 +207,8 @@
     <ClCompile Include="Components\Camera.cpp" />
     <ClCompile Include="Components\MeshRenderer.cpp" />
     <ClCompile Include="Components\PointLight.cpp" />
+    <ClCompile Include="Rendering\Image\ImageDepth.cpp" />
+    <ClCompile Include="Rendering\Image\Image.cpp" />
     <ClCompile Include="Utils\ExecutionTimingBenchmark.cpp" />
     <ClCompile Include="Input\InputAxis.cpp" />
     <ClCompile Include="Input\InputButton.cpp" />

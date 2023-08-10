@@ -33,7 +33,7 @@ namespace Aminophenol {
 
 		m_activeScene.reset();
 
-		m_commandBuffers.clear();
+		m_frames.clear();
 		m_globalCommandBuffer.reset();
 		m_commandPool.reset();
 		m_pipeline.reset();
@@ -53,11 +53,11 @@ namespace Aminophenol {
 			return;
 
 		// Wait for the fence to be signaled
-		vkWaitForFences(*m_logicalDevice, 1, &m_inFlightFences[m_currentFrame], VK_TRUE, UINT64_MAX);
+		vkWaitForFences(*m_logicalDevice, 1, &m_frames[m_currentFrame].inFlightFence, VK_TRUE, UINT64_MAX);
 
 		// Acquire the next image
 		uint32_t imageIndex;
-		VkResult aquiringResult = vkAcquireNextImageKHR(*m_logicalDevice, *m_swapchain, UINT64_MAX, m_imageAvailableSemaphores[m_currentFrame], VK_NULL_HANDLE, &imageIndex);
+		VkResult aquiringResult = vkAcquireNextImageKHR(*m_logicalDevice, *m_swapchain, UINT64_MAX, m_frames[m_currentFrame].imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
 		if (aquiringResult == VK_ERROR_OUT_OF_DATE_KHR)
 		{
 			Logger::log(LogLevel::Trace, "Failed to acquire next image. Swapchain is out of date. Recreating swapchain...");
@@ -69,7 +69,7 @@ namespace Aminophenol {
 			throw std::runtime_error("Failed to acquire swapchain image!");
 		}
 
-		vkResetCommandBuffer(m_commandBuffers[imageIndex]->getCommandBuffer(), 0);
+		vkResetCommandBuffer(m_frames[imageIndex].commandBuffer->getCommandBuffer(), 0);
 
 		recordDrawCommand(imageIndex);
 
@@ -77,30 +77,16 @@ namespace Aminophenol {
 		VkSubmitInfo submitInfo{};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-		VkSemaphore waitSemaphores[] = { m_imageAvailableSemaphores[m_currentFrame] };
-		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
-		submitInfo.waitSemaphoreCount = 1;
-		submitInfo.pWaitSemaphores = waitSemaphores;
-		submitInfo.pWaitDstStageMask = waitStages;
-		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &m_commandBuffers[imageIndex]->getCommandBuffer();
+		VkSemaphore waitSemaphores{ m_frames[m_currentFrame].imageAvailableSemaphore };
+		VkSemaphore signalSemaphores{ m_frames[m_currentFrame].renderFinishedSemaphore };
 
-		VkSemaphore signalSemaphores[] = { m_renderFinishedSemaphores[m_currentFrame] };
-		submitInfo.signalSemaphoreCount = 1;
-		submitInfo.pSignalSemaphores = signalSemaphores;
-
-		vkResetFences(*m_logicalDevice, 1, &m_inFlightFences[m_currentFrame]);
-
-		if (vkQueueSubmit(m_logicalDevice->getGraphicsQueue(), 1, &submitInfo, m_inFlightFences[m_currentFrame]) != VK_SUCCESS)
-		{
-			Logger::log(LogLevel::Error, "Failed to submit draw command buffer!");
-		}
+		m_frames[imageIndex].commandBuffer->submit(waitSemaphores, signalSemaphores, m_frames[m_currentFrame].inFlightFence);
 
 		// Present the image
 		VkPresentInfoKHR presentInfo{};
 		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 		presentInfo.waitSemaphoreCount = 1;
-		presentInfo.pWaitSemaphores = signalSemaphores;
+		presentInfo.pWaitSemaphores = &signalSemaphores;
 
 		VkSwapchainKHR swapChains[] = { *m_swapchain };
 		presentInfo.swapchainCount = 1;
@@ -174,35 +160,40 @@ namespace Aminophenol {
 		// Resize vectors
 		m_maxFramesInFlight = m_attachments.size();
 
-		m_frameBuffers.resize(m_maxFramesInFlight);
-		m_commandBuffers.resize(m_maxFramesInFlight);
-		m_imageAvailableSemaphores.resize(m_maxFramesInFlight);
-		m_renderFinishedSemaphores.resize(m_maxFramesInFlight);
-		m_inFlightFences.resize(m_maxFramesInFlight);
+		m_frames.resize(m_maxFramesInFlight);
 
 		// Initialize all syncronization objects
 		for (size_t i = 0; i < m_maxFramesInFlight; i++)
 		{
+			// Create a depth buffer
+			m_frames[i].depthBuffer = std::make_unique<ImageDepth>(
+				*m_logicalDevice, *m_physicalDevice, m_commandPool,
+				VkExtent3D{ m_swapchain->getExtent().width, m_swapchain->getExtent().height, 1 }
+			);
+
+			Logger::log(LogLevel::Trace, "DepthBuffer %d initialized", i);
+
 			// Create a frame buffer
-			VkImageView attachments[] = { m_attachments[i] };
+			std::array<VkImageView, 2> attachments = { m_attachments[i], m_frames[i].depthBuffer->getImageView() };
 
 			VkFramebufferCreateInfo framebufferInfo{};
 			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 			framebufferInfo.renderPass = m_pipeline->getRenderPass();
-			framebufferInfo.attachmentCount = 1;
-			framebufferInfo.pAttachments = attachments;
+			framebufferInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
+			framebufferInfo.pAttachments = attachments.data();
 			framebufferInfo.width = m_swapchain->getExtent().width;
 			framebufferInfo.height = m_swapchain->getExtent().height;
 			framebufferInfo.layers = 1;
 
-			if (vkCreateFramebuffer(m_logicalDevice->getDevice(), &framebufferInfo, nullptr, &m_frameBuffers[i]) != VK_SUCCESS)
+			if (vkCreateFramebuffer(m_logicalDevice->getDevice(), &framebufferInfo, nullptr, &m_frames[i].frameBuffer) != VK_SUCCESS)
 			{
 				throw std::runtime_error("Failed to create framebuffer!");
 			}
 
 			Logger::log(LogLevel::Trace, "FrameBuffer %d initialized", i);
 
-			m_commandBuffers[i] = std::make_unique<CommandBuffer>(*m_logicalDevice, m_commandPool);
+			// Create a command buffer
+			m_frames[i].commandBuffer = std::make_unique<CommandBuffer>(*m_logicalDevice, m_commandPool);
 
 			Logger::log(LogLevel::Trace, "CommandBuffer %d initialized", i);
 
@@ -210,8 +201,8 @@ namespace Aminophenol {
 			VkSemaphoreCreateInfo semaphoreInfo{};
 			semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-			if (vkCreateSemaphore(m_logicalDevice->getDevice(), &semaphoreInfo, nullptr, &m_imageAvailableSemaphores[i]) != VK_SUCCESS ||
-				vkCreateSemaphore(m_logicalDevice->getDevice(), &semaphoreInfo, nullptr, &m_renderFinishedSemaphores[i]) != VK_SUCCESS)
+			if (vkCreateSemaphore(m_logicalDevice->getDevice(), &semaphoreInfo, nullptr, &m_frames[i].imageAvailableSemaphore) != VK_SUCCESS ||
+				vkCreateSemaphore(m_logicalDevice->getDevice(), &semaphoreInfo, nullptr, &m_frames[i].renderFinishedSemaphore) != VK_SUCCESS)
 			{
 				throw std::runtime_error("Failed to create semaphores!");
 			}
@@ -220,7 +211,7 @@ namespace Aminophenol {
 			fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 			fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-			if (vkCreateFence(m_logicalDevice->getDevice(), &fenceInfo, nullptr, &m_inFlightFences[i]) != VK_SUCCESS)
+			if (vkCreateFence(m_logicalDevice->getDevice(), &fenceInfo, nullptr, &m_frames[i].inFlightFence) != VK_SUCCESS)
 			{
 				throw std::runtime_error("Failed to create fences!");
 			}
@@ -229,111 +220,103 @@ namespace Aminophenol {
 
 	void RenderingEngine::destroyFrameObjects()
 	{
-		for (size_t i = 0; i < m_maxFramesInFlight; i++)
+		for (size_t i = 0; i < m_maxFramesInFlight; ++i)
 		{
-			vkDestroyFramebuffer(m_logicalDevice->getDevice(), m_frameBuffers[i], nullptr);
-			vkDestroySemaphore(m_logicalDevice->getDevice(), m_imageAvailableSemaphores[i], nullptr);
-			vkDestroySemaphore(m_logicalDevice->getDevice(), m_renderFinishedSemaphores[i], nullptr);
-			vkDestroyFence(m_logicalDevice->getDevice(), m_inFlightFences[i], nullptr);
+			vkDestroyFramebuffer(m_logicalDevice->getDevice(), m_frames[i].frameBuffer, nullptr);
+			m_frames[i].depthBuffer.reset();
+			m_frames[i].commandBuffer.reset();
+			vkDestroySemaphore(m_logicalDevice->getDevice(), m_frames[i].imageAvailableSemaphore, nullptr);
+			vkDestroySemaphore(m_logicalDevice->getDevice(), m_frames[i].renderFinishedSemaphore, nullptr);
+			vkDestroyFence(m_logicalDevice->getDevice(), m_frames[i].inFlightFence, nullptr);
 		}
 	}
 
 	void RenderingEngine::recordDrawCommand(uint32_t imageIndex)
 	{
-		// Begin recording
-		VkCommandBufferBeginInfo beginInfo{};
-		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
-
-		if (vkBeginCommandBuffer(m_commandBuffers[imageIndex]->getCommandBuffer(), &beginInfo) != VK_SUCCESS)
-		{
-			throw std::runtime_error("Failed to begin recording command buffer!");
-		}
+		m_frames[imageIndex].commandBuffer->begin(VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT);
 		
 		// Begin render pass
 		VkRenderPassBeginInfo renderPassInfo{};
 		renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 		renderPassInfo.renderPass = m_pipeline->getRenderPass();
-		renderPassInfo.framebuffer = m_frameBuffers[imageIndex];
+		renderPassInfo.framebuffer = m_frames[imageIndex].frameBuffer;
 		renderPassInfo.renderArea.offset = { 0, 0 };
 		renderPassInfo.renderArea.extent = m_swapchain->getExtent();
 
 		if (m_activeScene == nullptr)
 		{
 			Logger::log(LogLevel::Warning, "No active scene!");
+			m_frames[imageIndex].commandBuffer->end();
+			return;
 		}
-		else
-		{
-			VkClearValue clearColor{
-				m_activeScene->getBackgroundColor().r,
-				m_activeScene->getBackgroundColor().g,
-				m_activeScene->getBackgroundColor().b,
-				m_activeScene->getBackgroundColor().a
-			};
-
-			renderPassInfo.clearValueCount = 1;
-			renderPassInfo.pClearValues = &clearColor;
-
-			vkCmdBeginRenderPass(m_commandBuffers[imageIndex]->getCommandBuffer(), &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-
-			vkCmdBindPipeline(m_commandBuffers[imageIndex]->getCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, *m_pipeline);
-			
-			// Update viewport and scissor
-			VkViewport viewport{};
-			viewport.x = 0.0f;
-			viewport.y = 0.0f;
-			viewport.width = (float)m_swapchain->getExtent().width;
-			viewport.height = (float)m_swapchain->getExtent().height;
-			viewport.minDepth = 0.0f;
-			viewport.maxDepth = 1.0f;
-
-			VkRect2D scissor{};
-			scissor.offset = { 0, 0 };
-			scissor.extent = m_swapchain->getExtent();
-
-			vkCmdSetViewport(m_commandBuffers[imageIndex]->getCommandBuffer(), 0, 1, &viewport);
-			vkCmdSetScissor(m_commandBuffers[imageIndex]->getCommandBuffer(), 0, 1, &scissor);
-			
-			static int frame = 0;
-			++frame;
 		
-			// Iterate through all renderables in the active scene and draw them
-			for (std::vector<std::unique_ptr<Node>>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
+		std::array<VkClearValue, 2> clearValues{};
+		clearValues[0].color = {
+			m_activeScene->getBackgroundColor().r,
+			m_activeScene->getBackgroundColor().g,
+			m_activeScene->getBackgroundColor().b,
+			m_activeScene->getBackgroundColor().a
+		};
+		clearValues[1].depthStencil = { 1.0f, 0 };
+
+		renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
+		renderPassInfo.pClearValues = clearValues.data();
+
+		vkCmdBeginRenderPass(m_frames[imageIndex].commandBuffer->getCommandBuffer(), &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+		vkCmdBindPipeline(m_frames[imageIndex].commandBuffer->getCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, *m_pipeline);
+
+		// Update viewport and scissor
+		VkViewport viewport{};
+		viewport.x = 0.0f;
+		viewport.y = 0.0f;
+		viewport.width = (float)m_swapchain->getExtent().width;
+		viewport.height = (float)m_swapchain->getExtent().height;
+		viewport.minDepth = 0.0f;
+		viewport.maxDepth = 1.0f;
+
+		VkRect2D scissor{};
+		scissor.offset = { 0, 0 };
+		scissor.extent = m_swapchain->getExtent();
+
+		vkCmdSetViewport(m_frames[imageIndex].commandBuffer->getCommandBuffer(), 0, 1, &viewport);
+		vkCmdSetScissor(m_frames[imageIndex].commandBuffer->getCommandBuffer(), 0, 1, &scissor);
+
+		static int frame = 0;
+		++frame;
+
+		// Iterate through all renderables in the active scene and draw them
+		for (std::vector<std::unique_ptr<Node>>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
+		{
+			(*it)->transform.rotation.rotate({ 0.25f, 0.75f, 0.0f }, frame / 5000.0f);
+
+			PushConstantData push{};
+			push.modelTransform =
+				m_activeScene->getActiveCamera()->getProjectionMatrix()
+				* m_activeScene->getActiveCamera()->getViewMatrix()
+				* (*it)->transform.getMatrix()
+				;
+
+			vkCmdPushConstants(
+				m_frames[imageIndex].commandBuffer->getCommandBuffer(),
+				m_pipeline->getPipelineLayout(),
+				VK_SHADER_STAGE_VERTEX_BIT,
+				0,
+				sizeof(PushConstantData),
+				&push
+			);
+
+			// If the Node has a MeshRenderer component, draw it
+			std::vector<MeshRenderer*> renderers = (*it)->getComponentsOfType<MeshRenderer>();
+			for (std::vector<MeshRenderer*>::iterator it2 = renderers.begin(); it2 != renderers.end(); ++it2)
 			{
-				(*it)->transform.rotation.rotate({ 0.25f, 0.75f, 0.0f }, frame / 5000.0f);
-
-				PushConstantData push{};
-				push.modelTransform =
-					m_activeScene->getActiveCamera()->getProjectionMatrix()
-					* m_activeScene->getActiveCamera()->getViewMatrix()
-					* (*it)->transform.getMatrix()
-					;
-
-				vkCmdPushConstants(
-					m_commandBuffers[imageIndex]->getCommandBuffer(),
-					m_pipeline->getPipelineLayout(),
-					VK_SHADER_STAGE_VERTEX_BIT,
-					0,
-					sizeof(PushConstantData),
-					&push
-				);
-
-				// If the Node has a MeshRenderer component, draw it
-				std::vector<MeshRenderer*> renderers = (*it)->getComponentsOfType<MeshRenderer>();
-				for (std::vector<MeshRenderer*>::iterator it2 = renderers.begin(); it2 != renderers.end(); ++it2)
-				{
-					(*it2)->renderMesh(m_commandBuffers[imageIndex]->getCommandBuffer());
-				}
+				(*it2)->renderMesh(m_frames[imageIndex].commandBuffer->getCommandBuffer());
 			}
+		}
 
-			vkCmdEndRenderPass(m_commandBuffers[imageIndex]->getCommandBuffer());
-		}
+		vkCmdEndRenderPass(m_frames[imageIndex].commandBuffer->getCommandBuffer());
 		
-		// End recording
-		if (vkEndCommandBuffer(m_commandBuffers[imageIndex]->getCommandBuffer()) != VK_SUCCESS)
-		{
-			throw std::runtime_error("Failed to record command buffer!");
-		}
+		m_frames[imageIndex].commandBuffer->end();
 	}
 
 	void RenderingEngine::recreateSwapchain()
