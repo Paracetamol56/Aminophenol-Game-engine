@@ -6,8 +6,6 @@
 
 namespace Aminophenol {
 
-
-
 	Image::Image(
 		const LogicalDevice& logicalDevice,
 		const PhysicalDevice& physicalDevice,
@@ -202,12 +200,7 @@ namespace Aminophenol {
 		const VkImage& image,
 		VkFormat format,
 		VkImageLayout srcImageLayout,
-		VkImageLayout dstImageLayout,
-		VkImageAspectFlags imageAspect,
-		uint32_t mipLevels,
-		uint32_t baseMipLevel,
-		uint32_t layerCount,
-		uint32_t baseArrayLayer
+		VkImageLayout dstImageLayout
 	)
 	{
 		/*VkCommandBuffer commandBuffer = beginSingleTimeCommands(logicalDevice);
