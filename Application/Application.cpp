@@ -1,6 +1,8 @@
 
 #include <memory>
 #include <string>
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 #include "Core/Engine.h"
 #include "Logging/Logger.h"
@@ -19,7 +21,7 @@ int main(int argc, char* argv[])
 	Logger logger{ LogLevel::Info };
 #endif // _DEBUG
 
-	Engine engine{ "Aminophenol application" };
+	Engine engine{ "Aminophenol application", 60.0, 800, 800 };
 
 	// Create a basic scene
 	std::shared_ptr<Scene> scene = std::make_shared<Scene>("Basic scene");
@@ -40,7 +42,6 @@ int main(int argc, char* argv[])
 	camera->transform.position = { 0.0f, 0.0f, -3.0f };
 	// OrthographicCamera* cameraComponent = camera->addComponent<OrthographicCamera>(1.0, -1.0, 1.0, 0.0, 100.0);
 	PerspectiveCamera* cameraComponent = camera->addComponent<PerspectiveCamera>(Maths::degreesToRadians(45.0f), 1.0f, 0.1f, 100.0f);
-	cameraComponent->setPerspectiveProjection(Maths::degreesToRadians(45.0f), 1.0f, 0.1f, 100.0f);
 	cameraComponent->setViewDirection({ 0.0f, 0.0f, 1.0f }, { 0.0f, -1.0f, 0.0f });
 
 	scene->setBackgroundColor(Maths::Color{0.21f, 0.35f, 0.45f, 1.0f});

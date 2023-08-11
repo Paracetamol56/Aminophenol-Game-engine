@@ -6,8 +6,9 @@ namespace Aminophenol {
 	
 	Engine* Engine::s_instance = nullptr;
 
-	Engine::Engine(std::string appName, const unsigned int width, const unsigned int height)
+	Engine::Engine(std::string appName, const double maxFPS, const unsigned int width, const unsigned int height)
 		:  _appName{ appName }
+		, m_maxFrameTime{ 1.0f / maxFPS }
 		, m_uuidGenerator{}
 	{
 		try {
@@ -55,11 +56,27 @@ namespace Aminophenol {
 
 		m_activeScene->onStart();
 
+		std::chrono::high_resolution_clock::time_point previousTime = std::chrono::high_resolution_clock::now();
+		std::chrono::high_resolution_clock::time_point lastFrameTime = std::chrono::high_resolution_clock::now();
+		double accumulatedTime = 0.0;
+
 		while (!m_window->shouldClose())
 		{
-			glfwPollEvents();
-			m_inputSystem->update();
-			m_renderingEngine->update();
+			std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
+			std::chrono::duration<double> elapsedDuration = currentTime - previousTime;
+			previousTime = currentTime;
+			accumulatedTime += elapsedDuration.count();
+
+			while (accumulatedTime >= m_maxFrameTime)
+			{
+				glfwPollEvents();
+				m_inputSystem->update();
+				m_activeScene->onUpdate();
+				m_renderingEngine->update();
+				accumulatedTime -= m_maxFrameTime;
+				m_deltaTime = std::chrono::duration<double>(currentTime - lastFrameTime).count();
+				lastFrameTime = currentTime;
+			}
 		}
 
 		Logger::log(LogLevel::Info, "Exiting %s...", _appName.c_str());
@@ -98,6 +115,21 @@ namespace Aminophenol {
 	InputSystem& Engine::getInputSystem() const
 	{
 		return *m_inputSystem;
+	}
+
+	float Engine::getDeltaTime() const
+	{
+		return m_deltaTime;
+	}
+
+	float Engine::getFPS() const
+	{
+		return 1.0f / m_deltaTime;
+	}
+
+	void Engine::setMaxFPS(const double maxFPS)
+	{
+		m_maxFrameTime = 1.0f / maxFPS;
 	}
 
 } // namespace Aminophenol

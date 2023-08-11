@@ -16,6 +16,7 @@ namespace Aminophenol
 		// Init GLFW
 		glfwInit();
 
+		// Set GLFW window hints
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 

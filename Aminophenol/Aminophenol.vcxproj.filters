@@ -171,9 +171,6 @@
     <ClInclude Include="Rendering\Image\ImageDepth.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Engine.cpp">
@@ -325,10 +322,5 @@
     <None Include="Maths\Constant.inl">
       <Filter>Fichiers d%27en-tête</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Ressources\Icon.ico">
-      <Filter>Fichiers de ressources</Filter>
-    </Image>
   </ItemGroup>
 </Project>

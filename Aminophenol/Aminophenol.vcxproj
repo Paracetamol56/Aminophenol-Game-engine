@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -124,6 +124,9 @@
       <AdditionalLibraryDirectories>C:\sdk\VulkanSDK\1.3.250.1\Lib;$(SolutionDir)vendor\glfw\bin\src\Debug</AdditionalLibraryDirectories>
       <AdditionalDependencies>vulkan-1.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)Ressources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -147,12 +150,14 @@
       <AdditionalLibraryDirectories>C:\sdk\VulkanSDK\1.3.250.1\Lib;$(SolutionDir)vendor\glfw\bin\src\Release</AdditionalLibraryDirectories>
       <AdditionalDependencies>vulkan-1.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)Ressources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Rendering\Image\ImageDepth.h" />
     <ClInclude Include="Rendering\Image\Image.h" />
     <ClInclude Include="Rendering\Frame.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Utils\ExecutionTimingBenchmark.h" />
     <ClInclude Include="Input\InputAxis.h" />
     <ClInclude Include="Input\InputButton.h" />
@@ -264,9 +269,6 @@
     <None Include="Shaders\shader.frag" />
     <None Include="Shaders\shader.frag.frag" />
     <None Include="Shaders\shader.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Ressources\Icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
