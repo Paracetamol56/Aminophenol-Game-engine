@@ -147,6 +147,8 @@ namespace Aminophenol {
 	void Aminophenol::RenderingEngine::setActiveScene(const std::shared_ptr<Scene> scene)
 	{
 		m_activeScene = scene;
+		if (m_activeScene->getActiveCamera())
+			m_activeScene->getActiveCamera()->setAspectRatio(m_swapchain->getExtent().width / static_cast<float>(m_swapchain->getExtent().height));
 	}
 	std::shared_ptr<Scene> RenderingEngine::getActiveScene() const
 	{
@@ -311,8 +313,6 @@ namespace Aminophenol {
 		vkCmdEndRenderPass(m_frames[imageIndex].commandBuffer->getCommandBuffer());
 		
 		m_frames[imageIndex].commandBuffer->end();
-
-		m_activeScene->onUpdate();
 	}
 
 	void RenderingEngine::recreateSwapchain()
@@ -329,6 +329,7 @@ namespace Aminophenol {
 
 		destroyFrameObjects();
 		m_swapchain.reset(new Swapchain(*m_logicalDevice, *m_physicalDevice, *m_surface, m_window.getExtent(), m_swapchain.get()));
+		m_activeScene->getActiveCamera()->setAspectRatio(m_swapchain->getExtent().width / static_cast<float>(m_swapchain->getExtent().height));
 		initFrameObjects();
 	}
 

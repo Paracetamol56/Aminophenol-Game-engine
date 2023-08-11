@@ -38,7 +38,7 @@ namespace Aminophenol {
 		// Component accessors
 		template<typename T, typename... Args>
 		T* addComponent(Args &&...args);
-		 const std::vector<std::unique_ptr<Component>>& getComponents() const;
+		const std::vector<std::unique_ptr<Component>>& getComponents() const;
 		const size_t getComponentCount() const;
 		template<typename T>
 		T* getComponentOfType() const;

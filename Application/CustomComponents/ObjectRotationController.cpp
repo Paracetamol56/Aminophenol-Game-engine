@@ -12,18 +12,22 @@ ObjectRotationController::ObjectRotationController(Node* node)
 
 void ObjectRotationController::onStart()
 {
-	m_xAxis = Engine::get()->getInputSystem().addAxis("ObjectRotationX", KeyCode::Left, KeyCode::Right, 0.01f, 0.01f);
-	m_yAxis = Engine::get()->getInputSystem().addAxis("ObjectRotationY", KeyCode::Down, KeyCode::Up, 0.01f, 0.01f);
+	m_xAxis = Engine::get()->getInputSystem().addAxis("ObjectRotationX", KeyCode::Left, KeyCode::Right, 0.1f, 0.1f);
+	m_yAxis = Engine::get()->getInputSystem().addAxis("ObjectRotationY", KeyCode::Down, KeyCode::Up, 0.1f, 0.1f);
 	m_autoRotateButton = Engine::get()->getInputSystem().addButton("ObjectAutoRotate", KeyCode::Space);
 }
 
 void ObjectRotationController::onUpdate()
 {
-	const float deltaX = m_xAxis->getValue() / 1000.0f;
-	const float deltaY = m_yAxis->getValue() / 1000.0f;
+	const float deltaX = m_xAxis->getValue() * Engine::get()->getDeltaTime();
+	const float deltaY = m_yAxis->getValue() * Engine::get()->getDeltaTime();
 
-	if (deltaX != 0.0f || deltaY != 0.0f)
-		m_node->transform.rotation *= Maths::Quaternion(Maths::Vector3f{ 0.0f, deltaX, deltaY });
+	if (std::abs(deltaX) > std::numeric_limits<float>::epsilon() || std::abs(deltaY) > std::numeric_limits<float>::epsilon())
+	{
+		Maths::Vector3f eulerRotation = m_node->transform.rotation.toEulerAngles();
+		//Logger::log(LogLevel::Info, "Rotation: %f, %f, %f", eulerRotation.x, eulerRotation.y, eulerRotation.z);
+		m_node->transform.rotation = Maths::Quaternion(Maths::Vector3f{ 0.0f, eulerRotation.y + deltaX, (eulerRotation.z + deltaY) });
+	}
 
 	if (m_autoRotateButton->isPressed())
 		m_autoRotate = !m_autoRotate;

@@ -38,12 +38,12 @@ int main(int argc, char* argv[])
 
 	Node* camera = scene->addChild("Camera");
 	camera->transform.position = { 0.0f, 0.0f, -3.0f };
-	Camera* cameraComponent = camera->addComponent<Camera>();
-	// cameraComponent->setOrthographicProjection(-1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 100.0f);
+	// OrthographicCamera* cameraComponent = camera->addComponent<OrthographicCamera>(1.0, -1.0, 1.0, 0.0, 100.0);
+	PerspectiveCamera* cameraComponent = camera->addComponent<PerspectiveCamera>(Maths::degreesToRadians(45.0f), 1.0f, 0.1f, 100.0f);
 	cameraComponent->setPerspectiveProjection(Maths::degreesToRadians(45.0f), 1.0f, 0.1f, 100.0f);
 	cameraComponent->setViewDirection({ 0.0f, 0.0f, 1.0f }, { 0.0f, -1.0f, 0.0f });
 
-	scene->setBackgroundColor(Maths::Color{0.43f, 0.75f, 0.93f, 1.0f});
+	scene->setBackgroundColor(Maths::Color{0.21f, 0.35f, 0.45f, 1.0f});
 	scene->setActiveCamera(cameraComponent);
 	scene.reset();
 
