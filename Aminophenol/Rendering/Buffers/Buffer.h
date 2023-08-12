@@ -22,7 +22,7 @@ namespace Aminophenol {
 		VkBuffer getBuffer() const;
 		VkDeviceMemory getBufferMemory() const;
 
-	private:
+	protected:
 
 		const LogicalDevice& m_logicalDevice;
 

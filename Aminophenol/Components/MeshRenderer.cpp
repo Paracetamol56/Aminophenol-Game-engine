@@ -9,7 +9,7 @@ namespace Aminophenol {
 		: Component(node)
 	{}
 
-	Aminophenol::MeshRenderer::MeshRenderer(Node* node, const std::shared_ptr<Mesh>& mesh)
+	MeshRenderer::MeshRenderer(Node* node, const std::shared_ptr<Mesh>& mesh)
 		: Component(node)
 		, m_mesh(mesh)
 	{}

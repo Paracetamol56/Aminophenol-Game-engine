@@ -520,21 +520,21 @@ namespace Aminophenol::Maths
 
 	// Zero matrix method
 	template<typename T>
-	const Matrix4<T> Matrix4<T>::zero()
+	Matrix4<T> Matrix4<T>::zero()
 	{
 		return { static_cast<T>(0) };
 	}
 
 	// Identity matrix method
 	template<typename T>
-	const Matrix4<T> Matrix4<T>::identity()
+	Matrix4<T> Matrix4<T>::identity()
 	{
 		return { static_cast<T>(1) };
 	}
 
 	// Translation matrix method
 	template<typename T>
-	const Matrix4<T> Matrix4<T>::translation(Vector3<T> translation)
+	Matrix4<T> Matrix4<T>::translation(Vector3<T> translation)
 	{
 		Matrix4<T> result = Matrix4<T>::identity();
 		result.m[0][3] = translation.x;
@@ -545,14 +545,14 @@ namespace Aminophenol::Maths
 
 	// Rotation matrix method
 	template<typename T>
-	const Matrix4<T> Matrix4<T>::rotation(Quaternion<T> rotation)
+	Matrix4<T> Matrix4<T>::rotation(Quaternion<T> rotation)
 	{
 		return rotation.toMatrix4();
 	}
 
 	// Scale matrix method
 	template<typename T>
-	const Matrix4<T> Matrix4<T>::scale(Vector3<T> scale)
+	Matrix4<T> Matrix4<T>::scale(Vector3<T> scale)
 	{
 		return {
 			scale.x, 0, 0, 0,

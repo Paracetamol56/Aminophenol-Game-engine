@@ -288,10 +288,10 @@ namespace Aminophenol {
 		for (std::vector<std::unique_ptr<Node>>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
 		{
 			PushConstantData push{};
-			push.modelTransform =
-				m_activeScene->getActiveCamera()->getProjectionMatrix()
-				* m_activeScene->getActiveCamera()->getViewMatrix()
-				* (*it)->transform.getMatrix();
+			push.projectionMatrix = m_activeScene->getActiveCamera()->getProjectionMatrix();
+			push.viewMatrix = m_activeScene->getActiveCamera()->getViewMatrix();
+			push.modelMatrix = (*it)->transform.getMatrix();
+			push.normalMatrix = (*it)->transform.getMatrix();
 
 			vkCmdPushConstants(
 				m_frames[imageIndex].commandBuffer->getCommandBuffer(),
