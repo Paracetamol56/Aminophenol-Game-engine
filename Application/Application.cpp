@@ -28,16 +28,23 @@ int main(int argc, char* argv[])
 	std::shared_ptr<Scene> scene = std::make_shared<Scene>("Basic scene");
 	engine.setActiveScene(scene);
 
-	Node* object = scene->addChild("Dragon");
-	MeshRenderer* objectMeshRenderer = object->addComponent<MeshRenderer>(OBJLoader::loadMesh(
+	std::shared_ptr<Mesh> mesh = OBJLoader::loadMesh(
 		engine.getRenderingEngine().getLogicalDevice(),
 		engine.getRenderingEngine().getCommandPool(),
 		"C:\\Users\\mathe\\Downloads\\xyzrgb_dragon_normal.obj"
-	));
-	object->transform.position = { 0.0f, 0.0f, 0.0f };
-	object->transform.scale = { 0.01f };
+	);
 
-	object->addComponent<ObjectRotationController>();
+	Node* dragon0 = scene->addChild("Dragon 0");
+	dragon0->addComponent<MeshRenderer>(mesh);
+	dragon0->transform.position = { 0.0f, 0.5f, 0.0f };
+	dragon0->transform.scale = { 0.01f };
+	dragon0->addComponent<ObjectRotationController>(-1.0f);
+
+	Node* dragon1 = scene->addChild("Dragon 1");
+	dragon1->addComponent<MeshRenderer>(mesh);
+	dragon1->transform.position = { 0.0f, -0.5f, 0.0f };
+	dragon1->transform.scale = { 0.01f, 0.01, 0.01f };
+	dragon1->addComponent<ObjectRotationController>(1.0f);
 
 	Node* camera = scene->addChild("Camera");
 	camera->transform.position = { 0.0f, 0.0f, -3.0f };

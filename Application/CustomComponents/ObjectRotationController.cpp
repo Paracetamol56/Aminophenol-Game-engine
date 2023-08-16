@@ -6,8 +6,9 @@
 #include "Maths/Vector3.h"
 #include "Maths/Quaternion.h"
 
-ObjectRotationController::ObjectRotationController(Node* node)
+ObjectRotationController::ObjectRotationController(Node* node, const float speed)
 	: Component(node)
+	, _speed(speed)
 {}
 
 void ObjectRotationController::onStart()
@@ -19,8 +20,8 @@ void ObjectRotationController::onStart()
 
 void ObjectRotationController::onUpdate()
 {
-	const float deltaX = m_xAxis->getValue() * Engine::get()->getDeltaTime();
-	const float deltaY = m_yAxis->getValue() * Engine::get()->getDeltaTime();
+	const float deltaX = m_xAxis->getValue() * Engine::get()->getDeltaTime() * _speed;
+	const float deltaY = m_yAxis->getValue() * Engine::get()->getDeltaTime() * _speed;
 
 	if (std::abs(deltaX) > std::numeric_limits<float>::epsilon() || std::abs(deltaY) > std::numeric_limits<float>::epsilon())
 	{
@@ -32,5 +33,5 @@ void ObjectRotationController::onUpdate()
 		m_autoRotate = !m_autoRotate;
 
 	if (m_autoRotate)
-		m_node->transform.rotation *= Maths::Quaternion(Maths::Vector3f{ 0.0f, 0.0002f, -0.0001f });
+		m_node->transform.rotation *= Maths::Quaternion(Maths::Vector3f{ 0.0f, 0.5f * Engine::get()->getDeltaTime() * _speed, 0.0f });
 }

@@ -8,15 +8,21 @@ layout(location = 3) in vec2 vertexUV;
 
 layout(push_constant) uniform PushConstant
 {
-	mat4 modelTransform;
+	mat4 projectionMatrix;
+	mat4 viewMatrix;
+	mat4 modelMatrix;
+	mat4 normalMatrix;
 } pushConstant;
 
 layout(location = 0) out vec3 fragColor;
-layout(location = 1) out vec3 fragNormal;
+layout(location = 1) out vec3 fragPositionWorld;
+layout(location = 2) out vec3 fragNormalWorld;
 
 void main()
 {
-	gl_Position = vec4(vertexPosition, 1.0) * pushConstant.modelTransform;
+	vec4 positionWorld = vec4(vertexPosition, 1.0) * pushConstant.modelMatrix;
+	gl_Position = positionWorld * pushConstant.viewMatrix * pushConstant.projectionMatrix;
 	fragColor = vertexColor;
-	fragNormal = vertexNormal;
+	fragPositionWorld = positionWorld.xyz;
+	fragNormalWorld = normalize(vertexNormal * mat3(pushConstant.normalMatrix));
 }

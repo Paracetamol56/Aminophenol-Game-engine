@@ -13,7 +13,7 @@ class ObjectRotationController :
 {
 
 public:
-	ObjectRotationController(Node* node);
+	ObjectRotationController(Node* node, const float speed);
 	~ObjectRotationController() = default;
 
 	void onStart() override;
@@ -21,10 +21,11 @@ public:
 
 private:
 
+	const float _speed;
 	std::shared_ptr<InputAxis> m_xAxis;
 	std::shared_ptr<InputAxis> m_yAxis;
 	std::shared_ptr<InputButton> m_autoRotateButton;
-	bool m_autoRotate = false;
+	bool m_autoRotate = true;
 
 };
 

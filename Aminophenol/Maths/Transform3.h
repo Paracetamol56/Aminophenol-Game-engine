@@ -22,6 +22,7 @@ namespace Aminophenol::Maths
 		Transform3(Transform3&& other);
 
 		Matrix4f getMatrix() const;
+		Matrix4f getNormalMatrix() const;
 
 		Vector3f position;
 		Quaternionf rotation;

@@ -40,4 +40,14 @@ namespace Aminophenol::Maths
 		return result;
 	}
 
+	Matrix4f Transform3::getNormalMatrix() const
+	{
+		Matrix4f result = Matrix4f::identity();
+
+		result *= Matrix4f::rotation(rotation);
+		result *= Matrix4f::scale(scale).inverse();
+
+		return result;
+	}
+
 }

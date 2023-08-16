@@ -330,27 +330,27 @@ namespace Aminophenol::Maths
 		/// <summary>
 		/// Static zero matrix.
 		/// </summary>
-		static const Matrix4<T> zero();
+		static Matrix4<T> zero();
 
 		/// <summary>
 		/// Static unit matrix.
 		/// </summary>
-		static const Matrix4<T> identity();
+		static Matrix4<T> identity();
 
 		/// <summary>
 		/// Static translation matrix.
 		/// </summary>
-		static const Matrix4<T> translation(Vector3<T> translation);
+		static Matrix4<T> translation(Vector3<T> translation);
 
 		/// <summary>
 		/// Static rotation matrix.
 		/// </summary>
-		static const Matrix4<T> rotation(Quaternion<T> rotation);
+		static Matrix4<T> rotation(Quaternion<T> rotation);
 
 		/// <summary>
 		/// Static scale matrix.
 		/// </summary>
-		static const Matrix4<T> scale(Vector3<T> scaling);
+		static Matrix4<T> scale(Vector3<T> scaling);
 
 	private:
 
