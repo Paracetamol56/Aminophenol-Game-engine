@@ -17,7 +17,7 @@ struct SunLight
 };
 
 const SunLight sunLight = SunLight(
-	normalize(vec3(0.0, -1.0, 0.0)),
+	normalize(vec3(0.2, -1.0, 0.5)),
 	vec3(0.1, 0.1, 0.1),
 	vec3(0.5, 0.5, 0.5),
 	vec3(0.8, 0.8, 0.8),
