@@ -25,7 +25,7 @@ private:
 	std::shared_ptr<InputAxis> m_xAxis;
 	std::shared_ptr<InputAxis> m_yAxis;
 	std::shared_ptr<InputButton> m_autoRotateButton;
-	bool m_autoRotate = true;
+	bool m_autoRotate = false;
 
 };
 

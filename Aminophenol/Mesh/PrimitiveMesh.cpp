@@ -74,11 +74,19 @@ namespace Aminophenol
         return mesh;
     }
 
-    std::shared_ptr<Mesh> PrimitiveMesh::createPlane(const LogicalDevice& logicalDevice, const std::shared_ptr<CommandPool> commandPool, float width, float height)
+    std::shared_ptr<Mesh> PrimitiveMesh::createPlane(const LogicalDevice& logicalDevice, const std::shared_ptr<CommandPool> commandPool)
     {
         std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(logicalDevice, commandPool);
 
-        // TODO: Implement plane mesh creation
+        mesh->vertices = {
+            { { -0.5f, 0.0f, 0.5f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f } },
+            { {  0.5f, 0.0f, 0.5f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f } },
+            { {  0.5f, 0.0f,-0.5f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f } },
+            { { -0.5f, 0.0f,-0.5f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f } }
+        };
+        mesh->indices = {
+			2, 1, 0, 0, 3, 2
+		};
 
         mesh->create();
 

@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 	engine.setActiveScene(scene);
 
 	Node* object = scene->addChild("object");
-	MeshRenderer* objectMeshRenderer = object->addComponent<MeshRenderer>(PrimitiveMesh::createCube(
+	MeshRenderer* objectMeshRenderer = object->addComponent<MeshRenderer>(PrimitiveMesh::createPlane(
 		engine.getRenderingEngine().getLogicalDevice(),
 		engine.getRenderingEngine().getCommandPool()
 	));
