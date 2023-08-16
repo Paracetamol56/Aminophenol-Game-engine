@@ -7,6 +7,7 @@
 #include "Core/Engine.h"
 #include "Logging/Logger.h"
 #include "Mesh/OBJLoader.h"
+#include "Mesh/PrimitiveMesh.h"
 
 #include "CustomComponents/ObjectRotationController.h"
 

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -155,6 +155,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Mesh\PrimitiveMesh.h" />
     <ClInclude Include="Rendering\Image\ImageDepth.h" />
     <ClInclude Include="Rendering\Image\Image.h" />
     <ClInclude Include="Rendering\Frame.h" />
@@ -220,6 +221,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Mesh\PrimitiveMesh.cpp" />
     <ClCompile Include="Rendering\Image\ImageDepth.cpp" />
     <ClCompile Include="Rendering\Image\Image.cpp" />
     <ClCompile Include="Utils\ExecutionTimingBenchmark.cpp" />
