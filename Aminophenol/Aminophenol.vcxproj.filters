@@ -171,10 +171,10 @@
     <ClInclude Include="Rendering\Image\ImageDepth.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh\Primitives.h">
+    <ClInclude Include="Rendering\Buffers\UniformBuffer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\Buffers\UniformBuffer.h">
+    <ClInclude Include="Mesh\PrimitiveMesh.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

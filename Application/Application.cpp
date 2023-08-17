@@ -7,6 +7,7 @@
 #include "Core/Engine.h"
 #include "Logging/Logger.h"
 #include "Mesh/OBJLoader.h"
+#include "Mesh/PrimitiveMesh.h"
 
 #include "CustomComponents/ObjectRotationController.h"
 
@@ -27,23 +28,12 @@ int main(int argc, char* argv[])
 	std::shared_ptr<Scene> scene = std::make_shared<Scene>("Basic scene");
 	engine.setActiveScene(scene);
 
-	std::shared_ptr<Mesh> mesh = OBJLoader::loadMesh(
+	Node* object = scene->addChild("object");
+	MeshRenderer* objectMeshRenderer = object->addComponent<MeshRenderer>(PrimitiveMesh::createSphere(
 		engine.getRenderingEngine().getLogicalDevice(),
-		engine.getRenderingEngine().getCommandPool(),
-		"C:\\Users\\mathe\\Downloads\\xyzrgb_dragon_normal.obj"
-	);
-
-	Node* dragon0 = scene->addChild("Dragon 0");
-	dragon0->addComponent<MeshRenderer>(mesh);
-	dragon0->transform.position = { 0.0f, 0.5f, 0.0f };
-	dragon0->transform.scale = { 0.01f };
-	dragon0->addComponent<ObjectRotationController>(-1.0f);
-
-	Node* dragon1 = scene->addChild("Dragon 1");
-	dragon1->addComponent<MeshRenderer>(mesh);
-	dragon1->transform.position = { 0.0f, -0.5f, 0.0f };
-	dragon1->transform.scale = { 0.01f, 0.01, 0.01f };
-	dragon1->addComponent<ObjectRotationController>(1.0f);
+		engine.getRenderingEngine().getCommandPool()
+	));
+	object->addComponent<ObjectRotationController>(1.0f);
 
 	Node* camera = scene->addChild("Camera");
 	camera->transform.position = { 0.0f, 0.0f, -3.0f };
