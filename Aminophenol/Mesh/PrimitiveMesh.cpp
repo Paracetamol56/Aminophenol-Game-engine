@@ -231,18 +231,43 @@ namespace Aminophenol
     {
         std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(logicalDevice, commandPool);
 
-        // TODO: Implement cone mesh creation
+        for (size_t i = 0; i <= sectors; ++i)
+        {
+            float thetai = static_cast<float>(i) * 2.0f * Maths::Constant::pi<float>() / static_cast<float>(sectors);
+            float cosThetai = cos(thetai);
+            float sinThetai = sin(thetai);
+            
+            // Side vertices
+            mesh->vertices.push_back({
+                { cosThetai * 0.5f, -0.5f, sinThetai * 0.5f },
+                { 1.0f, 1.0f, 1.0f },
+                { cosThetai, 1.0f, sinThetai }
+            });
+            // Top vertex
+            mesh->vertices.push_back({
+				{ 0.0f, 0.5f, 0.0f },
+				{ 1.0f, 1.0f, 1.0f },
+                { cosThetai, 1.0f, sinThetai }
+			});
+            // Bottom vertex
+            mesh->vertices.push_back({
+                { cosThetai * 0.5f, -0.5f, sinThetai * 0.5f },
+                { 1.0f, 1.0f, 1.0f },
+				{ 0.0f, -1.0f, 0.0f }
+            });
+        }
 
-        mesh->create();
-
-        return mesh;
-    }
-
-    std::shared_ptr<Mesh> PrimitiveMesh::createTorus(const LogicalDevice& logicalDevice, const std::shared_ptr<CommandPool> commandPool, float innerRadius, float outerRadius, uint32_t rings, uint32_t sectors)
-    {
-        std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(logicalDevice, commandPool);
-
-        // TODO: Implement torus mesh creation
+        for (size_t i = 0; i < sectors * 3; i += 3)
+        {
+            // Side face indices
+            mesh->indices.push_back(i);
+            mesh->indices.push_back(i + 3);
+            mesh->indices.push_back(i + 1);
+            // Bottom face indices
+            mesh->indices.push_back(sectors * 3 + 2);
+            mesh->indices.push_back(i + 5);
+            mesh->indices.push_back(i + 2);
+        }
 
         mesh->create();
 
