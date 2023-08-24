@@ -23,24 +23,21 @@ namespace Aminophenol
 		unmap();
 	}
 
-	VkWriteDescriptorSet UniformBuffer::getWriteDescriptor(VkDescriptorSet descriptorSet, VkDescriptorType descriptorType, uint32_t binding, uint32_t descriptorCount)
+	DescriptorWriter UniformBuffer::getDescriptorWriter(DescriptorSetLayout& layout, DescriptorPool& pool, uint32_t binding) const
 	{
+		DescriptorWriter writer(layout, pool);
+
 		VkDescriptorBufferInfo bufferInfo = {};
 		bufferInfo.buffer = m_buffer;
 		bufferInfo.offset = 0;
 		bufferInfo.range = VK_WHOLE_SIZE;
 
-		VkWriteDescriptorSet descriptorWrite = {};
-		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet = descriptorSet;
-		descriptorWrite.dstBinding = binding;
-		descriptorWrite.dstArrayElement = 0;
-		descriptorWrite.descriptorType = descriptorType;
-		descriptorWrite.descriptorCount = descriptorCount;
-		descriptorWrite.pBufferInfo = &bufferInfo;
+		writer.writeBuffer(
+			binding,
+			&bufferInfo
+		);
 
-		return descriptorWrite;
-
+		return writer;
 	}
 
 	VkDescriptorSetLayoutBinding UniformBuffer::getDescriptorSetLayoutBinding(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, uint32_t descriptorCount)
