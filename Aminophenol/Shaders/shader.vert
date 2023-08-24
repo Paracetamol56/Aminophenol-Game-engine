@@ -17,6 +17,7 @@ layout(push_constant) uniform PushConstant
 layout(location = 0) out vec3 fragColor;
 layout(location = 1) out vec3 fragPositionWorld;
 layout(location = 2) out vec3 fragNormalWorld;
+layout(location = 3) out vec2 fragUV;
 
 void main()
 {
@@ -25,4 +26,5 @@ void main()
 	fragColor = vertexColor;
 	fragPositionWorld = positionWorld.xyz;
 	fragNormalWorld = normalize(vertexNormal * mat3(pushConstant.normalMatrix));
+	fragUV = vertexUV;
 }
