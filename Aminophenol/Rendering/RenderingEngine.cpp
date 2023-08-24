@@ -17,10 +17,39 @@ namespace Aminophenol {
 		, m_swapchain{ std::make_unique<Swapchain>(*m_logicalDevice, *m_physicalDevice, *m_surface, window.getExtent()) }
 		, m_pipeline{ std::make_unique<Pipeline>(*m_logicalDevice, m_swapchain->getExtent(), m_swapchain->getFormat(), "../Aminophenol/Shaders/shader.vert.spv", "../Aminophenol/Shaders/shader.frag.spv") }
 		, m_commandPool{ std::make_unique<CommandPool>(*m_logicalDevice) }
+		, m_globalCommandBuffer{ std::make_unique<CommandBuffer>(*m_logicalDevice, m_commandPool) }
 	{
+		// Initialize the frame objects
 		initFrameObjects();
 
-		m_globalCommandBuffer = std::make_unique<CommandBuffer>(*m_logicalDevice, m_commandPool);
+		m_globalDescriptorSetLayout = std::make_unique<DescriptorSetLayout>(
+			*m_logicalDevice,
+			std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding>{
+				{ 0, UniformBuffer::getDescriptorSetLayoutBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT) }
+			}
+		);
+
+		m_globalDescriptorPool = std::make_unique<DescriptorPool>(
+			*m_logicalDevice,
+			std::vector<VkDescriptorPoolSize>{
+				VkDescriptorPoolSize{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, static_cast<uint32_t>(m_maxFramesInFlight) }
+			},
+			m_maxFramesInFlight,
+			0
+		);
+
+		// Create a gloabal descriptor set
+		std::vector<VkDescriptorSet> globalDescriptorSets{ m_maxFramesInFlight };
+		for (size_t i = 0; i < m_maxFramesInFlight; ++i)
+		{
+			DescriptorWriter writer = m_frames[i].uniformBuffer->getDescriptorWriter(
+				*m_globalDescriptorSetLayout,
+				*m_globalDescriptorPool,
+				0
+			);
+			
+			writer.build(globalDescriptorSets[i]);
+		}
 
 		Logger::log(LogLevel::Trace, "Global CommandBuffer initialized");
 	}
@@ -34,6 +63,8 @@ namespace Aminophenol {
 		m_activeScene.reset();
 
 		m_frames.clear();
+		m_globalDescriptorSetLayout.reset();
+		m_globalDescriptorPool.reset();
 		m_globalCommandBuffer.reset();
 		m_commandPool.reset();
 		m_pipeline.reset();
@@ -199,6 +230,11 @@ namespace Aminophenol {
 
 			Logger::log(LogLevel::Trace, "CommandBuffer %d initialized", i);
 
+			// Create a UBO
+			m_frames[i].uniformBuffer = std::make_unique<UniformBuffer>(*m_logicalDevice, sizeof(FrameUniformBufferObject), &m_frames[i].uniformBufferData);
+
+			Logger::log(LogLevel::Trace, "UniformBuffer %d initialized", i);
+
 			// Create 2 semaphores and 1 fence
 			VkSemaphoreCreateInfo semaphoreInfo{};
 			semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
@@ -227,6 +263,7 @@ namespace Aminophenol {
 			vkDestroyFramebuffer(m_logicalDevice->getDevice(), m_frames[i].frameBuffer, nullptr);
 			m_frames[i].depthBuffer.reset();
 			m_frames[i].commandBuffer.reset();
+			m_frames[i].uniformBuffer.reset();
 			vkDestroySemaphore(m_logicalDevice->getDevice(), m_frames[i].imageAvailableSemaphore, nullptr);
 			vkDestroySemaphore(m_logicalDevice->getDevice(), m_frames[i].renderFinishedSemaphore, nullptr);
 			vkDestroyFence(m_logicalDevice->getDevice(), m_frames[i].inFlightFence, nullptr);

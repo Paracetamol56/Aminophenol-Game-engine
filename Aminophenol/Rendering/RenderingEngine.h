@@ -5,12 +5,15 @@
 #include "Utils/NonCopyable.h"
 #include "Window/Window.h"
 #include "Scene/Scene.h"
+#include "Rendering/Buffers/UniformBuffer.h"
 #include "Rendering/Device/Instance.h"
 #include "Rendering/Device/PhysicalDevice.h"
 #include "Rendering/Device/LogicalDevice.h"
 #include "Rendering/Device/Surface.h"
 #include "Rendering/Swapchain/Swapchain.h"
 #include "Rendering/Pipeline/Pipeline.h"
+#include "Rendering/Descriptors/DescriptorPool.h"
+#include "Rendering/Descriptors/DescriptorSetLayout.h"
 #include "Rendering/Commands/CommandPool.h"
 #include "Rendering/Commands/CommandBuffer.h"
 #include "Rendering/Frame.h"
@@ -76,15 +79,15 @@ namespace Aminophenol {
 		// Pipeline
 		std::unique_ptr<Pipeline> m_pipeline{ nullptr };
 		
-		// Command Pool
+		// Global objects (CommandPool, DescriptorPool, DescriptorSetLayout, CommandBuffer)
 		std::shared_ptr<CommandPool> m_commandPool{ nullptr };
+		std::unique_ptr<DescriptorPool> m_globalDescriptorPool{ nullptr };
+		std::unique_ptr<DescriptorSetLayout> m_globalDescriptorSetLayout{ nullptr };
+		std::unique_ptr<CommandBuffer> m_globalCommandBuffer;
 		
 		// Frames
 		std::vector<Frame> m_frames{};
 		
-		// Global command buffer
-		std::unique_ptr<CommandBuffer> m_globalCommandBuffer;
-
 		// Attachments
 		std::vector<VkImageView> m_attachments{};
 		

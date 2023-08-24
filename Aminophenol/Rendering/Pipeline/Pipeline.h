@@ -3,6 +3,7 @@
 #define PIPELINE_H
 
 #include <filesystem>
+#include "Rendering/Descriptors/DescriptorPool.h"
 #include "Rendering/Swapchain/RenderPass.h"
 
 namespace Aminophenol {
