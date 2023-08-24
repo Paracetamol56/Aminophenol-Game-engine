@@ -177,6 +177,9 @@
     <ClInclude Include="Mesh\PrimitiveMesh.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Rendering\Image\Texture.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
     <ClInclude Include="Rendering\Descriptors\DescriptorSetLayout.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>

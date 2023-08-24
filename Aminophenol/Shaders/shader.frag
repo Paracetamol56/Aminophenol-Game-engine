@@ -4,6 +4,8 @@
 layout(location = 0) in vec3 fragColor;
 layout(location = 1) in vec3 fragPositionWorld;
 layout(location = 2) in vec3 fragNormalWorld;
+layout(location = 3) in vec2 fragUV;
+// layout(set = 1, binding = 0) uniform sampler2D texSampler;
 
 layout(location = 0) out vec4 color;
 
@@ -31,7 +33,8 @@ void main()
     vec3 viewDir = normalize(-vec3(0.0, 0.0, 1.0)); // Assuming camera is looking along negative z-axis
 
     // Ambient component
-    vec3 ambient = sunLight.ambient * fragColor;
+    // vec3 ambient = sunLight.ambient * fragColor;
+    vec3 ambient = sunLight.ambient * fragColor; // vec3(texture(texSampler, fragUV));
 
     // Diffuse component
     float diffIntensity = max(dot(normal, fragToLightDir), 0.0);
