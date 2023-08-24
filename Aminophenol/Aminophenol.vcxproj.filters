@@ -177,6 +177,9 @@
     <ClInclude Include="Mesh\PrimitiveMesh.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Rendering\Descriptors\DescriptorPool.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Engine.cpp">
@@ -297,6 +300,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\Buffers\UniformBuffer.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\Descriptors\DescriptorPool.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

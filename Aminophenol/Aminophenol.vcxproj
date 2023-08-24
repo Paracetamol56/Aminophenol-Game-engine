@@ -155,6 +155,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Rendering\Descriptors\DescriptorPool.h" />
     <ClInclude Include="Mesh\PrimitiveMesh.h" />
     <ClInclude Include="Rendering\Image\ImageDepth.h" />
     <ClInclude Include="Rendering\Image\Image.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="Components\Camera.cpp" />
     <ClCompile Include="Components\MeshRenderer.cpp" />
     <ClCompile Include="Components\PointLight.cpp" />
+    <ClCompile Include="Rendering\Descriptors\DescriptorPool.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
