@@ -27,8 +27,8 @@ namespace Aminophenol {
 		const LogicalDevice& m_logicalDevice;
 
 		VkDeviceSize m_size;
-		VkBuffer m_buffer;
-		VkDeviceMemory m_bufferMemory;
+		VkBuffer m_buffer{ VK_NULL_HANDLE };
+		VkDeviceMemory m_bufferMemory{ VK_NULL_HANDLE };
 
 	};
 

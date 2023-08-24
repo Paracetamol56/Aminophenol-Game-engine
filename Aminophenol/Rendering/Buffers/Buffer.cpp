@@ -5,11 +5,11 @@
 namespace Aminophenol {
 
 	Buffer::Buffer(const LogicalDevice& logicalDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, const void* data)
-		: m_logicalDevice(logicalDevice)
-		, m_size(size)
+		: m_logicalDevice{ logicalDevice }
+		, m_size{ size }
 	{
 		// Get an array of queue families that support graphics operations
-		std::vector<uint32_t> queueFamilyIndices
+		const std::array<uint32_t, 3> queueFamilyIndices
 		{
 			m_logicalDevice.getGraphicsQueueFamilyIndex(),
 			m_logicalDevice.getPresentQueueFamilyIndex(),
@@ -18,7 +18,7 @@ namespace Aminophenol {
 		
 		VkBufferCreateInfo bufferCreateInfo = {};
 		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		bufferCreateInfo.size = size;
+		bufferCreateInfo.size = m_size;
 		bufferCreateInfo.usage = usage;
 		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamilyIndices.size());
