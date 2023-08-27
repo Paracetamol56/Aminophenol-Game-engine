@@ -26,8 +26,6 @@ namespace Aminophenol {
 
 	struct PushConstantData
 	{
-		alignas(0) Maths::Matrix4f projectionMatrix;
-		alignas(0) Maths::Matrix4f viewMatrix;
 		alignas(0) Maths::Matrix4f modelMatrix;
 		alignas(0) Maths::Matrix4f normalMatrix;
 	};
@@ -66,24 +64,24 @@ namespace Aminophenol {
 		std::shared_ptr<Scene> m_activeScene{ nullptr };
 		
 		// Device
-		std::unique_ptr<Instance> m_instance{ nullptr };
-		std::unique_ptr<PhysicalDevice> m_physicalDevice{ nullptr };
-		std::unique_ptr<LogicalDevice> m_logicalDevice{ nullptr };
-		std::unique_ptr<Surface> m_surface{ nullptr };
+		std::unique_ptr<Instance> m_instance;
+		std::unique_ptr<PhysicalDevice> m_physicalDevice;
+		std::unique_ptr<LogicalDevice> m_logicalDevice;
+		std::unique_ptr<Surface> m_surface;
 		
 		// Swapchain
-		std::unique_ptr<Swapchain> m_swapchain{ nullptr };
+		std::unique_ptr<Swapchain> m_swapchain;
 		size_t m_currentFrame{ 0 };
 		size_t m_maxFramesInFlight{ 0 };
 		
 		// Pipeline
-		std::unique_ptr<Pipeline> m_pipeline{ nullptr };
+		std::unique_ptr<Pipeline> m_pipeline;
 		
 		// Global objects (CommandPool, DescriptorPool, DescriptorSetLayout, CommandBuffer)
-		std::shared_ptr<CommandPool> m_commandPool{ nullptr };
-		std::unique_ptr<DescriptorPool> m_globalDescriptorPool{ nullptr };
-		std::unique_ptr<DescriptorSetLayout> m_globalDescriptorSetLayout{ nullptr };
+		std::shared_ptr<CommandPool> m_commandPool;
 		std::unique_ptr<CommandBuffer> m_globalCommandBuffer;
+		std::unique_ptr<DescriptorPool> m_globalDescriptorPool;
+		std::unique_ptr<DescriptorSetLayout> m_globalDescriptorSetLayout;
 		
 		// Frames
 		std::vector<Frame> m_frames{};

@@ -31,6 +31,16 @@ namespace Aminophenol
 		return m_physicalDevice;
 	}
 
+	const VkPhysicalDevice PhysicalDevice::getPhysicalDevice() const
+	{
+		return m_physicalDevice;
+	}
+
+	const VkPhysicalDeviceProperties PhysicalDevice::getProperties() const
+	{
+		return m_properties;
+	}
+
 	VkPhysicalDevice PhysicalDevice::pickPhysicalDevice()
 	{
 		// Get all physical devices
@@ -65,9 +75,8 @@ namespace Aminophenol
 		}
 		
 		// Log the device name
-		VkPhysicalDeviceProperties deviceProperties;
-		vkGetPhysicalDeviceProperties(bestDevice, &deviceProperties);
-		Logger::log(LogLevel::Trace, "Picked the physical device \"%s\" with a score of %d.", deviceProperties.deviceName, bestScore);
+		vkGetPhysicalDeviceProperties(bestDevice, &m_properties);
+		Logger::log(LogLevel::Trace, "Picked the physical device \"%s\" with a score of %d.", m_properties.deviceName, bestScore);
 
 		return bestDevice;
 	}

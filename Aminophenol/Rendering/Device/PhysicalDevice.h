@@ -16,12 +16,14 @@ namespace Aminophenol
 		
 		operator const VkPhysicalDevice& () const;
 
-		const uint32_t findMemoryTypeIndex(uint32_t typeFilter, VkMemoryPropertyFlags properties) const;
+		const VkPhysicalDevice getPhysicalDevice() const;
+		const VkPhysicalDeviceProperties getProperties() const;
 
 	private:
 
 		const Instance& m_instance;
 		VkPhysicalDevice m_physicalDevice{ VK_NULL_HANDLE };
+		VkPhysicalDeviceProperties m_properties{};
 
 		VkPhysicalDevice pickPhysicalDevice();
 		void logPhysicalDeviceProperties(VkPhysicalDeviceProperties& deviceProperties);

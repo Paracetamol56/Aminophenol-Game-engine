@@ -15,8 +15,6 @@ namespace Aminophenol
 	{
 		Maths::Matrix4f projectionMatrix;
 		Maths::Matrix4f viewMatrix;
-		Maths::Matrix4f modelMatrix;
-		Maths::Matrix4f normalMatrix;
 	};
 
 	struct Frame
@@ -38,6 +36,9 @@ namespace Aminophenol
 		// Frame UBO
 		FrameUniformBufferObject uniformBufferData;
 		std::unique_ptr<UniformBuffer> uniformBuffer;
+
+		// Descriptor set
+		VkDescriptorSet descriptorSet;
 
 		// Attachment
 		VkImageView attachment;

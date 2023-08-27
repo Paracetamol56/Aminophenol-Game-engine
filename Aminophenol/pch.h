@@ -17,5 +17,6 @@
 #include <memory>
 #include <functional>
 #include <filesystem>
+#include <optional>
 
 #endif //PCH_H

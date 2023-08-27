@@ -13,6 +13,9 @@ namespace Aminophenol
 
 	DescriptorWriter& DescriptorWriter::writeBuffer(uint32_t binding, VkDescriptorBufferInfo* bufferInfo)
 	{
+		if (m_descriptorSetLayout.m_bindings.count(binding) == 0)
+			throw std::runtime_error("Binding not found in descriptor set layout");
+
 		VkDescriptorSetLayoutBinding& bindingDescription = m_descriptorSetLayout.m_bindings[binding];
 
 		VkWriteDescriptorSet writeDescriptorSet = {};
@@ -56,7 +59,7 @@ namespace Aminophenol
 
 		vkUpdateDescriptorSets(
 			m_descriptorPool.m_logicalDevice,
-			static_cast<uint32_t>(m_writeDescriptorSets.size()),
+			m_writeDescriptorSets.size(),
 			m_writeDescriptorSets.data(),
 			0,
 			nullptr

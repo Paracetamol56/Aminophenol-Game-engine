@@ -15,23 +15,20 @@ namespace Aminophenol
 		)
 	{}
 
-	void UniformBuffer::update(const void* data)
+	void UniformBuffer::update(void* data)
 	{
-		void *mappedMemory;
-		map(&mappedMemory);
-		std::memcpy(mappedMemory, data, static_cast<size_t>(m_size));
+		map(data);
 		unmap();
 	}
 
 	DescriptorWriter UniformBuffer::getDescriptorWriter(DescriptorSetLayout& layout, DescriptorPool& pool, uint32_t binding) const
 	{
-		DescriptorWriter writer(layout, pool);
-
 		VkDescriptorBufferInfo bufferInfo = {};
 		bufferInfo.buffer = m_buffer;
 		bufferInfo.offset = 0;
-		bufferInfo.range = VK_WHOLE_SIZE;
+		bufferInfo.range = m_size;
 
+		DescriptorWriter writer(layout, pool);
 		writer.writeBuffer(
 			binding,
 			&bufferInfo

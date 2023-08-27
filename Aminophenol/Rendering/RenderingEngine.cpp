@@ -15,13 +15,21 @@ namespace Aminophenol {
 		, m_logicalDevice{ std::make_unique<LogicalDevice>(*m_instance, *m_physicalDevice) }
 		, m_surface{ std::make_unique<Surface>(*m_instance, window, *m_logicalDevice, *m_physicalDevice) }
 		, m_swapchain{ std::make_unique<Swapchain>(*m_logicalDevice, *m_physicalDevice, *m_surface, window.getExtent()) }
-		, m_pipeline{ std::make_unique<Pipeline>(*m_logicalDevice, m_swapchain->getExtent(), m_swapchain->getFormat(), "../Aminophenol/Shaders/shader.vert.spv", "../Aminophenol/Shaders/shader.frag.spv") }
+		, m_attachments{ m_swapchain->getImageViews() }
 		, m_commandPool{ std::make_unique<CommandPool>(*m_logicalDevice) }
 		, m_globalCommandBuffer{ std::make_unique<CommandBuffer>(*m_logicalDevice, m_commandPool) }
 	{
-		// Initialize the frame objects
-		initFrameObjects();
+		m_maxFramesInFlight = m_attachments.size();
 
+		m_globalDescriptorPool = std::make_unique<DescriptorPool>(
+			*m_logicalDevice,
+			std::vector<VkDescriptorPoolSize>{
+				VkDescriptorPoolSize{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, static_cast<uint32_t>(m_maxFramesInFlight) }
+			},
+			static_cast<uint32_t>(m_maxFramesInFlight),
+			0
+		);
+		
 		m_globalDescriptorSetLayout = std::make_unique<DescriptorSetLayout>(
 			*m_logicalDevice,
 			std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding>{
@@ -29,29 +37,17 @@ namespace Aminophenol {
 			}
 		);
 
-		m_globalDescriptorPool = std::make_unique<DescriptorPool>(
+		m_pipeline = std::make_unique<Pipeline>(
 			*m_logicalDevice,
-			std::vector<VkDescriptorPoolSize>{
-				VkDescriptorPoolSize{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, static_cast<uint32_t>(m_maxFramesInFlight) }
-			},
-			m_maxFramesInFlight,
-			0
+			*m_globalDescriptorSetLayout,
+			m_swapchain->getExtent(),
+			m_swapchain->getFormat(),
+			"../Aminophenol/Shaders/shader.vert.spv",
+			"../Aminophenol/Shaders/shader.frag.spv"
 		);
-
-		// Create a gloabal descriptor set
-		std::vector<VkDescriptorSet> globalDescriptorSets{ m_maxFramesInFlight };
-		for (size_t i = 0; i < m_maxFramesInFlight; ++i)
-		{
-			DescriptorWriter writer = m_frames[i].uniformBuffer->getDescriptorWriter(
-				*m_globalDescriptorSetLayout,
-				*m_globalDescriptorPool,
-				0
-			);
-			
-			writer.build(globalDescriptorSets[i]);
-		}
-
-		Logger::log(LogLevel::Trace, "Global CommandBuffer initialized");
+		
+		// Initialize the frame objects
+		initFrameObjects();
 	}
 
 	RenderingEngine::~RenderingEngine()
@@ -188,14 +184,8 @@ namespace Aminophenol {
 
 	void RenderingEngine::initFrameObjects()
 	{
-		m_attachments = m_swapchain->getImageViews();
-
-		// Resize vectors
-		m_maxFramesInFlight = m_attachments.size();
-
 		m_frames.resize(m_maxFramesInFlight);
 
-		// Initialize all syncronization objects
 		for (size_t i = 0; i < m_maxFramesInFlight; i++)
 		{
 			// Create a depth buffer
@@ -231,9 +221,21 @@ namespace Aminophenol {
 			Logger::log(LogLevel::Trace, "CommandBuffer %d initialized", i);
 
 			// Create a UBO
+			m_frames[i].uniformBufferData = FrameUniformBufferObject{
+				Maths::Matrix4f::identity(),
+				Maths::Matrix4f::identity(),
+			};
 			m_frames[i].uniformBuffer = std::make_unique<UniformBuffer>(*m_logicalDevice, sizeof(FrameUniformBufferObject), &m_frames[i].uniformBufferData);
 
 			Logger::log(LogLevel::Trace, "UniformBuffer %d initialized", i);
+
+			// Create a descriptor set
+			DescriptorWriter writer = m_frames[i].uniformBuffer->getDescriptorWriter(
+				*m_globalDescriptorSetLayout,
+				*m_globalDescriptorPool,
+				0
+			);
+			writer.build(m_frames[i].descriptorSet);
 
 			// Create 2 semaphores and 1 fence
 			VkSemaphoreCreateInfo semaphoreInfo{};
@@ -321,12 +323,24 @@ namespace Aminophenol {
 		vkCmdSetViewport(m_frames[imageIndex].commandBuffer->getCommandBuffer(), 0, 1, &viewport);
 		vkCmdSetScissor(m_frames[imageIndex].commandBuffer->getCommandBuffer(), 0, 1, &scissor);
 
+		// Update the uniform buffer
+		m_frames[imageIndex].uniformBufferData.projectionMatrix = m_activeScene->getActiveCamera()->getProjectionMatrix();
+		m_frames[imageIndex].uniformBufferData.viewMatrix = m_activeScene->getActiveCamera()->getViewMatrix();
+		m_frames[imageIndex].uniformBuffer->update(&m_frames[imageIndex].uniformBufferData);
+
+		vkCmdBindDescriptorSets(
+			m_frames[imageIndex].commandBuffer->getCommandBuffer(),
+			VK_PIPELINE_BIND_POINT_GRAPHICS,
+			m_pipeline->getPipelineLayout(),
+			0, 1,
+			&m_frames[imageIndex].descriptorSet,
+			0, nullptr
+		);
+
 		// Iterate through all renderables in the active scene and draw them
 		for (std::vector<std::unique_ptr<Node>>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
 		{
 			PushConstantData push{};
-			push.projectionMatrix = m_activeScene->getActiveCamera()->getProjectionMatrix();
-			push.viewMatrix = m_activeScene->getActiveCamera()->getViewMatrix();
 			push.modelMatrix = (*it)->transform.getMatrix();
 			push.normalMatrix = (*it)->transform.getMatrix();
 
