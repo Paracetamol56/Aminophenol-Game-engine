@@ -137,7 +137,7 @@ namespace Aminophenol
 
 	const uint32_t LogicalDevice::getPresentQueueFamilyIndex() const
 	{
-		return m_computeFamilyIndex;
+		return m_presentFamilyIndex;
 	}
 
 	const uint32_t LogicalDevice::getComputeQueueFamilyIndex() const

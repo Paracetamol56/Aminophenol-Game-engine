@@ -13,7 +13,7 @@ namespace Aminophenol {
 		Buffer(const LogicalDevice& logicalDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, const void* data = nullptr);
 		~Buffer();
 
-		void map(void* data) const;
+		void map(void** data) const;
 		void unmap() const;
 
 		operator const VkBuffer& () const;
@@ -27,8 +27,8 @@ namespace Aminophenol {
 		const LogicalDevice& m_logicalDevice;
 
 		VkDeviceSize m_size;
-		VkBuffer m_buffer;
-		VkDeviceMemory m_bufferMemory;
+		VkBuffer m_buffer{ VK_NULL_HANDLE };
+		VkDeviceMemory m_bufferMemory{ VK_NULL_HANDLE };
 
 	};
 

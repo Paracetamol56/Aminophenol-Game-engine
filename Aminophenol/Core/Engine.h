@@ -22,7 +22,7 @@ namespace Aminophenol
 	{
 	public:
 
-		Engine(std::string appName = "Aminophenol", const double maxFPS = 60.0, const unsigned int width = 800, const unsigned int height = 800);
+		Engine(std::string appName = "Aminophenol", const float maxFPS = 60.0, const unsigned int width = 800, const unsigned int height = 800);
 		~Engine();
 
 		static Engine* get();
@@ -38,7 +38,7 @@ namespace Aminophenol
 		float getDeltaTime() const;
 		float getFPS() const;
 
-		void setMaxFPS(const double maxFPS);
+		void setMaxFPS(const float maxFPS);
 
 	private:
 
@@ -51,8 +51,8 @@ namespace Aminophenol
 		std::unique_ptr<RenderingEngine> m_renderingEngine;
 		std::unique_ptr<InputSystem> m_inputSystem;
 
-		double m_maxFrameTime;
-		double m_deltaTime{ 0.0f };
+		float m_maxFrameTime;
+		float m_deltaTime{ 0.0f };
 
 	};
 

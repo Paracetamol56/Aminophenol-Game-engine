@@ -32,6 +32,7 @@ int main(int argc, char* argv[])
 		engine.setActiveScene(scene);
 
 		Node* object = scene->addChild("object");
+		object->transform.rotation = Maths::Quaternionf({ 0.0f, Maths::degreesToRadians(-90.0f), Maths::degreesToRadians(90.0f) }, Maths::EulerAngle::YXZ);
 		MeshRenderer* objectMeshRenderer = object->addComponent<MeshRenderer>(PrimitiveMesh::createPlane(
 			engine.getRenderingEngine().getLogicalDevice(),
 			engine.getRenderingEngine().getCommandPool()

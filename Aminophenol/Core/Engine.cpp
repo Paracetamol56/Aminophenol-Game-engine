@@ -6,7 +6,7 @@ namespace Aminophenol {
 	
 	Engine* Engine::s_instance = nullptr;
 
-	Engine::Engine(std::string appName, const double maxFPS, const unsigned int width, const unsigned int height)
+	Engine::Engine(std::string appName, const float maxFPS, const unsigned int width, const unsigned int height)
 		:  _appName{ appName }
 		, m_maxFrameTime{ 1.0f / maxFPS }
 		, m_uuidGenerator{}
@@ -74,7 +74,7 @@ namespace Aminophenol {
 				m_activeScene->onUpdate();
 				m_renderingEngine->update();
 				accumulatedTime -= m_maxFrameTime;
-				m_deltaTime = std::chrono::duration<double>(currentTime - lastFrameTime).count();
+				m_deltaTime = std::chrono::duration<float>(currentTime - lastFrameTime).count();
 				lastFrameTime = currentTime;
 			}
 		}
@@ -127,7 +127,7 @@ namespace Aminophenol {
 		return 1.0f / m_deltaTime;
 	}
 
-	void Engine::setMaxFPS(const double maxFPS)
+	void Engine::setMaxFPS(const float maxFPS)
 	{
 		m_maxFrameTime = 1.0f / maxFPS;
 	}

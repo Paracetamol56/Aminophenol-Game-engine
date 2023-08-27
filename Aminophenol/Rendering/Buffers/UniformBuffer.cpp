@@ -17,30 +17,26 @@ namespace Aminophenol
 
 	void UniformBuffer::update(const void* data)
 	{
-		void *mappedMemory;
-		map(&mappedMemory);
-		std::memcpy(mappedMemory, data, static_cast<size_t>(m_size));
+		void * mappedData;
+		map(&mappedData);
+		std::memcpy(mappedData, data, static_cast<size_t>(m_size));
 		unmap();
 	}
 
-	VkWriteDescriptorSet UniformBuffer::getWriteDescriptor(VkDescriptorSet descriptorSet, VkDescriptorType descriptorType, uint32_t binding, uint32_t descriptorCount)
+	DescriptorWriter UniformBuffer::getDescriptorWriter(DescriptorSetLayout& layout, DescriptorPool& pool, uint32_t binding) const
 	{
 		VkDescriptorBufferInfo bufferInfo = {};
 		bufferInfo.buffer = m_buffer;
 		bufferInfo.offset = 0;
-		bufferInfo.range = VK_WHOLE_SIZE;
+		bufferInfo.range = m_size;
 
-		VkWriteDescriptorSet descriptorWrite = {};
-		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet = descriptorSet;
-		descriptorWrite.dstBinding = binding;
-		descriptorWrite.dstArrayElement = 0;
-		descriptorWrite.descriptorType = descriptorType;
-		descriptorWrite.descriptorCount = descriptorCount;
-		descriptorWrite.pBufferInfo = &bufferInfo;
+		DescriptorWriter writer(layout, pool);
+		writer.writeBuffer(
+			binding,
+			&bufferInfo
+		);
 
-		return descriptorWrite;
-
+		return writer;
 	}
 
 	VkDescriptorSetLayoutBinding UniformBuffer::getDescriptorSetLayoutBinding(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, uint32_t descriptorCount)

@@ -356,6 +356,8 @@ namespace Aminophenol::Maths
 
 		T m[4][4];
 
+		friend std::ostream& operator<<(std::ostream& os, const Matrix4<T>& matrix);
+
 	};
 
 	using Matrix4f = Matrix4<float>;

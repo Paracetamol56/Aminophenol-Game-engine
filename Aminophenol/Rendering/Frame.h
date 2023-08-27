@@ -2,13 +2,23 @@
 #ifndef FRAME_H
 #define FRAME_H
 
+#include "Utils/NonCopyable.h"
+#include "Rendering/Buffers/UniformBuffer.h"
 #include "Rendering/Commands/CommandBuffer.h"
 #include "Rendering/Image/ImageDepth.h"
+#include "Rendering/Pipeline/Pipeline.h"
 
 namespace Aminophenol
 {
 
-	struct Frame {
+	struct FrameUniformBufferObject
+	{
+		Maths::Matrix4f projectionMatrix;
+		Maths::Matrix4f viewMatrix;
+	};
+
+	struct Frame
+	{
 
 		// Frame size
 		uint32_t width;
@@ -22,6 +32,16 @@ namespace Aminophenol
 
 		// Command buffer
 		std::unique_ptr<CommandBuffer> commandBuffer;
+
+		// Frame UBO
+		FrameUniformBufferObject uniformBufferData;
+		std::unique_ptr<UniformBuffer> uniformBuffer;
+
+		// Descriptor set
+		VkDescriptorSet descriptorSet;
+
+		// Attachment
+		VkImageView attachment;
 
 		// Syncronization objects
 		VkSemaphore imageAvailableSemaphore;

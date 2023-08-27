@@ -3,6 +3,8 @@
 #define PIPELINE_H
 
 #include <filesystem>
+#include "Rendering/Descriptors/DescriptorSetLayout.h"
+#include "Rendering/Descriptors/DescriptorPool.h"
 #include "Rendering/Swapchain/RenderPass.h"
 
 namespace Aminophenol {
@@ -12,7 +14,8 @@ namespace Aminophenol {
 	public:
 
 		Pipeline(
-			const LogicalDevice& logicalDevice, const VkExtent2D& swapchainExtent, const VkFormat& swapchainImageFormat,
+			const LogicalDevice& logicalDevice, const DescriptorSetLayout& descriptorSetLayout,
+			const VkExtent2D& swapchainExtent, const VkFormat& swapchainImageFormat,
 			const std::filesystem::path& vertShaderPath, const std::filesystem::path& fragShaderPath
 		);
 		~Pipeline();
