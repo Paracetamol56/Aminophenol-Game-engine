@@ -15,7 +15,7 @@ namespace Aminophenol
 
 		UniformBuffer(const LogicalDevice& logicalDevice, VkDeviceSize size, const void *data);
 
-		void update(void *data);
+		void update(const void* data);
 
 		DescriptorWriter getDescriptorWriter(DescriptorSetLayout& layout, DescriptorPool& pool, uint32_t binding) const;
 		static VkDescriptorSetLayoutBinding getDescriptorSetLayoutBinding(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, uint32_t descriptorCount = 1);

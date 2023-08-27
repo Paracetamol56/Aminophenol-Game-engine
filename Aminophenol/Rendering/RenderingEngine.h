@@ -26,6 +26,8 @@ namespace Aminophenol {
 
 	struct PushConstantData
 	{
+		alignas(0) Maths::Matrix4f projectionMatrix;
+		alignas(0) Maths::Matrix4f viewMatrix;
 		alignas(0) Maths::Matrix4f modelMatrix;
 		alignas(0) Maths::Matrix4f normalMatrix;
 	};

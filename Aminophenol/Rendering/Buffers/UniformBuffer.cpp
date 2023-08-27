@@ -15,9 +15,11 @@ namespace Aminophenol
 		)
 	{}
 
-	void UniformBuffer::update(void* data)
+	void UniformBuffer::update(const void* data)
 	{
-		map(data);
+		void * mappedData;
+		map(&mappedData);
+		std::memcpy(mappedData, data, static_cast<size_t>(m_size));
 		unmap();
 	}
 

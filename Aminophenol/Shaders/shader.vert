@@ -8,12 +8,14 @@ layout(location = 3) in vec2 vertexUV;
 
 layout(set = 0, binding = 0) uniform CameraUBO
 {
-	mat4 viewMatrix;
 	mat4 projectionMatrix;
+	mat4 viewMatrix;
 } cameraUBO;
 
 layout(push_constant) uniform PushConstant
 {
+	mat4 projectionMatrix;
+	mat4 viewMatrix;
 	mat4 modelMatrix;
 	mat4 normalMatrix;
 } pushConstant;

@@ -221,11 +221,8 @@ namespace Aminophenol {
 			Logger::log(LogLevel::Trace, "CommandBuffer %d initialized", i);
 
 			// Create a UBO
-			m_frames[i].uniformBufferData = FrameUniformBufferObject{
-				Maths::Matrix4f::identity(),
-				Maths::Matrix4f::identity(),
-			};
-			m_frames[i].uniformBuffer = std::make_unique<UniformBuffer>(*m_logicalDevice, sizeof(FrameUniformBufferObject), &m_frames[i].uniformBufferData);
+			m_frames[i].uniformBufferData = FrameUniformBufferObject{};
+			m_frames[i].uniformBuffer = std::make_unique<UniformBuffer>(*m_logicalDevice, sizeof(FrameUniformBufferObject), nullptr);
 
 			Logger::log(LogLevel::Trace, "UniformBuffer %d initialized", i);
 
@@ -305,8 +302,6 @@ namespace Aminophenol {
 
 		vkCmdBeginRenderPass(m_frames[imageIndex].commandBuffer->getCommandBuffer(), &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-		vkCmdBindPipeline(m_frames[imageIndex].commandBuffer->getCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, *m_pipeline);
-
 		// Update viewport and scissor
 		VkViewport viewport{};
 		viewport.x = 0.0f;
@@ -323,6 +318,8 @@ namespace Aminophenol {
 		vkCmdSetViewport(m_frames[imageIndex].commandBuffer->getCommandBuffer(), 0, 1, &viewport);
 		vkCmdSetScissor(m_frames[imageIndex].commandBuffer->getCommandBuffer(), 0, 1, &scissor);
 
+		vkCmdBindPipeline(m_frames[imageIndex].commandBuffer->getCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, *m_pipeline);
+		
 		// Update the uniform buffer
 		m_frames[imageIndex].uniformBufferData.projectionMatrix = m_activeScene->getActiveCamera()->getProjectionMatrix();
 		m_frames[imageIndex].uniformBufferData.viewMatrix = m_activeScene->getActiveCamera()->getViewMatrix();
@@ -341,6 +338,8 @@ namespace Aminophenol {
 		for (std::vector<std::unique_ptr<Node>>::iterator it = m_activeScene->begin(); it != m_activeScene->end(); ++it)
 		{
 			PushConstantData push{};
+			push.projectionMatrix = m_activeScene->getActiveCamera()->getProjectionMatrix();
+			push.viewMatrix = m_activeScene->getActiveCamera()->getViewMatrix();
 			push.modelMatrix = (*it)->transform.getMatrix();
 			push.normalMatrix = (*it)->transform.getMatrix();
 

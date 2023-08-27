@@ -46,27 +46,35 @@ namespace Aminophenol {
 		// If data is provided, copy it to the buffer
 		if (data != nullptr)
 		{
-			map(const_cast<void*>(data));
+			void* mappedData;
+			map(&mappedData);
+			std::memcpy(mappedData, data, static_cast<size_t>(m_size));
+			if ((properties & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) == 0) {
+				VkMappedMemoryRange mappedMemoryRange = {};
+				mappedMemoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
+				mappedMemoryRange.memory = m_bufferMemory;
+				mappedMemoryRange.offset = 0;
+				mappedMemoryRange.size = m_size;
+				vkFlushMappedMemoryRanges(m_logicalDevice.getDevice(), 1, &mappedMemoryRange);
+			}
 			unmap();
 		}
 	}
 
 	Buffer::~Buffer()
 	{
-		vkDestroyBuffer(m_logicalDevice.getDevice(), m_buffer, nullptr);
-		vkFreeMemory(m_logicalDevice.getDevice(), m_bufferMemory, nullptr);
+		vkDestroyBuffer(m_logicalDevice, m_buffer, nullptr);
+		vkFreeMemory(m_logicalDevice, m_bufferMemory, nullptr);
 	}
 
-	void Buffer::map(void* data) const
+	void Buffer::map(void** data) const
 	{
-		void* mappedData;
-		vkMapMemory(m_logicalDevice.getDevice(), m_bufferMemory, 0, m_size, 0, &mappedData);
-		memcpy(mappedData, data, static_cast<size_t>(m_size));
+		vkMapMemory(m_logicalDevice, m_bufferMemory, 0, m_size, 0, data);
 	}
 
 	void Buffer::unmap() const
 	{
-		vkUnmapMemory(m_logicalDevice.getDevice(), m_bufferMemory);
+		vkUnmapMemory(m_logicalDevice, m_bufferMemory);
 	}
 
 	Buffer::operator const VkBuffer& () const
