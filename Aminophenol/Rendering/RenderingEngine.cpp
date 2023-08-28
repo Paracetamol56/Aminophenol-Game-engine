@@ -2,8 +2,12 @@
 #include "pch.h"
 #include "RenderingEngine.h"
 #include "Maths/Matrix4.h"
-
 #include "Logging/Logger.h"
+
+// ImGUI headers
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_vulkan.h>
 
 namespace Aminophenol {
 
@@ -48,6 +52,9 @@ namespace Aminophenol {
 		
 		// Initialize the frame objects
 		initFrameObjects();
+
+		// Initialize ImGui
+		initImGui();
 	}
 
 	RenderingEngine::~RenderingEngine()
@@ -56,11 +63,14 @@ namespace Aminophenol {
 		
 		destroyFrameObjects();
 
+		ImGui_ImplVulkan_Shutdown();
+
 		m_activeScene.reset();
 
 		m_frames.clear();
 		m_globalDescriptorSetLayout.reset();
 		m_globalDescriptorPool.reset();
+		m_imguiDescriptorPool.reset();
 		m_globalCommandBuffer.reset();
 		m_commandPool.reset();
 		m_pipeline.reset();
@@ -360,6 +370,8 @@ namespace Aminophenol {
 			}
 		}
 
+		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), m_frames[imageIndex].commandBuffer->getCommandBuffer());
+
 		vkCmdEndRenderPass(m_frames[imageIndex].commandBuffer->getCommandBuffer());
 		
 		m_frames[imageIndex].commandBuffer->end();
@@ -381,6 +393,57 @@ namespace Aminophenol {
 		m_swapchain.reset(new Swapchain(*m_logicalDevice, *m_physicalDevice, *m_surface, m_window.getExtent(), m_swapchain.get()));
 		m_activeScene->getActiveCamera()->setAspectRatio(m_swapchain->getExtent().width / static_cast<float>(m_swapchain->getExtent().height));
 		initFrameObjects();
+	}
+
+	void RenderingEngine::initImGui()
+	{
+		std::vector<VkDescriptorPoolSize> pool_sizes =
+		{
+			{ VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
+			{ VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
+			{ VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
+			{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
+			{ VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
+		};
+
+		m_imguiDescriptorPool = std::make_unique<DescriptorPool>(*m_logicalDevice, pool_sizes, 1000, 0);
+
+		// 2: initialize imgui library
+
+		//this initializes the core structures of imgui
+		ImGui::CreateContext();
+
+		//this initializes imgui for SDL
+		ImGui_ImplGlfw_InitForVulkan(m_window, true);
+
+		//this initializes imgui for Vulkan
+		ImGui_ImplVulkan_InitInfo init_info = {};
+		init_info.Instance = *m_instance;
+		init_info.PhysicalDevice = *m_physicalDevice;
+		init_info.Device = *m_logicalDevice;
+		init_info.Queue = m_logicalDevice->getGraphicsQueue();
+		init_info.DescriptorPool = *m_imguiDescriptorPool;
+		init_info.MinImageCount = 3;
+		init_info.ImageCount = 3;
+		init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
+
+		ImGui_ImplVulkan_Init(&init_info, m_pipeline->getRenderPass());
+
+		//execute a gpu command to upload imgui font textures
+		CommandBuffer oneTimeCmdBuffer(*m_logicalDevice, m_commandPool);
+		oneTimeCmdBuffer.begin();
+		ImGui_ImplVulkan_CreateFontsTexture(oneTimeCmdBuffer);
+		oneTimeCmdBuffer.end();
+		oneTimeCmdBuffer.submitIdle();
+
+		//clear font textures from cpu data
+		ImGui_ImplVulkan_DestroyFontUploadObjects();
 	}
 
 } // namespace Aminophenol

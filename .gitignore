@@ -399,3 +399,4 @@ FodyWeavers.xsd
 
 # Custom ignores
 !models/*.obj
+Application/imgui.ini
