@@ -16,35 +16,28 @@ using namespace Aminophenol;
 
 int main(int argc, char* argv[])
 {
-	try
-	{
-		// Initialize logger
+	// Initialize logger
 #if _DEBUG
-		Logger logger{ LogLevel::Trace };
+	Logger logger{ LogLevel::Trace };
 #else
-		Logger logger{ LogLevel::Info };
+	Logger logger{ LogLevel::Info };
 #endif // _DEBUG
 
-		Engine engine{ "Aminophenol application", 60.0, 800, 800 };
+	Engine engine{ "Aminophenol application", 60.0, 800, 800 };
 
+	try
+	{
 		// Create a basic scene
 		std::shared_ptr<Scene> scene = std::make_shared<Scene>("Basic scene");
 		engine.setActiveScene(scene);
 
 		Node* object = scene->addChild("object");
-		object->transform.rotation = Maths::Quaternionf({ 0.0f, Maths::degreesToRadians(-90.0f), Maths::degreesToRadians(90.0f) }, Maths::EulerAngle::YXZ);
+		object->transform.rotation = Maths::Quaternionf({ 0.0f, Maths::degreesToRadians(-60.0f), Maths::degreesToRadians(60.0f) }, Maths::EulerAngle::YXZ);
 		MeshRenderer* objectMeshRenderer = object->addComponent<MeshRenderer>(PrimitiveMesh::createPlane(
 			engine.getRenderingEngine().getLogicalDevice(),
 			engine.getRenderingEngine().getCommandPool()
 		));
 		object->addComponent<ObjectRotationController>(1.0f);
-
-		Texture(
-			engine.getRenderingEngine().getLogicalDevice(),
-			engine.getRenderingEngine().getPhysicalDevice(),
-			engine.getRenderingEngine().getCommandPool(),
-			"C:/Users/mathe/Downloads/UV_checker_map.jpg"
-		);
 
 		Node* camera = scene->addChild("Camera");
 		camera->transform.position = { 0.0f, 0.0f, -3.0f };

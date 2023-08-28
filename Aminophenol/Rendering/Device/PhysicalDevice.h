@@ -29,6 +29,7 @@ namespace Aminophenol
 		void logPhysicalDeviceProperties(VkPhysicalDeviceProperties& deviceProperties);
 		bool checkDeviceExtensionSupport(VkPhysicalDevice& device, const std::vector<const char*>& requiredExtensions);
 		int rateDeviceSuitability(VkPhysicalDevice device, const std::vector<const char*>& requiredExtensions);
+		VkSampleCountFlagBits getMaxUsableSampleCount();
 
 	};
 

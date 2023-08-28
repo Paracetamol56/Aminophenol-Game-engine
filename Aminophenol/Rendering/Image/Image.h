@@ -5,6 +5,7 @@
 #include "Rendering/Device/LogicalDevice.h"
 #include "Rendering/Device/PhysicalDevice.h"
 #include "Rendering/Commands/CommandPool.h"
+#include "Rendering/Descriptors/DescriptorWriter.h"
 
 namespace Aminophenol
 {
@@ -21,7 +22,8 @@ namespace Aminophenol
 			VkImageTiling tiling,
 			VkImageUsageFlags usage,
 			VkMemoryPropertyFlags properties,
-			VkFormat format
+			VkFormat format,
+			VkImageLayout layout
 		);
 		~Image();
 
@@ -30,6 +32,10 @@ namespace Aminophenol
 		const VkImageView& getImageView() const;
 		const VkSampler& getSampler() const;
 
+		DescriptorWriter getDescriptorWriter(uint32_t binding, DescriptorSetLayout& layout, DescriptorPool& pool) const;
+		static VkDescriptorSetLayoutBinding getDescriptorSetLayoutBinding(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, uint32_t descriptorCount = 1);
+
+		// Static helper functions
 		static uint32_t findMipLevels(const VkExtent3D& extent);
 		static VkFormat findSupportedFormat(
 			const PhysicalDevice& physicalDevice,
@@ -94,6 +100,7 @@ namespace Aminophenol
 		VkImageUsageFlags m_usage;
 		VkMemoryPropertyFlags m_properties;
 		VkFormat m_format;
+		VkImageLayout m_imageLayout;
 
 		// Ressources
 		VkImage m_image{ VK_NULL_HANDLE };

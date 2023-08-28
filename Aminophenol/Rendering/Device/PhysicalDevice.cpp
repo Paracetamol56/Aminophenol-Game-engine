@@ -74,8 +74,10 @@ namespace Aminophenol
 			throw std::runtime_error("Failed to find a suitable GPU!");
 		}
 		
-		// Log the device name
+		// Get the properties of the best device
 		vkGetPhysicalDeviceProperties(bestDevice, &m_properties);
+
+		// Log the device name
 		Logger::log(LogLevel::Trace, "Picked the physical device \"%s\" with a score of %d.", m_properties.deviceName, bestScore);
 
 		return bestDevice;
@@ -195,6 +197,20 @@ namespace Aminophenol
 		Logger::log(LogLevel::Trace, "The device \"%s\" has a score of %d.", deviceProperties.deviceName, score);
 
 		return score;
+	}
+
+	VkSampleCountFlagBits PhysicalDevice::getMaxUsableSampleCount()
+	{
+		VkSampleCountFlags counts = m_properties.limits.framebufferColorSampleCounts & m_properties.limits.framebufferDepthSampleCounts;
+
+		if (counts & VK_SAMPLE_COUNT_64_BIT) return VK_SAMPLE_COUNT_64_BIT;
+		if (counts & VK_SAMPLE_COUNT_32_BIT) return VK_SAMPLE_COUNT_32_BIT;
+		if (counts & VK_SAMPLE_COUNT_16_BIT) return VK_SAMPLE_COUNT_16_BIT;
+		if (counts & VK_SAMPLE_COUNT_8_BIT) return VK_SAMPLE_COUNT_8_BIT;
+		if (counts & VK_SAMPLE_COUNT_4_BIT) return VK_SAMPLE_COUNT_4_BIT;
+		if (counts & VK_SAMPLE_COUNT_2_BIT) return VK_SAMPLE_COUNT_2_BIT;
+
+		return VK_SAMPLE_COUNT_1_BIT;
 	}
 
 } // namespace Aminophenol

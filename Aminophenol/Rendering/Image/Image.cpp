@@ -14,7 +14,8 @@ namespace Aminophenol {
 		VkImageTiling tiling,
 		VkImageUsageFlags usage,
 		VkMemoryPropertyFlags properties,
-		VkFormat format
+		VkFormat format,
+		VkImageLayout layout
 	)
 		: m_logicalDevice{ logicalDevice }
 		, m_physicalDevice{ physicalDevice }
@@ -24,6 +25,7 @@ namespace Aminophenol {
 		, m_usage{ usage }
 		, m_properties{ properties }
 		, m_format{ format }
+		, m_imageLayout{ layout }
 	{}
 
 	Image::~Image()
@@ -47,6 +49,31 @@ namespace Aminophenol {
 	const VkSampler& Image::getSampler() const
 	{
 		return m_sampler;
+	}
+
+	DescriptorWriter Image::getDescriptorWriter(uint32_t binding, DescriptorSetLayout& layout, DescriptorPool& pool) const
+	{
+		VkDescriptorImageInfo imageInfo{};
+		imageInfo.imageLayout = m_imageLayout;
+		imageInfo.imageView = m_imageView;
+		imageInfo.sampler = m_sampler;
+
+		DescriptorWriter writer{ layout, pool };
+		writer.writeImage(binding, &imageInfo);
+
+		return writer;
+	}
+
+	VkDescriptorSetLayoutBinding Image::getDescriptorSetLayoutBinding(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, uint32_t descriptorCount)
+	{
+		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding{};
+		descriptorSetLayoutBinding.binding = binding;
+		descriptorSetLayoutBinding.descriptorType = descriptorType;
+		descriptorSetLayoutBinding.descriptorCount = descriptorCount;
+		descriptorSetLayoutBinding.stageFlags = stageFlags;
+		descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
+
+		return descriptorSetLayoutBinding;
 	}
 
 	uint32_t Image::findMipLevels(const VkExtent3D& extent)

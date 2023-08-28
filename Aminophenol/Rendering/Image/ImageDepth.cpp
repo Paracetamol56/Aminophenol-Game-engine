@@ -20,6 +20,7 @@ namespace Aminophenol
 			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
 			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
 			Image::findDepthFormat(physicalDevice),
+			VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
 		}
 	{
 		if (m_format == VK_FORMAT_UNDEFINED)

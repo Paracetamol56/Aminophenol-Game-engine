@@ -228,9 +228,9 @@ namespace Aminophenol {
 
 			// Create a descriptor set
 			DescriptorWriter writer = m_frames[i].uniformBuffer->getDescriptorWriter(
+				0,
 				*m_globalDescriptorSetLayout,
-				*m_globalDescriptorPool,
-				0
+				*m_globalDescriptorPool
 			);
 			writer.build(m_frames[i].descriptorSet);
 

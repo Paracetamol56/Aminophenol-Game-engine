@@ -23,7 +23,7 @@ namespace Aminophenol
 		unmap();
 	}
 
-	DescriptorWriter UniformBuffer::getDescriptorWriter(DescriptorSetLayout& layout, DescriptorPool& pool, uint32_t binding) const
+	DescriptorWriter UniformBuffer::getDescriptorWriter(uint32_t binding, DescriptorSetLayout& layout, DescriptorPool& pool) const
 	{
 		VkDescriptorBufferInfo bufferInfo = {};
 		bufferInfo.buffer = m_buffer;
@@ -31,10 +31,7 @@ namespace Aminophenol
 		bufferInfo.range = m_size;
 
 		DescriptorWriter writer(layout, pool);
-		writer.writeBuffer(
-			binding,
-			&bufferInfo
-		);
+		writer.writeBuffer(binding, &bufferInfo);
 
 		return writer;
 	}

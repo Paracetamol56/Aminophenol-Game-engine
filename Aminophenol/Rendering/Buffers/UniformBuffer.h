@@ -17,7 +17,7 @@ namespace Aminophenol
 
 		void update(const void* data);
 
-		DescriptorWriter getDescriptorWriter(DescriptorSetLayout& layout, DescriptorPool& pool, uint32_t binding) const;
+		DescriptorWriter getDescriptorWriter(uint32_t binding, DescriptorSetLayout& layout, DescriptorPool& pool) const;
 		static VkDescriptorSetLayoutBinding getDescriptorSetLayoutBinding(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, uint32_t descriptorCount = 1);
 
 	};
