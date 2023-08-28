@@ -169,7 +169,6 @@
     <ClInclude Include="Mesh\PrimitiveMesh.h" />
     <ClInclude Include="Rendering\Image\ImageDepth.h" />
     <ClInclude Include="Rendering\Image\Image.h" />
-    <ClInclude Include="Rendering\Frame.h" />
     <ClInclude Include="Rendering\Buffers\UniformBuffer.h" />
     <ClInclude Include="Rendering\Image\Texture.h" />
     <ClInclude Include="Utils\ExecutionTimingBenchmark.h" />

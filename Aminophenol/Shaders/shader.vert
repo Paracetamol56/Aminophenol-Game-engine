@@ -14,8 +14,6 @@ layout(set = 0, binding = 0) uniform CameraUBO
 
 layout(push_constant) uniform PushConstant
 {
-	mat4 projectionMatrix;
-	mat4 viewMatrix;
 	mat4 modelMatrix;
 	mat4 normalMatrix;
 } pushConstant;

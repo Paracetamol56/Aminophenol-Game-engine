@@ -17,6 +17,7 @@ namespace Aminophenol {
 
 		operator const VkSwapchainKHR& () const;
 
+		const size_t getImageCount() const;
 		const std::vector<VkImage>& getImages() const;
 		const std::vector<VkImageView>& getImageViews() const;
 		const VkExtent2D& getExtent() const;

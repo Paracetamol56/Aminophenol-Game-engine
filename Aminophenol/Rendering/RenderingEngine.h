@@ -16,7 +16,7 @@
 #include "Rendering/Descriptors/DescriptorSetLayout.h"
 #include "Rendering/Commands/CommandPool.h"
 #include "Rendering/Commands/CommandBuffer.h"
-#include "Rendering/Frame.h"
+#include "Rendering/Image/ImageDepth.h"
 #include "Mesh/Mesh.h"
 
 #include "Maths/Vector2.h"
@@ -24,10 +24,14 @@
 
 namespace Aminophenol {
 
+	struct FrameUniformBufferObject
+	{
+		Maths::Matrix4f projectionMatrix;
+		Maths::Matrix4f viewMatrix;
+	};
+
 	struct PushConstantData
 	{
-		alignas(0) Maths::Matrix4f projectionMatrix;
-		alignas(0) Maths::Matrix4f viewMatrix;
 		alignas(0) Maths::Matrix4f modelMatrix;
 		alignas(0) Maths::Matrix4f normalMatrix;
 	};
@@ -87,10 +91,21 @@ namespace Aminophenol {
 		std::unique_ptr<DescriptorSetLayout> m_globalDescriptorSetLayout;
 		
 		// Frames
+		FrameUniformBufferObject m_uniformBufferData;
+		struct Frame
+		{
+			VkFramebuffer frameBuffer;
+			std::unique_ptr<ImageDepth> depthBuffer;
+
+			VkSemaphore imageAvailableSemaphore;
+			VkSemaphore renderFinishedSemaphore;
+			VkFence inFlightFence;
+
+			std::unique_ptr<CommandBuffer> commandBuffer;
+			std::unique_ptr<UniformBuffer> uniformBuffer;
+			VkDescriptorSet descriptorSet;
+		};
 		std::vector<Frame> m_frames{};
-		
-		// Attachments
-		std::vector<VkImageView> m_attachments{};
 		
 		void initFrameObjects();
 		void destroyFrameObjects();
