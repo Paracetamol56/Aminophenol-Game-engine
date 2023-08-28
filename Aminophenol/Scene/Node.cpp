@@ -92,6 +92,8 @@ namespace Aminophenol {
 			}
 		}
 		Logger::log(LogLevel::Error, "Node::getChild: Node with UUID %s not found.", uuid);
+		
+		return nullptr;
 	}
 
 	const size_t Node::getChildrenCount() const

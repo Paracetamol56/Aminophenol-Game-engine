@@ -2,6 +2,11 @@
 #include "pch.h"
 #include "Engine.h"
 
+// ImGUI headers
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_vulkan.h>
+
 namespace Aminophenol {
 	
 	Engine* Engine::s_instance = nullptr;
@@ -72,7 +77,14 @@ namespace Aminophenol {
 				glfwPollEvents();
 				m_inputSystem->update();
 				m_activeScene->onUpdate();
+
+				ImGui_ImplVulkan_NewFrame();
+				ImGui_ImplGlfw_NewFrame();
+				ImGui::NewFrame();
+				ImGui::ShowDemoWindow();
+				ImGui::Render();
 				m_renderingEngine->update();
+
 				accumulatedTime -= m_maxFrameTime;
 				m_deltaTime = std::chrono::duration<float>(currentTime - lastFrameTime).count();
 				lastFrameTime = currentTime;

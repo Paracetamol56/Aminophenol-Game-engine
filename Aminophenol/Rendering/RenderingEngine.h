@@ -83,6 +83,7 @@ namespace Aminophenol {
 		std::shared_ptr<CommandPool> m_commandPool;
 		std::unique_ptr<CommandBuffer> m_globalCommandBuffer;
 		std::unique_ptr<DescriptorPool> m_globalDescriptorPool;
+		std::unique_ptr<DescriptorPool> m_imguiDescriptorPool;
 		std::unique_ptr<DescriptorSetLayout> m_globalDescriptorSetLayout;
 		
 		// Frames
@@ -95,6 +96,8 @@ namespace Aminophenol {
 		void destroyFrameObjects();
 		void recordDrawCommand(uint32_t imageIndex);
 		void recreateSwapchain();
+
+		void initImGui();
 
 	};
 
