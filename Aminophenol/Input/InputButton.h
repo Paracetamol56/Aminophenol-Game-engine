@@ -19,7 +19,8 @@ namespace Aminophenol
 		const Utils::UUID getUUID() const;
 		const std::string getName() const;
 		void setKey(const KeyCode key);
-		bool isPressed() const;
+		bool isPressed();
+		bool wasPressed();
 
 	private:
 
@@ -27,6 +28,8 @@ namespace Aminophenol
 		const std::string m_name;
 		KeyCode m_key;
 		const Window& m_window;
+
+		bool m_wasPressed = false;
 
 	};
 

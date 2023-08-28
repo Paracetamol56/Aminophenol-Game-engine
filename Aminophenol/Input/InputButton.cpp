@@ -27,10 +27,17 @@ namespace Aminophenol
 		m_key = key;
 	}
 
-	bool InputButton::isPressed() const
+	bool InputButton::isPressed()
 	{
 		int state = glfwGetKey(m_window, static_cast<int>(m_key));
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
+	}
+
+	bool InputButton::wasPressed()
+	{
+		bool stillPressed = m_wasPressed && isPressed();
+		m_wasPressed = isPressed();
+		return m_wasPressed != stillPressed;
 	}
 
 } // namespace Aminophenol

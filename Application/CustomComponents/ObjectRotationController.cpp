@@ -29,7 +29,7 @@ void ObjectRotationController::onUpdate()
 		m_node->transform.rotation = Maths::Quaternion(Maths::Vector3f{ 0.0f, eulerRotation.y + deltaX, (eulerRotation.z + deltaY) }, Maths::EulerAngle::YXZ);
 	}
 
-	if (m_autoRotateButton->isPressed())
+	if (m_autoRotateButton->wasPressed())
 		m_autoRotate = !m_autoRotate;
 
 	if (m_autoRotate)
