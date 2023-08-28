@@ -1,6 +1,7 @@
 
 #include "pch.h"
 #include "Window.h"
+#include <stb_image.h>
 #include "Logging/Logger.h"
 
 namespace Aminophenol
@@ -51,6 +52,60 @@ namespace Aminophenol
 		int width, height;
 		glfwGetFramebufferSize(m_window, &width, &height);
 		return width == 0 || height == 0;
+	}
+
+	void Window::setWidth(uint32_t width)
+	{
+		m_width = width;
+		glfwSetWindowSize(m_window, m_width, m_height);
+	}
+
+	void Window::setHeight(uint32_t height)
+	{
+		m_height = height;
+		glfwSetWindowSize(m_window, m_width, m_height);
+	}
+
+	void Window::setSize(uint32_t width, uint32_t height)
+	{
+		m_width = width;
+		m_height = height;
+		glfwSetWindowSize(m_window, m_width, m_height);
+	}
+
+	void Window::setMaximized(bool maximized)
+	{
+		if (maximized)
+			glfwMaximizeWindow(m_window);
+		else
+			glfwRestoreWindow(m_window);
+	}
+
+	void Window::setTitle(const char* title)
+	{
+		m_title = title;
+		glfwSetWindowTitle(m_window, m_title);
+	}
+
+	void Window::setIcon(const char* iconPath)
+	{
+		// Check if path is valid
+		std::filesystem::path path = iconPath;
+		if (!std::filesystem::exists(path))
+		{
+			Logger::log(LogLevel::Error, "Icon path is invalid: %s", iconPath);
+			return;
+		}
+
+		GLFWimage images[1];
+		images[0].pixels = stbi_load(iconPath, &images[0].width, &images[0].height, 0, 4);
+		glfwSetWindowIcon(m_window, 1, images);
+		stbi_image_free(images[0].pixels);
+	}
+
+	GLFWwindow* Window::getGLFWwindow() const
+	{
+		return m_window;
 	}
 
 	VkExtent2D Window::getExtent() const

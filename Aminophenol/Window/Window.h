@@ -16,10 +16,18 @@ namespace Aminophenol {
 
 		operator GLFWwindow* () const;
 		
+		GLFWwindow* getGLFWwindow() const;
+		VkExtent2D getExtent() const;
+
 		bool shouldClose() const;
 		bool isMinimized() const;
 
-		VkExtent2D getExtent() const;
+		void setWidth(uint32_t width);
+		void setHeight(uint32_t height);
+		void setSize(uint32_t width, uint32_t height);
+		void setMaximized(bool maximized);
+		void setTitle(const char* title);
+		void setIcon(const char* iconPath);
 		
 	private:
 
