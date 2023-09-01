@@ -20,7 +20,7 @@ namespace Aminophenol {
         void setViewTarget(Maths::Vector3f target, Maths::Vector3f up);
 
         Maths::Matrix4f getProjectionMatrix() const;
-        Maths::Matrix4f getViewMatrix() const;
+        Maths::Matrix4f getViewMatrix();
 
     protected:
 

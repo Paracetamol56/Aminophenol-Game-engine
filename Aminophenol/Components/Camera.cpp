@@ -127,8 +127,9 @@ namespace Aminophenol {
 		return m_projectionMatrix;
 	}
 
-	Maths::Matrix4f Camera::getViewMatrix() const
+	Maths::Matrix4f Camera::getViewMatrix()
 	{
+		setViewDirection(m_node->transform.getForward(), m_node->transform.getUp());
 		return m_viewMatrix;
 	}
 
