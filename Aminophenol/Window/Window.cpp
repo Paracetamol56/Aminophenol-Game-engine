@@ -112,6 +112,21 @@ namespace Aminophenol
 	{
 		return { m_width, m_height };
 	}
+
+	uint32_t Window::getWidth() const
+	{
+		return m_width;
+	}
+
+	uint32_t Window::getHeight() const
+	{
+		return m_height;
+	}
+
+	Maths::Vector2<double> Window::getSizeVector() const
+	{
+		return Maths::Vector2<double>{ m_width, m_height };
+	}
 	
 	void Window::framebufferResizeCallback(GLFWwindow* window, int width, int height)
 	{

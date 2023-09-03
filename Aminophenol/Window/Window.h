@@ -2,6 +2,8 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include "Maths/Vector2.h"
+
 #include <vulkan/vulkan.hpp>
 #include <GLFW/glfw3.h>
 
@@ -18,6 +20,9 @@ namespace Aminophenol {
 		
 		GLFWwindow* getGLFWwindow() const;
 		VkExtent2D getExtent() const;
+		uint32_t getWidth() const;
+		uint32_t getHeight() const;
+		Maths::Vector2<double> getSizeVector() const;
 
 		bool shouldClose() const;
 		bool isMinimized() const;
