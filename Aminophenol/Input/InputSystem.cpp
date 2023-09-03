@@ -33,6 +33,11 @@ namespace Aminophenol {
 		return Maths::Vector2<double>{ x, y };
 	}
 
+	void InputSystem::setMousePosition(const Maths::Vector2<double>& position)
+	{
+		glfwSetCursorPos(m_window, position.x, position.y);
+	}
+
 	void InputSystem::setCursorMode(CursorMode mode)
 	{
 		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL + static_cast<int>(mode));
@@ -44,13 +49,21 @@ namespace Aminophenol {
 		const float acceleration, const float deceleration
 	)
 	{
+		if (keyNegative == keyPositive)
+			throw std::runtime_error("InputSystem::addAxis: keyNegative and keyPositive cannot be the same key.");
 		m_axes.push_back(std::make_shared<InputAxis>(m_window, name, keyNegative, keyPositive, acceleration, deceleration));
 		return m_axes.back();
 	}
 
 	std::shared_ptr<InputButton> InputSystem::addButton(const std::string name, const KeyCode key)
 	{
-		m_buttons.push_back(std::make_shared<InputButton>(m_window, name, key));
+		m_buttons.push_back(std::make_shared<InputKeyButton>(m_window, name, key));
+		return m_buttons.back();
+	}
+
+	std::shared_ptr<InputButton> InputSystem::addButton(const std::string name, const MouseButton button)
+	{
+		m_buttons.push_back(std::make_shared<InputMouseButton>(m_window, name, button));
 		return m_buttons.back();
 	}
 

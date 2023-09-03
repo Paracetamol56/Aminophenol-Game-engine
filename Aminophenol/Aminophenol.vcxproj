@@ -163,6 +163,8 @@
     <ClInclude Include="..\vendor\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\vendor\imgui\imstb_textedit.h" />
     <ClInclude Include="..\vendor\imgui\imstb_truetype.h" />
+    <ClInclude Include="Input\InputKeyButton.h" />
+    <ClInclude Include="Input\InputMouseButton.h" />
     <ClInclude Include="Rendering\Descriptors\DescriptorWriter.h" />
     <ClInclude Include="Rendering\Descriptors\DescriptorPool.h" />
     <ClInclude Include="Rendering\Descriptors\DescriptorSetLayout.h" />
@@ -253,6 +255,8 @@
     <ClCompile Include="Components\Camera.cpp" />
     <ClCompile Include="Components\MeshRenderer.cpp" />
     <ClCompile Include="Components\PointLight.cpp" />
+    <ClCompile Include="Input\InputKeyButton.cpp" />
+    <ClCompile Include="Input\InputMouseButton.cpp" />
     <ClCompile Include="Rendering\Descriptors\DescriptorWriter.cpp" />
     <ClCompile Include="Rendering\Descriptors\DescriptorPool.cpp" />
     <ClCompile Include="Rendering\Descriptors\DescriptorSetLayout.cpp" />

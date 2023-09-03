@@ -5,6 +5,8 @@
 #include "Maths/Vector2.h"
 #include "InputAxis.h"
 #include "InputButton.h"
+#include "InputKeyButton.h"
+#include "InputMouseButton.h"
 #include "KeyCodes.h"
 
 namespace Aminophenol
@@ -22,6 +24,7 @@ namespace Aminophenol
 		bool isKeyPressed(KeyCode key);
 		bool isMouseButtonPressed(MouseButton button);
 		Maths::Vector2<double> getMousePosition();
+		void setMousePosition(const Maths::Vector2<double>& position);
 		void setCursorMode(CursorMode mode);
 
 		// Axis & buttons methods
@@ -32,6 +35,9 @@ namespace Aminophenol
 		);
 		std::shared_ptr<InputButton> addButton(
 			const std::string name, const KeyCode key
+		);
+		std::shared_ptr<InputButton> addButton(
+			const std::string name, const MouseButton button
 		);
 		float getAxis(const std::string& name) const;
 		float getAxis(const Utils::UUID& uuid) const;

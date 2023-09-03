@@ -13,23 +13,23 @@ namespace Aminophenol
 	{
 	public:
 
-		InputButton(const Window& window, const std::string name, const KeyCode key);
+		InputButton(const Window& window, const std::string name);
 		~InputButton() = default;
 
-		const Utils::UUID getUUID() const;
-		const std::string getName() const;
-		void setKey(const KeyCode key);
-		bool isPressed();
-		bool wasPressed();
+		Utils::UUID getUUID() const;
+		std::string getName() const;
+		virtual bool isPressed() = 0;
+		virtual bool wasPressed();
 
 	private:
 
 		const Utils::UUID m_uuid;
 		const std::string m_name;
-		KeyCode m_key;
-		const Window& m_window;
-
 		bool m_wasPressed = false;
+
+	protected:
+
+		const Window& m_window;
 
 	};
 
