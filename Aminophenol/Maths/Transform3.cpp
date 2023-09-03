@@ -50,4 +50,49 @@ namespace Aminophenol::Maths
 		return result;
 	}
 
+	Vector3f Transform3::getForward() const
+	{
+		return rotation * Vector3f::forward();
+	}
+
+	Vector3f Transform3::getBack() const
+	{
+		return rotation * Vector3f::backward();
+	}
+
+	Vector3f Transform3::getRight() const
+	{
+		return rotation * Vector3f::right();
+	}
+
+	Vector3f Transform3::getLeft() const
+	{
+		return rotation * Vector3f::left();
+	}
+
+	Vector3f Transform3::getUp() const
+	{
+		return rotation * Vector3f::up();
+	}
+
+	Vector3f Transform3::getDown() const
+	{
+		return rotation * Vector3f::down();
+	}
+
+	void Transform3::move(const Vector3f& offset)
+	{
+		position += rotation * offset;
+	}
+
+	void Transform3::move(float x, float y, float z)
+	{
+		move(Vector3f(x, y, z));
+	}
+
+	void Transform3::rotate(const Quaternionf& rotation)
+	{
+		this->rotation *= rotation;
+	}
+
 }

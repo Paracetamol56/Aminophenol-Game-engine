@@ -23,6 +23,16 @@ namespace Aminophenol::Maths
 
 		Matrix4f getMatrix() const;
 		Matrix4f getNormalMatrix() const;
+		Vector3f getForward() const;
+		Vector3f getBack() const;
+		Vector3f getRight() const;
+		Vector3f getLeft() const;
+		Vector3f getUp() const;
+		Vector3f getDown() const;
+
+		void move(const Vector3f& offset);
+		void move(float x, float y, float z);
+		void rotate(const Quaternionf& rotation);
 
 		Vector3f position;
 		Quaternionf rotation;

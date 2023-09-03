@@ -2,9 +2,9 @@
 #ifndef OBJECT_ROTATION_CONTROLLER_H
 #define OBJECT_ROTATION_CONTROLLER_H
 
-#include "Scene\Component.h"
-#include "Input\InputAxis.h"
-#include "Input\InputButton.h"
+#include "Scene/Component.h"
+#include "Input/InputAxis.h"
+#include "Input/InputButton.h"
 
 using namespace Aminophenol;
 

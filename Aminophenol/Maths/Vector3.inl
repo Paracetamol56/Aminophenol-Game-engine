@@ -365,14 +365,14 @@ namespace Aminophenol::Maths
 	template<typename T>
 	const Vector3<T> Vector3<T>::up()
 	{
-		return Vector3<T>{ static_cast<T>(0), static_cast<T>(1), static_cast<T>(0) };
+		return Vector3<T>{ static_cast<T>(0), static_cast<T>(-1), static_cast<T>(0) };
 	}
 
 	// Down vector method
 	template<typename T>
 	const Vector3<T> Vector3<T>::down()
 	{
-		return Vector3<T>{ static_cast<T>(0), static_cast<T>(-1), static_cast<T>(0) };
+		return Vector3<T>{ static_cast<T>(0), static_cast<T>(1), static_cast<T>(0) };
 	}
 
 	// Forward vector method
