@@ -226,6 +226,12 @@ namespace Aminophenol::Maths
 		T dot(const Quaternion<T>& other) const;
 
 		/// <summary>
+		/// Returns the conjugate of the quaternion (does not modify the quaternion)
+		/// </summary>
+		/// <returns>The conjugate of the quaternion</returns>
+		Quaternion<T> conjugate() const;
+
+		/// <summary>
 		/// Unary negation operator
 		/// </summary>
 		/// <returns>The negation of the quaternion</returns>
@@ -344,7 +350,11 @@ namespace Aminophenol::Maths
 		/// <param name="stream">The stream to output to</param>
 		/// <param name="quaternion">The quaternion to output</param>
 		/// <returns>A reference to the stream</returns>
-		friend std::ostream& operator<<(std::ostream& stream, const Quaternion<T>& quaternion);
+		friend std::ostream& operator<<(std::ostream& stream, const Quaternion<T>& quaternion)
+		{
+			stream << "(" << quaternion.x << ", " << quaternion.y << ", " << quaternion.z << ", " << quaternion.w << ")";
+			return stream;
+		}
 
 		/// <summary>
 		/// Static zero quaternion

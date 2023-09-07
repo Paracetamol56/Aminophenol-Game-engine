@@ -303,7 +303,11 @@ namespace Aminophenol::Maths
 		/// <param name="stream">The stream to output to.</param>
 		/// <param name="vector">The vector to output.</param>
 		/// <returns>A reference to the stream.</returns>
-		friend std::ostream& operator<<(std::ostream& stream, const Vector3<T>& vector);
+		friend std::ostream& operator<<(std::ostream& stream, const Vector3<T>& vector)
+		{
+			stream << "(" << vector.x << ", " << vector.y << ", " << vector.z << ")";
+			return stream;
+		}
 
 		/// <summary>
 		/// Static zero vector.

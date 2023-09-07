@@ -52,32 +52,32 @@ namespace Aminophenol::Maths
 
 	Vector3f Transform3::getForward() const
 	{
-		return rotation * Vector3f::forward();
+		return rotation.conjugate() * Vector3f::forward();
 	}
 
 	Vector3f Transform3::getBack() const
 	{
-		return rotation * Vector3f::backward();
+		return rotation.conjugate() * Vector3f::backward();
 	}
 
 	Vector3f Transform3::getRight() const
 	{
-		return rotation * Vector3f::right();
+		return rotation.conjugate() * Vector3f::right();
 	}
 
 	Vector3f Transform3::getLeft() const
 	{
-		return rotation * Vector3f::left();
+		return rotation.conjugate() * Vector3f::left();
 	}
 
 	Vector3f Transform3::getUp() const
 	{
-		return rotation * Vector3f::up();
+		return rotation.conjugate() * Vector3f::up();
 	}
 
 	Vector3f Transform3::getDown() const
 	{
-		return rotation * Vector3f::down();
+		return rotation.conjugate() * Vector3f::down();
 	}
 
 	void Transform3::move(const Vector3f& offset)

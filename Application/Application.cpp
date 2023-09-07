@@ -11,6 +11,7 @@
 #include "Rendering/Image/Texture.h"
 
 #include "CustomComponents/ObjectRotationController.h"
+#include "CustomComponents/CameraController.h"
 
 using namespace Aminophenol;
 
@@ -23,8 +24,8 @@ int main(int argc, char* argv[])
 	Logger logger{ LogLevel::Info };
 #endif // _DEBUG
 
-	Engine engine{ "Aminophenol application", 60.0, 1080, 720 };
-	engine.getWindow().setMaximized(true);
+	Engine engine{ "Aminophenol application", 60.0, 720, 720 };
+	// engine.getWindow().setMaximized(true);
 
 	try
 	{
@@ -33,15 +34,31 @@ int main(int argc, char* argv[])
 		engine.setActiveScene(scene);
 
 		Node* object = scene->addChild("object");
-		object->transform.rotation = Maths::Quaternionf({ 0.0f, Maths::degreesToRadians(-60.0f), Maths::degreesToRadians(60.0f) }, Maths::EulerAngle::YXZ);
-		MeshRenderer* objectMeshRenderer = object->addComponent<MeshRenderer>(PrimitiveMesh::createCube(
+		object->transform.position = { 0.0f, 0.0f, 0.0f };
+		object->transform.rotation = Maths::Quaternionf({ 0.0f, 0.0f, 0.0f }, Maths::EulerAngle::YXZ);
+		object->transform.scale = { 0.2f, 0.2f, 0.2f };
+		MeshRenderer* objectMeshRenderer = object->addComponent<MeshRenderer>(OBJLoader::loadMesh(
+			engine.getRenderingEngine().getLogicalDevice(),
+			engine.getRenderingEngine().getCommandPool(),
+			"C:/Users/mathe/Downloads/xyz-gizmo.obj"
+		));
+		object->addComponent<CameraController>();
+		/*MeshRenderer* objectMeshRenderer = object->addComponent<MeshRenderer>(PrimitiveMesh::createCube(
+			engine.getRenderingEngine().getLogicalDevice(),
+			engine.getRenderingEngine().getCommandPool()
+		));*/
+
+		Node* floor = scene->addChild("floor");
+		floor->transform.position = { 0.0f, -1.0f, 0.0f };
+		floor->transform.scale = { 100.0f, 100.0f, 100.0f };
+		MeshRenderer* floorMeshRenderer = floor->addComponent<MeshRenderer>(PrimitiveMesh::createPlane(
 			engine.getRenderingEngine().getLogicalDevice(),
 			engine.getRenderingEngine().getCommandPool()
 		));
-		object->addComponent<ObjectRotationController>(1.0f);
 
 		Node* camera = scene->addChild("Camera");
 		camera->transform.position = { 0.0f, 0.0f, -3.0f };
+		camera->addComponent<CameraController>();
 		// OrthographicCamera* cameraComponent = camera->addComponent<OrthographicCamera>(1.0, -1.0, 1.0, 0.0, 100.0);
 		PerspectiveCamera* cameraComponent = camera->addComponent<PerspectiveCamera>(Maths::degreesToRadians(45.0f), 1.0f, 0.1f, 100.0f);
 		cameraComponent->setViewDirection({ 0.0f, 0.0f, 1.0f }, { 0.0f, -1.0f, 0.0f });

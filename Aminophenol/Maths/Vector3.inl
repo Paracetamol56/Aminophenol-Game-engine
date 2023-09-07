@@ -333,12 +333,12 @@ namespace Aminophenol::Maths
 	}
 
 	// Output stream operator
-	template<typename T>
+	/*template<typename T>
 	std::ostream& operator<<(std::ostream& stream, const Vector3<T>& vector)
 	{
 		stream << "(" << vector.x << ", " << vector.y << ", " << vector.z << ")";
 		return stream;
-	}
+	}*/
 
 	// Zero vector method
 	template<typename T>

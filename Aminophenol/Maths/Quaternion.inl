@@ -1,6 +1,7 @@
 
 #include "Constant.h"
 #include "Utils.h"
+#include "Quaternion.h"
 
 namespace Aminophenol::Maths
 {
@@ -496,6 +497,12 @@ namespace Aminophenol::Maths
 	}
 
 	template<typename T>
+	Quaternion<T> Quaternion<T>::conjugate() const
+	{
+		return Quaternion<T>(-this->x, -this->y, -this->z, this->w);
+	}
+
+	template<typename T>
 	inline Quaternion<T> Aminophenol::Maths::Quaternion<T>::operator-() const
 	{
 		return Quaternion<T>(-x, -y, -z, -w);
@@ -615,11 +622,11 @@ namespace Aminophenol::Maths
 		return max(max(x, y), max(z, w));
 	}
 
-	template<typename T>
+	/*template<typename T>
 	std::ostream& operator<<(std::ostream& stream, const Quaternion<T>& quaternion)
 	{
 		stream << "(" << quaternion.x << ", " << quaternion.y << ", " << quaternion.z << ", " << quaternion.w << ")";
 		return stream;
-	}
+	}*/
 
 } // namespace Aminophenol::Maths

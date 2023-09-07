@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="CustomComponents\CameraController.cpp" />
     <ClCompile Include="CustomComponents\ObjectRotationController.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +173,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomComponents\CameraController.h" />
     <ClInclude Include="CustomComponents\ObjectRotationController.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

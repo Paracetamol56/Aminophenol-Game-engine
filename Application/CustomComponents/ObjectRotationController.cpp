@@ -26,7 +26,7 @@ void ObjectRotationController::onUpdate()
 	if (std::abs(deltaX) > std::numeric_limits<float>::epsilon() || std::abs(deltaY) > std::numeric_limits<float>::epsilon())
 	{
 		Maths::Vector3f eulerRotation = m_node->transform.rotation.toEulerAngles(Maths::EulerAngle::YXZ);
-		m_node->transform.rotation = Maths::Quaternion(Maths::Vector3f{ 0.0f, eulerRotation.y + deltaX, (eulerRotation.z + deltaY) }, Maths::EulerAngle::YXZ);
+		m_node->transform.rotation = Maths::Quaternion(Maths::Vector3f{ 0.0f, eulerRotation.y + deltaX, eulerRotation.z + deltaY }, Maths::EulerAngle::YXZ);
 	}
 
 	if (m_autoRotateButton->wasPressed())

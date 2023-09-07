@@ -129,7 +129,10 @@ namespace Aminophenol {
 
 	Maths::Matrix4f Camera::getViewMatrix()
 	{
-		setViewDirection(m_node->transform.getForward(), m_node->transform.getUp());
+		setViewDirection(
+			m_node->transform.rotation.conjugate() * Maths::Vector3f(0.0f, 0.0f, 1.0f),
+			m_node->transform.rotation.conjugate() * Maths::Vector3f(0.0f, -1.0f, 0.0f)
+		);
 		return m_viewMatrix;
 	}
 
