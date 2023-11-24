@@ -9,7 +9,7 @@
 namespace Aminophenol {
 	
 	Pipeline::Pipeline(
-		const LogicalDevice& logicalDevice, const DescriptorSetLayout& descriptorSetLayout,
+		const LogicalDevice& logicalDevice, const std::vector<VkDescriptorSetLayout>& descriptorSetLayouts,
 		const VkExtent2D& swapchainExtent, const VkFormat& swapchainImageFormat,
 		const std::filesystem::path& vertShaderPath, const std::filesystem::path& fragShaderPath
 	)
@@ -24,9 +24,6 @@ namespace Aminophenol {
 		pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
 		pushConstantRange.offset = 0;
 		pushConstantRange.size = sizeof(PushConstantData);
-
-		// Descriptor set layout vector
-		std::vector<VkDescriptorSetLayout> descriptorSetLayouts{ descriptorSetLayout };
 
 		// Create the pipeline layout
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo{};

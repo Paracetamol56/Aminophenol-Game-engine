@@ -17,6 +17,7 @@
 #include "Rendering/Commands/CommandPool.h"
 #include "Rendering/Commands/CommandBuffer.h"
 #include "Rendering/Image/ImageDepth.h"
+#include "Rendering/Image/Texture.h"
 #include "Mesh/Mesh.h"
 
 #include "Maths/Vector2.h"
@@ -89,6 +90,11 @@ namespace Aminophenol {
 		std::unique_ptr<DescriptorPool> m_globalDescriptorPool;
 		std::unique_ptr<DescriptorPool> m_imguiDescriptorPool;
 		std::unique_ptr<DescriptorSetLayout> m_globalDescriptorSetLayout;
+		// TMP
+		std::unique_ptr<DescriptorPool> m_textureDescriptorPool;
+		std::unique_ptr<DescriptorSetLayout> m_textureDescriptorSetLayout;
+		std::unique_ptr<Texture> m_texture;
+		VkDescriptorSet m_textureDescriptorSet;
 		
 		// Frames
 		FrameUniformBufferObject m_uniformBufferData;

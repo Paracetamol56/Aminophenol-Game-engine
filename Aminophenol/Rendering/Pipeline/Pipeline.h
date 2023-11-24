@@ -14,7 +14,7 @@ namespace Aminophenol {
 	public:
 
 		Pipeline(
-			const LogicalDevice& logicalDevice, const DescriptorSetLayout& descriptorSetLayout,
+			const LogicalDevice& logicalDevice, const std::vector<VkDescriptorSetLayout>& descriptorSetLayouts,
 			const VkExtent2D& swapchainExtent, const VkFormat& swapchainImageFormat,
 			const std::filesystem::path& vertShaderPath, const std::filesystem::path& fragShaderPath
 		);

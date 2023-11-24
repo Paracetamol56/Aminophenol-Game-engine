@@ -89,6 +89,15 @@ namespace Aminophenol
 			uint32_t layerCount,
 			uint32_t baseArrayLayer
 		);
+		static void copyBufferToImage(
+			const LogicalDevice& logicalDevice,
+			std::shared_ptr<CommandPool> commandPool,
+			const VkBuffer& buffer,
+			const VkImage& image,
+			const VkExtent3D& extent,
+			uint32_t layerCount,
+			uint32_t baseArrayLayer
+		);
 
 	protected:
 

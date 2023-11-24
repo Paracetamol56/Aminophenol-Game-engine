@@ -7,7 +7,8 @@
 namespace Aminophenol
 {
 
-	class Texture final : Image
+	class Texture final
+		: public Image
 	{
 	public:
 

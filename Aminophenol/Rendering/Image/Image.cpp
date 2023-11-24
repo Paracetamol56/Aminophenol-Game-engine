@@ -111,7 +111,8 @@ namespace Aminophenol {
 		);
 	}
 
-	bool Image::hasStencilComponent(VkFormat format) {
+	bool Image::hasStencilComponent(VkFormat format)
+	{
 		return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;
 	}
 
@@ -138,6 +139,7 @@ namespace Aminophenol {
 		createInfo.usage = usage;
 		createInfo.samples = VK_SAMPLE_COUNT_1_BIT;
 		createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		createInfo.flags = 0;
 
 		if (vkCreateImage(logicalDevice.getDevice(), &createInfo, nullptr, &image) != VK_SUCCESS) {
 			throw std::runtime_error("Failed to create image!");
@@ -298,9 +300,19 @@ namespace Aminophenol {
 			
 			barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 			break;
+		case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
+			if (barrier.srcAccessMask == 0)
+				barrier.srcAccessMask = VK_ACCESS_HOST_WRITE_BIT | VK_ACCESS_TRANSFER_WRITE_BIT;
+			
+			barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+			break;
 		default:
 			throw std::invalid_argument("Unsupported layout transition destination layout!");
 		}
+
+		// Temporary
+		barrier.srcAccessMask = 0;
+		barrier.dstAccessMask = 0;
 
 		vkCmdPipelineBarrier(
 			commandBuffer,
@@ -309,6 +321,42 @@ namespace Aminophenol {
 			0, nullptr,
 			0, nullptr,
 			1, &barrier
+		);
+
+		commandBuffer.submitIdle();
+	}
+
+	void Aminophenol::Image::copyBufferToImage(
+		const LogicalDevice& logicalDevice,
+		std::shared_ptr<CommandPool> commandPool,
+		const VkBuffer& buffer,
+		const VkImage& image,
+		const VkExtent3D& extent,
+		uint32_t layerCount,
+		uint32_t baseArrayLayer
+	)
+	{
+		CommandBuffer commandBuffer{ logicalDevice, commandPool };
+		commandBuffer.begin();
+
+		VkBufferImageCopy region{};
+		region.bufferOffset = 0;
+		region.bufferRowLength = 0;
+		region.bufferImageHeight = 0;
+		region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		region.imageSubresource.baseArrayLayer = baseArrayLayer;
+		region.imageSubresource.layerCount = layerCount;
+		region.imageSubresource.mipLevel = 0;
+		region.imageOffset = { 0, 0, 0 };
+		region.imageExtent = extent;
+
+		vkCmdCopyBufferToImage(
+			commandBuffer,
+			buffer,
+			image,
+			VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+			1,
+			&region
 		);
 
 		commandBuffer.submitIdle();
