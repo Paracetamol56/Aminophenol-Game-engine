@@ -107,6 +107,7 @@ namespace Aminophenol {
 	{
 		vkDeviceWaitIdle(*m_logicalDevice);
 		
+		m_texture.reset();
 		destroyFrameObjects();
 
 		ImGui_ImplVulkan_Shutdown();
@@ -115,7 +116,9 @@ namespace Aminophenol {
 
 		m_frames.clear();
 		m_globalDescriptorSetLayout.reset();
+		m_textureDescriptorSetLayout.reset();
 		m_globalDescriptorPool.reset();
+		m_textureDescriptorPool.reset();
 		m_imguiDescriptorPool.reset();
 		m_globalCommandBuffer.reset();
 		m_commandPool.reset();
