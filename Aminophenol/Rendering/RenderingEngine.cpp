@@ -3,6 +3,7 @@
 #include "RenderingEngine.h"
 #include "Maths/Matrix4.h"
 #include "Logging/Logger.h"
+#include "Rendering/Image/Texture.h"
 
 // ImGUI headers
 #include <imgui.h>
@@ -28,7 +29,7 @@ namespace Aminophenol {
 		m_globalDescriptorPool = std::make_unique<DescriptorPool>(
 			*m_logicalDevice,
 			std::vector<VkDescriptorPoolSize>{
-				VkDescriptorPoolSize{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, static_cast<uint32_t>(m_maxFramesInFlight) }
+				VkDescriptorPoolSize{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, static_cast<uint32_t>(m_maxFramesInFlight) },
 			},
 			static_cast<uint32_t>(m_maxFramesInFlight),
 			0
@@ -37,13 +38,30 @@ namespace Aminophenol {
 		m_globalDescriptorSetLayout = std::make_unique<DescriptorSetLayout>(
 			*m_logicalDevice,
 			std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding>{
-				{ 0, UniformBuffer::getDescriptorSetLayoutBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT) }
+				{ 0, UniformBuffer::getDescriptorSetLayoutBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT) },
 			}
 		);
 
+		m_textureDescriptorPool = std::make_unique<DescriptorPool>(
+			*m_logicalDevice,
+			std::vector<VkDescriptorPoolSize>{
+				VkDescriptorPoolSize{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1 },
+			},
+			1,
+			0
+		);
+
+		m_textureDescriptorSetLayout = std::make_unique<DescriptorSetLayout>(
+			*m_logicalDevice,
+			std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding>{
+				{ 0, Image::getDescriptorSetLayoutBinding(0, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT) }
+			}
+		);
+
+		std::vector<VkDescriptorSetLayout> descriptorSetLayouts{ *m_globalDescriptorSetLayout, *m_textureDescriptorSetLayout };
 		m_pipeline = std::make_unique<Pipeline>(
 			*m_logicalDevice,
-			*m_globalDescriptorSetLayout,
+			descriptorSetLayouts,
 			m_swapchain->getExtent(),
 			m_swapchain->getFormat(),
 			"../Aminophenol/Shaders/shader.vert.spv",
@@ -66,6 +84,21 @@ namespace Aminophenol {
 			writer.build(m_frames[i].descriptorSet);
 		}
 
+		// Create a texture and send it to the GPU
+		m_texture = std::make_unique<Texture>(
+			*m_logicalDevice,
+			*m_physicalDevice,
+			m_commandPool,
+			"C:/Users/mathe/Downloads/statue.jpg"
+		);
+
+		DescriptorWriter writer = m_texture->getDescriptorWriter(
+			0,
+			*m_textureDescriptorSetLayout,
+			*m_textureDescriptorPool
+		);
+		writer.build(m_textureDescriptorSet);
+
 		// Initialize ImGui
 		initImGui();
 	}
@@ -74,6 +107,7 @@ namespace Aminophenol {
 	{
 		vkDeviceWaitIdle(*m_logicalDevice);
 		
+		m_texture.reset();
 		destroyFrameObjects();
 
 		ImGui_ImplVulkan_Shutdown();
@@ -82,7 +116,9 @@ namespace Aminophenol {
 
 		m_frames.clear();
 		m_globalDescriptorSetLayout.reset();
+		m_textureDescriptorSetLayout.reset();
 		m_globalDescriptorPool.reset();
+		m_textureDescriptorPool.reset();
 		m_imguiDescriptorPool.reset();
 		m_globalCommandBuffer.reset();
 		m_commandPool.reset();
@@ -333,13 +369,19 @@ namespace Aminophenol {
 		m_uniformBufferData.viewMatrix = m_activeScene->getActiveCamera()->getViewMatrix();
 		m_frames[imageIndex].uniformBuffer->update(&m_uniformBufferData);
 
+		std::vector<VkDescriptorSet> descriptorSets = {
+			m_frames[imageIndex].descriptorSet,
+			m_textureDescriptorSet
+		};
 		vkCmdBindDescriptorSets(
 			m_frames[imageIndex].commandBuffer->getCommandBuffer(),
 			VK_PIPELINE_BIND_POINT_GRAPHICS,
 			m_pipeline->getPipelineLayout(),
-			0, 1,
-			&m_frames[imageIndex].descriptorSet,
-			0, nullptr
+			0,
+			static_cast<uint32_t>(descriptorSets.size()),
+			descriptorSets.data(),
+			0,
+			nullptr
 		);
 
 		// Iterate through all renderables in the active scene and draw them
@@ -443,3 +485,4 @@ namespace Aminophenol {
 	}
 
 } // namespace Aminophenol
+

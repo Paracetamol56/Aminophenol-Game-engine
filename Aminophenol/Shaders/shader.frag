@@ -5,7 +5,7 @@ layout(location = 0) in vec3 fragColor;
 layout(location = 1) in vec3 fragPositionWorld;
 layout(location = 2) in vec3 fragNormalWorld;
 layout(location = 3) in vec2 fragUV;
-// layout(set = 1, binding = 0) uniform sampler2D texSampler;
+layout(set = 1, binding = 0) uniform sampler2D texSampler;
 
 layout(location = 0) out vec4 color;
 
@@ -21,7 +21,7 @@ struct SunLight
 const SunLight sunLight = SunLight(
 	normalize(vec3(0.2, -1.0, 0.5)),
 	vec3(0.1, 0.1, 0.1),
-	vec3(0.5, 0.5, 0.5),
+	vec3(0.7, 0.7, 0.7),
 	vec3(0.8, 0.8, 0.8),
     32.0
 );
@@ -33,12 +33,11 @@ void main()
     vec3 viewDir = normalize(-vec3(0.0, 0.0, 1.0)); // Assuming camera is looking along negative z-axis
 
     // Ambient component
-    // vec3 ambient = sunLight.ambient * fragColor;
-    vec3 ambient = sunLight.ambient * fragColor; // vec3(texture(texSampler, fragUV));
+    vec3 ambient = sunLight.ambient * vec3(texture(texSampler, fragUV));
 
     // Diffuse component
     float diffIntensity = max(dot(normal, fragToLightDir), 0.0);
-    vec3 diffuse = sunLight.diffuse * diffIntensity * fragColor;
+    vec3 diffuse = sunLight.diffuse * diffIntensity * vec3(texture(texSampler, fragUV));
 
     // Specular component
     vec3 reflectionDir = reflect(-fragToLightDir, normal);
@@ -46,5 +45,5 @@ void main()
     vec3 specular = sunLight.specular * specIntensity;
 
     // Final color with Phong illumination
-    color = vec4(ambient + diffuse + specular, 1.0);
+    color = vec4(sunLight.ambient * ambient + sunLight.diffuse * diffuse + sunLight.specular * specular, 1.0);
 }
