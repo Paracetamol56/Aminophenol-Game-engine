@@ -222,6 +222,9 @@
     <ClInclude Include="Input\InputMouseButton.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Rendering\Materials\Material.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Engine.cpp">
@@ -384,6 +387,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Input\InputMouseButton.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\Materials\Material.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
