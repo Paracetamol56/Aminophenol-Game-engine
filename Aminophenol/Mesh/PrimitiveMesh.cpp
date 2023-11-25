@@ -72,16 +72,20 @@ namespace Aminophenol
 			float thetai = static_cast<float>(i) * 2.0f * Maths::Constant::pi<float>() / static_cast<float>(sectors);
 			float cosThetai = cos(thetai);
 			float sinThetai = sin(thetai);
+            float u = 1 - static_cast<float>(i) / static_cast<float>(sectors);
 			for (size_t j = 1; j <= rings; ++j)
 			{
 				float phij = static_cast<float>(j) * Maths::Constant::pi<float>() / (static_cast<float>(rings) + 1);
 				float cosPhij = cos(phij);
 				float sinPhij = sin(phij);
 
+                Maths::Vector3f normal{ cosThetai * sinPhij, cosPhij, sinThetai * sinPhij };
+                normal.normalize();
 		        mesh->vertices.push_back({
 					{ cosThetai * sinPhij * 0.5f, cosPhij * 0.5f, sinThetai * sinPhij * 0.5f },
 					{ 1.0f, 1.0f, 1.0f },
-					{ cosThetai * sinPhij, cosPhij, sinThetai * sinPhij }
+					normal,
+                    { u, static_cast<float>(j) / static_cast<float>(rings) }
 				});
 			}
 		}
@@ -90,13 +94,15 @@ namespace Aminophenol
         mesh->vertices.push_back({
             { 0.0f, -0.5f, 0.0f },
             { 1.0f, 1.0f, 1.0f },
-            { 0.0f, -1.0f, 0.0f }
+            { 0.0f, -1.0f, 0.0f },
+            { 0.5f, 1.0f }
         });
         // North pole
         mesh->vertices.push_back({
 			{ 0.0f, 0.5f, 0.0f },
 			{ 1.0f, 1.0f, 1.0f },
-			{ 0.0f, 1.0f, 0.0f }
+			{ 0.0f, 1.0f, 0.0f },
+            { 0.5f, 0.0f }
 		});
 
         // Indices
@@ -106,12 +112,12 @@ namespace Aminophenol
             {
                 // Triangle 1
                 mesh->indices.push_back((i + 1) * rings + j - 1);
-                mesh->indices.push_back((i + 1) * rings + j);
                 mesh->indices.push_back(i * rings + j);
+                mesh->indices.push_back((i + 1) * rings + j);
                 // Triangle 2
                 mesh->indices.push_back(i * rings + j - 1);
-                mesh->indices.push_back((i + 1) * rings + j - 1);
                 mesh->indices.push_back(i * rings + j);
+                mesh->indices.push_back((i + 1) * rings + j - 1);
             }
         }
 
@@ -119,16 +125,16 @@ namespace Aminophenol
         for (size_t i = 0; i < sectors; ++i)
         {
             mesh->indices.push_back((sectors + 1) * rings);
-            mesh->indices.push_back((i + 1) * rings - 1);
             mesh->indices.push_back((i + 2) * rings - 1);
+            mesh->indices.push_back((i + 1) * rings - 1);
         }
 
         // North pole indices
         for (size_t i = 0; i < sectors; ++i)
         {
 			mesh->indices.push_back((sectors + 1) * rings + 1);
-			mesh->indices.push_back((i + 1) * rings);
 			mesh->indices.push_back(i * rings);
+			mesh->indices.push_back((i + 1) * rings);
 		}
 
         mesh->create();
