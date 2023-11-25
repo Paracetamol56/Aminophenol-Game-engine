@@ -93,7 +93,9 @@ namespace Aminophenol {
 		// TMP
 		std::unique_ptr<DescriptorPool> m_textureDescriptorPool;
 		std::unique_ptr<DescriptorSetLayout> m_textureDescriptorSetLayout;
-		std::unique_ptr<Texture> m_texture;
+		std::unique_ptr<Texture> m_diffuse;
+		std::unique_ptr<Texture> m_normal;
+		std::unique_ptr<Texture> m_specular;
 		VkDescriptorSet m_textureDescriptorSet;
 		
 		// Frames

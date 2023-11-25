@@ -45,7 +45,7 @@ namespace Aminophenol {
 		m_textureDescriptorPool = std::make_unique<DescriptorPool>(
 			*m_logicalDevice,
 			std::vector<VkDescriptorPoolSize>{
-				VkDescriptorPoolSize{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1 },
+				VkDescriptorPoolSize{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 100 },
 			},
 			1,
 			0
@@ -54,7 +54,9 @@ namespace Aminophenol {
 		m_textureDescriptorSetLayout = std::make_unique<DescriptorSetLayout>(
 			*m_logicalDevice,
 			std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding>{
-				{ 0, Image::getDescriptorSetLayoutBinding(0, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT) }
+				{ 0, Image::getDescriptorSetLayoutBinding(0, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT) },
+				{ 1, Image::getDescriptorSetLayoutBinding(1, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT) },
+				{ 2, Image::getDescriptorSetLayoutBinding(2, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT) },
 			}
 		);
 
@@ -85,20 +87,48 @@ namespace Aminophenol {
 		}
 
 		// Create a texture and send it to the GPU
-		m_texture = std::make_unique<Texture>(
+		m_diffuse = std::make_unique<Texture>(
 			*m_logicalDevice,
 			*m_physicalDevice,
 			m_commandPool,
-			"C:/Users/mathe/Downloads/statue.jpg"
+			"C:/Users/mathe/Downloads/8k_earth_daymap.jpg"
+		);
+		m_normal = std::make_unique<Texture>(
+			*m_logicalDevice,
+			*m_physicalDevice,
+			m_commandPool,
+			"C:/Users/mathe/Downloads/8k_earth_normal_map.jpg"
+		);
+		m_specular = std::make_unique<Texture>(
+			*m_logicalDevice,
+			*m_physicalDevice,
+			m_commandPool,
+			"C:/Users/mathe/Downloads/8k_earth_specular_map.jpg"
 		);
 
-		DescriptorWriter writer = m_texture->getDescriptorWriter(
-			0,
+		// Write the texture descriptor set
+		DescriptorWriter writer{
 			*m_textureDescriptorSetLayout,
 			*m_textureDescriptorPool
-		);
-		writer.build(m_textureDescriptorSet);
+		};
+		VkDescriptorImageInfo diffuseImageInfo{};
+		diffuseImageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		diffuseImageInfo.imageView = m_diffuse->getImageView();
+		diffuseImageInfo.sampler = m_diffuse->getSampler();
+		writer.writeImage(0, &diffuseImageInfo);
+		VkDescriptorImageInfo normalImageInfo{};
+		normalImageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		normalImageInfo.imageView = m_normal->getImageView();
+		normalImageInfo.sampler = m_normal->getSampler();
+		writer.writeImage(1, &normalImageInfo);
+		VkDescriptorImageInfo specularImageInfo{};
+		specularImageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		specularImageInfo.imageView = m_specular->getImageView();
+		specularImageInfo.sampler = m_specular->getSampler();
+		writer.writeImage(2, &specularImageInfo);
 
+		writer.build(m_textureDescriptorSet);
+		
 		// Initialize ImGui
 		initImGui();
 	}
@@ -107,7 +137,9 @@ namespace Aminophenol {
 	{
 		vkDeviceWaitIdle(*m_logicalDevice);
 		
-		m_texture.reset();
+		m_diffuse.reset();
+		m_normal.reset();
+		m_specular.reset();
 		destroyFrameObjects();
 
 		ImGui_ImplVulkan_Shutdown();

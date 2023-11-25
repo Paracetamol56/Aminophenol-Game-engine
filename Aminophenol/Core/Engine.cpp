@@ -81,7 +81,9 @@ namespace Aminophenol {
 				ImGui_ImplVulkan_NewFrame();
 				ImGui_ImplGlfw_NewFrame();
 				ImGui::NewFrame();
-				ImGui::ShowDemoWindow();
+				ImGui::Begin("Hello, world!");
+				ImGui::Text("Hello, world!");
+				ImGui::End();
 				ImGui::Render();
 				m_renderingEngine->update();
 
