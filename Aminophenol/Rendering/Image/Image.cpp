@@ -11,6 +11,8 @@ namespace Aminophenol {
 		const PhysicalDevice& physicalDevice,
 		std::shared_ptr<CommandPool> commandPool,
 		VkExtent3D extent,
+		VkSampleCountFlagBits samples,
+		uint32_t mipLevels,
 		VkImageTiling tiling,
 		VkImageUsageFlags usage,
 		VkMemoryPropertyFlags properties,
@@ -21,6 +23,8 @@ namespace Aminophenol {
 		, m_physicalDevice{ physicalDevice }
 		, m_commandPool{ commandPool }
 		, m_extent{ extent }
+		, m_samples{ samples }
+		, m_mipLevels{ mipLevels }
 		, m_tiling{ tiling }
 		, m_usage{ usage }
 		, m_properties{ properties }

@@ -17,7 +17,8 @@ namespace Aminophenol
 			const LogicalDevice& logicalDevice,
 			const PhysicalDevice& physicalDevice,
 			std::shared_ptr<CommandPool> commandPool,
-			const VkExtent3D& extent
+			const VkExtent3D& extent,
+			const VkSampleCountFlagBits& sampleCount
 		);
 
 	};

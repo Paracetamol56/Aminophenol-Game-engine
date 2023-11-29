@@ -9,13 +9,16 @@ namespace Aminophenol
 		const LogicalDevice& logicalDevice,
 		const PhysicalDevice& physicalDevice,
 		std::shared_ptr<CommandPool> commandPool,
-		const VkExtent3D& extent
+		const VkExtent3D& extent,
+		const VkSampleCountFlagBits& samples
 	)
 		: Image{
 			logicalDevice,
 			physicalDevice,
 			commandPool,
 			extent,
+			samples,
+			1,
 			VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
 			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
