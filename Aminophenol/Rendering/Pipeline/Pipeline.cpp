@@ -38,7 +38,7 @@ namespace Aminophenol {
 		}
 
 		// Create the render pass
-		m_renderPass = std::make_unique<RenderPass>(m_logicalDevice, m_swapchainImageFormat);
+		m_renderPass = std::make_unique<RenderPass>(m_logicalDevice, m_swapchainImageFormat, m_logicalDevice.getPhysicalDevice().getMaxUsableSampleCount());
 		
 		// Create the shader modules
 		createShaderModule(m_logicalDevice, readFile("../Aminophenol/Shaders/shader.vert.spv"), m_vertShaderModule);
@@ -156,7 +156,7 @@ namespace Aminophenol {
 		VkPipelineMultisampleStateCreateInfo multisampling{};
 		multisampling.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		multisampling.sampleShadingEnable = VK_FALSE;
-		multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+		multisampling.rasterizationSamples = m_logicalDevice.getPhysicalDevice().getMaxUsableSampleCount();
 		multisampling.minSampleShading = 1.0f;
 		multisampling.pSampleMask = nullptr;
 		multisampling.alphaToCoverageEnable = VK_FALSE;

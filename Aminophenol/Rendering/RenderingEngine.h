@@ -104,6 +104,7 @@ namespace Aminophenol {
 		{
 			VkFramebuffer frameBuffer;
 			std::unique_ptr<ImageDepth> depthBuffer;
+			std::unique_ptr<Image> colorImage;
 
 			VkSemaphore imageAvailableSemaphore;
 			VkSemaphore renderFinishedSemaphore;

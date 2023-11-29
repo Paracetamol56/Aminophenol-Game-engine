@@ -10,7 +10,7 @@ namespace Aminophenol {
 	{
 	public:
 
-		RenderPass(const LogicalDevice& logicalDevice, const VkFormat& format);
+		RenderPass(const LogicalDevice& logicalDevice, const VkFormat& format, const VkSampleCountFlagBits& msaaSamples);
 		~RenderPass();
 
 		operator const VkRenderPass& () const;

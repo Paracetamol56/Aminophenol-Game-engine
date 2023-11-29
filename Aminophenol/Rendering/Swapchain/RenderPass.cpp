@@ -7,7 +7,7 @@
 
 namespace Aminophenol {
 
-	RenderPass::RenderPass(const LogicalDevice& logicalDevice, const VkFormat& format)
+	RenderPass::RenderPass(const LogicalDevice& logicalDevice, const VkFormat& format, const VkSampleCountFlagBits& msaaSamples)
 		: m_logicalDevice(logicalDevice)
 	{
 		Logger::log(LogLevel::Trace, "Creating RenderPass");
@@ -15,23 +15,39 @@ namespace Aminophenol {
 		// Color attachment
 		VkAttachmentDescription colorAttachment{};
 		colorAttachment.format = format;
-		colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+		colorAttachment.samples = msaaSamples;
 		colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 		colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 		colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 		colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
 		colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-		colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+		colorAttachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 		// Color attachment reference
 		VkAttachmentReference colorAttachmentRef{};
 		colorAttachmentRef.attachment = 0;
 		colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		
+		// Color attachment resolve
+		VkAttachmentDescription colorAttachmentResolve{};
+		colorAttachmentResolve.format = format;
+		colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
+		colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+		colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+		colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+		colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+		colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+
+		// Color attachment resolve reference
+		VkAttachmentReference colorAttachmentResolveRef{};
+		colorAttachmentResolveRef.attachment = 1;
+		colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 		// Depth attachment
 		VkAttachmentDescription depthAttachment{};
 		depthAttachment.format = Image::findDepthFormat(m_logicalDevice.getPhysicalDevice());
-		depthAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+		depthAttachment.samples = msaaSamples;
 		depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 		depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 		depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
@@ -41,7 +57,7 @@ namespace Aminophenol {
 
 		// Depth attachment reference
 		VkAttachmentReference depthAttachmentRef{};
-		depthAttachmentRef.attachment = 1;
+		depthAttachmentRef.attachment = 2;
 		depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
 		// Subpass
@@ -49,6 +65,7 @@ namespace Aminophenol {
 		subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
 		subpass.colorAttachmentCount = 1;
 		subpass.pColorAttachments = &colorAttachmentRef;
+		subpass.pResolveAttachments = &colorAttachmentResolveRef;
 		subpass.pDepthStencilAttachment = &depthAttachmentRef;
 
 		// Subpass dependencies for layout transitions
@@ -60,7 +77,11 @@ namespace Aminophenol {
 		dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
 		dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
 
-		std::array<VkAttachmentDescription, 2> attachments = { colorAttachment, depthAttachment };
+		std::array<VkAttachmentDescription, 3> attachments = {
+			colorAttachment,
+			colorAttachmentResolve,
+			depthAttachment
+		};
 
 		// Create the render pass
 		VkRenderPassCreateInfo renderPassInfo{};
