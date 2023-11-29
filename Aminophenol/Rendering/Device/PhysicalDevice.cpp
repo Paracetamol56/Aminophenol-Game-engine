@@ -41,6 +41,20 @@ namespace Aminophenol
 		return m_properties;
 	}
 
+	const VkSampleCountFlagBits PhysicalDevice::getMaxUsableSampleCount() const
+	{
+		VkSampleCountFlags counts = m_properties.limits.framebufferColorSampleCounts & m_properties.limits.framebufferDepthSampleCounts;
+
+		if (counts & VK_SAMPLE_COUNT_64_BIT) return VK_SAMPLE_COUNT_64_BIT;
+		if (counts & VK_SAMPLE_COUNT_32_BIT) return VK_SAMPLE_COUNT_32_BIT;
+		if (counts & VK_SAMPLE_COUNT_16_BIT) return VK_SAMPLE_COUNT_16_BIT;
+		if (counts & VK_SAMPLE_COUNT_8_BIT) return VK_SAMPLE_COUNT_8_BIT;
+		if (counts & VK_SAMPLE_COUNT_4_BIT) return VK_SAMPLE_COUNT_4_BIT;
+		if (counts & VK_SAMPLE_COUNT_2_BIT) return VK_SAMPLE_COUNT_2_BIT;
+
+		return VK_SAMPLE_COUNT_1_BIT;
+	}
+
 	VkPhysicalDevice PhysicalDevice::pickPhysicalDevice()
 	{
 		// Get all physical devices
@@ -191,26 +205,15 @@ namespace Aminophenol
 			score += 1000;
 		}
 
+		// Maximum MSAA samples affects the quality of anti-aliasing
+		score += getMaxUsableSampleCount() * 10;
+
 		// Maximum possible size of textures affects graphics quality
 		score += deviceProperties.limits.maxImageDimension2D;
 
 		Logger::log(LogLevel::Trace, "The device \"%s\" has a score of %d.", deviceProperties.deviceName, score);
 
 		return score;
-	}
-
-	VkSampleCountFlagBits PhysicalDevice::getMaxUsableSampleCount()
-	{
-		VkSampleCountFlags counts = m_properties.limits.framebufferColorSampleCounts & m_properties.limits.framebufferDepthSampleCounts;
-
-		if (counts & VK_SAMPLE_COUNT_64_BIT) return VK_SAMPLE_COUNT_64_BIT;
-		if (counts & VK_SAMPLE_COUNT_32_BIT) return VK_SAMPLE_COUNT_32_BIT;
-		if (counts & VK_SAMPLE_COUNT_16_BIT) return VK_SAMPLE_COUNT_16_BIT;
-		if (counts & VK_SAMPLE_COUNT_8_BIT) return VK_SAMPLE_COUNT_8_BIT;
-		if (counts & VK_SAMPLE_COUNT_4_BIT) return VK_SAMPLE_COUNT_4_BIT;
-		if (counts & VK_SAMPLE_COUNT_2_BIT) return VK_SAMPLE_COUNT_2_BIT;
-
-		return VK_SAMPLE_COUNT_1_BIT;
 	}
 
 } // namespace Aminophenol
