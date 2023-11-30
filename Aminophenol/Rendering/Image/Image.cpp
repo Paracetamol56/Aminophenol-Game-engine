@@ -120,58 +120,46 @@ namespace Aminophenol {
 		return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;
 	}
 
-	void Image::createImage(
-		const LogicalDevice& logicalDevice,
-		VkImage& image,
-		VkDeviceMemory& memory,
-		const VkExtent3D& extent,
-		VkFormat format,
-		VkImageTiling tiling,
-		VkImageUsageFlags usage,
-		VkMemoryPropertyFlags properties
-	)
+	void Image::createImage()
 	{
 		VkImageCreateInfo createInfo{};
 		createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
 		createInfo.imageType = VK_IMAGE_TYPE_2D;
-		createInfo.extent = extent;
+		createInfo.extent = m_extent;
 		createInfo.mipLevels = 1;
 		createInfo.arrayLayers = 1;
-		createInfo.format = format;
-		createInfo.tiling = tiling;
+		createInfo.format = m_format;
+		createInfo.tiling = m_tiling;
 		createInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-		createInfo.usage = usage;
-		createInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+		createInfo.usage = m_usage;
+		createInfo.samples = m_samples;
 		createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		createInfo.flags = 0;
 
-		if (vkCreateImage(logicalDevice.getDevice(), &createInfo, nullptr, &image) != VK_SUCCESS) {
+		if (vkCreateImage(m_logicalDevice.getDevice(), &createInfo, nullptr, &m_image) != VK_SUCCESS) {
 			throw std::runtime_error("Failed to create image!");
 		}
 
 		VkMemoryRequirements memRequirements;
-		vkGetImageMemoryRequirements(logicalDevice.getDevice(), image, &memRequirements);
+		vkGetImageMemoryRequirements(m_logicalDevice.getDevice(), m_image, &memRequirements);
 
 		VkMemoryAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		allocInfo.allocationSize = memRequirements.size;
-		allocInfo.memoryTypeIndex = logicalDevice.findMemoryType(memRequirements.memoryTypeBits, properties);
+		allocInfo.memoryTypeIndex = m_logicalDevice.findMemoryType(memRequirements.memoryTypeBits, m_properties);
 
-		if (vkAllocateMemory(logicalDevice.getDevice(), &allocInfo, nullptr, &memory) != VK_SUCCESS) {
+		if (vkAllocateMemory(m_logicalDevice.getDevice(), &allocInfo, nullptr, &m_imageMemory) != VK_SUCCESS) {
 			throw std::runtime_error("Failed to allocate image memory!");
 		}
 
-		vkBindImageMemory(logicalDevice.getDevice(), image, memory, 0);
+		vkBindImageMemory(m_logicalDevice.getDevice(), m_image, m_imageMemory, 0);
 	}
 
 
 	void Image::createSampler(
-		const LogicalDevice& logicalDevice,
-		VkSampler& sampler,
 		VkFilter filter,
 		VkSamplerAddressMode addressMode,
-		bool anisotropic,
-		uint32_t mipLevels
+		bool anisotropic
 	)
 	{
 		VkSamplerCreateInfo createInfo{};
@@ -190,19 +178,15 @@ namespace Aminophenol {
 		createInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
 		createInfo.mipLodBias = 0.0f;
 		createInfo.minLod = 0.0f;
-		createInfo.maxLod = static_cast<float>(mipLevels);
+		createInfo.maxLod = static_cast<float>(m_mipLevels);
 
-		if (vkCreateSampler(logicalDevice.getDevice(), &createInfo, nullptr, &sampler) != VK_SUCCESS) {
+		if (vkCreateSampler(m_logicalDevice.getDevice(), &createInfo, nullptr, &m_sampler) != VK_SUCCESS) {
 			throw std::runtime_error("Failed to create texture sampler!");
 		}
 	}
 
 	void Image::createImageView(
-		const LogicalDevice& logicalDevice,
-		VkImage& image,
-		VkImageView& imageView,
 		VkImageViewType type,
-		VkFormat format,
 		VkImageAspectFlags imageAspect,
 		uint32_t mipLevels,
 		uint32_t baseMipLevel,
@@ -212,9 +196,9 @@ namespace Aminophenol {
 	{
 		VkImageViewCreateInfo createInfo{};
 		createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-		createInfo.image = image;
+		createInfo.image = m_image;
 		createInfo.viewType = type;
-		createInfo.format = format;
+		createInfo.format = m_format;
 		createInfo.components.r = VK_COMPONENT_SWIZZLE_R;
 		createInfo.components.g = VK_COMPONENT_SWIZZLE_G;
 		createInfo.components.b = VK_COMPONENT_SWIZZLE_B;
@@ -225,16 +209,12 @@ namespace Aminophenol {
 		createInfo.subresourceRange.baseArrayLayer = baseArrayLayer;
 		createInfo.subresourceRange.layerCount = layerCount;
 
-		if (vkCreateImageView(logicalDevice.getDevice(), &createInfo, nullptr, &imageView) != VK_SUCCESS) {
+		if (vkCreateImageView(m_logicalDevice.getDevice(), &createInfo, nullptr, &m_imageView) != VK_SUCCESS) {
 			throw std::runtime_error("Failed to create image view!");
 		}
 	}
 
 	void Image::transitionImageLayout(
-		const LogicalDevice& logicalDevice,
-		std::shared_ptr<CommandPool> commandPool,
-		const VkImage& image,
-		VkFormat format,
 		VkImageLayout srcImageLayout,
 		VkImageLayout dstImageLayout,
 		VkImageAspectFlags imageAspect,
@@ -244,7 +224,7 @@ namespace Aminophenol {
 		uint32_t baseArrayLayer
 	)
 	{
-		CommandBuffer commandBuffer{ logicalDevice, commandPool };
+		CommandBuffer commandBuffer{ m_logicalDevice, m_commandPool };
 		commandBuffer.begin();
 
 
@@ -254,7 +234,7 @@ namespace Aminophenol {
 		barrier.newLayout = dstImageLayout;
 		barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
 		barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-		barrier.image = image;
+		barrier.image = m_image;
 		barrier.subresourceRange.aspectMask = imageAspect;
 		barrier.subresourceRange.baseMipLevel = baseMipLevel;
 		barrier.subresourceRange.levelCount = mipLevels;
@@ -331,16 +311,12 @@ namespace Aminophenol {
 	}
 
 	void Aminophenol::Image::copyBufferToImage(
-		const LogicalDevice& logicalDevice,
-		std::shared_ptr<CommandPool> commandPool,
 		const VkBuffer& buffer,
-		const VkImage& image,
-		const VkExtent3D& extent,
 		uint32_t layerCount,
 		uint32_t baseArrayLayer
 	)
 	{
-		CommandBuffer commandBuffer{ logicalDevice, commandPool };
+		CommandBuffer commandBuffer{ m_logicalDevice, m_commandPool };
 		commandBuffer.begin();
 
 		VkBufferImageCopy region{};
@@ -352,12 +328,12 @@ namespace Aminophenol {
 		region.imageSubresource.layerCount = layerCount;
 		region.imageSubresource.mipLevel = 0;
 		region.imageOffset = { 0, 0, 0 };
-		region.imageExtent = extent;
+		region.imageExtent = m_extent;
 
 		vkCmdCopyBufferToImage(
 			commandBuffer,
 			buffer,
-			image,
+			m_image,
 			VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
 			1,
 			&region

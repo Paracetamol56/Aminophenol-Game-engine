@@ -280,15 +280,6 @@ namespace Aminophenol {
 
 		for (size_t i = 0; i < m_maxFramesInFlight; i++)
 		{
-			// Create a depth buffer
-			m_frames[i].depthBuffer = std::make_unique<ImageDepth>(
-				*m_logicalDevice, *m_physicalDevice, m_commandPool,
-				VkExtent3D{ m_swapchain->getExtent().width, m_swapchain->getExtent().height, 1 },
-				msaaSamples
-			);
-
-			Logger::log(LogLevel::Trace, "DepthBuffer %d initialized", i);
-
 			// Create a color image
 			m_frames[i].colorImage = std::make_unique<Image>(
 				*m_logicalDevice, *m_physicalDevice, m_commandPool,
@@ -297,8 +288,19 @@ namespace Aminophenol {
 				VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
 				VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_swapchain->getFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
 			);
+			m_frames[i].colorImage->createImage();
+			m_frames[i].colorImage->createImageView(VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_ASPECT_COLOR_BIT, 1, 0, 1, 0);
 
 			Logger::log(LogLevel::Trace, "ColorImage %d initialized", i);
+
+			// Create a depth buffer
+			m_frames[i].depthBuffer = std::make_unique<ImageDepth>(
+				*m_logicalDevice, *m_physicalDevice, m_commandPool,
+				VkExtent3D{ m_swapchain->getExtent().width, m_swapchain->getExtent().height, 1 },
+				msaaSamples
+			);
+
+			Logger::log(LogLevel::Trace, "DepthBuffer %d initialized", i);
 
 			// Create a frame buffer
 			std::array<VkImageView, 3> attachments = {

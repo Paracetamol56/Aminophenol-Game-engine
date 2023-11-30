@@ -48,41 +48,22 @@ namespace Aminophenol
 		static VkFormat findDepthFormat(const PhysicalDevice& physicalDevice);
 		static bool hasStencilComponent(VkFormat format);
 
-		static void createImage(
-			const LogicalDevice& logicalDevice,
-			VkImage& image,
-			VkDeviceMemory& memory,
-			const VkExtent3D& extent,
-			VkFormat format,
-			VkImageTiling tiling,
-			VkImageUsageFlags usage,
-			VkMemoryPropertyFlags properties
-		);
-		static void createSampler(
-			const LogicalDevice& logicalDevice,
-			VkSampler& sampler,
+		// Helper functions
+		void createImage();
+		void createSampler(
 			VkFilter filter,
 			VkSamplerAddressMode addressMode,
-			bool anisotropic,
-			uint32_t mipLevels
+			bool anisotropic
 		);
-		static void createImageView(
-			const LogicalDevice& logicalDevice,
-			VkImage& image,
-			VkImageView& imageView,
+		void createImageView(
 			VkImageViewType type,
-			VkFormat format,
 			VkImageAspectFlags imageAspect,
 			uint32_t mipLevels,
 			uint32_t baseMipLevel,
 			uint32_t layerCount,
 			uint32_t baseArrayLayer
 		);
-		static void transitionImageLayout(
-			const LogicalDevice& logicalDevice,
-			std::shared_ptr<CommandPool> commandPool,
-			const VkImage& image,
-			VkFormat format,
+		void transitionImageLayout(
 			VkImageLayout srcImageLayout,
 			VkImageLayout dstImageLayout,
 			VkImageAspectFlags imageAspect,
@@ -91,12 +72,8 @@ namespace Aminophenol
 			uint32_t layerCount,
 			uint32_t baseArrayLayer
 		);
-		static void copyBufferToImage(
-			const LogicalDevice& logicalDevice,
-			std::shared_ptr<CommandPool> commandPool,
+		void copyBufferToImage(
 			const VkBuffer& buffer,
-			const VkImage& image,
-			const VkExtent3D& extent,
 			uint32_t layerCount,
 			uint32_t baseArrayLayer
 		);
