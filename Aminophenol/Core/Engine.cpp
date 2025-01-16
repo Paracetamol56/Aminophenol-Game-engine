@@ -78,13 +78,13 @@ namespace Aminophenol {
 				m_inputSystem->update();
 				m_activeScene->onUpdate();
 
-				ImGui_ImplVulkan_NewFrame();
+				/*ImGui_ImplVulkan_NewFrame();
 				ImGui_ImplGlfw_NewFrame();
 				ImGui::NewFrame();
 				ImGui::Begin("Hello, world!");
 				ImGui::Text("Hello, world!");
 				ImGui::End();
-				ImGui::Render();
+				ImGui::Render();*/
 				m_renderingEngine->update();
 
 				accumulatedTime -= m_maxFrameTime;

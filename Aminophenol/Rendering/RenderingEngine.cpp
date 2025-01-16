@@ -130,7 +130,7 @@ namespace Aminophenol {
 		writer.build(m_textureDescriptorSet);
 		
 		// Initialize ImGui
-		initImGui();
+		// initImGui();
 	}
 
 	RenderingEngine::~RenderingEngine()
@@ -142,7 +142,7 @@ namespace Aminophenol {
 		m_specular.reset();
 		destroyFrameObjects();
 
-		ImGui_ImplVulkan_Shutdown();
+		// ImGui_ImplVulkan_Shutdown();
 
 		m_activeScene.reset();
 
@@ -306,7 +306,7 @@ namespace Aminophenol {
 			std::array<VkImageView, 3> attachments = {
 				m_frames[i].colorImage->getImageView(),
 				swapchainImageViews[i],
-				m_frames[i].depthBuffer->getImageView()
+				m_frames[i].depthBuffer->getImageView(),
 			};
 
 			VkFramebufferCreateInfo framebufferInfo{};
@@ -383,7 +383,7 @@ namespace Aminophenol {
 			return;
 		}
 		
-		std::array<VkClearValue, 2> clearValues{};
+		std::array<VkClearValue, 3> clearValues{};
 		clearValues[0].color = {
 			m_activeScene->getBackgroundColor().r,
 			m_activeScene->getBackgroundColor().g,
@@ -391,6 +391,7 @@ namespace Aminophenol {
 			m_activeScene->getBackgroundColor().a
 		};
 		clearValues[1].depthStencil = { 1.0f, 0 };
+		clearValues[2].color = { 1.0f, 1.0f, 0.0f, 1.0f };
 
 		renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
 		renderPassInfo.pClearValues = clearValues.data();
@@ -459,7 +460,7 @@ namespace Aminophenol {
 			}
 		}
 
-		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), m_frames[imageIndex].commandBuffer->getCommandBuffer());
+		// ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), m_frames[imageIndex].commandBuffer->getCommandBuffer());
 
 		vkCmdEndRenderPass(m_frames[imageIndex].commandBuffer->getCommandBuffer());
 		

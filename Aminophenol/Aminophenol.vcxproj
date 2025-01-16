@@ -86,8 +86,8 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <PreBuildEvent>
-      <Command>C:\sdk\VulkanSDK\1.3.250.1\Bin\glslangValidator.exe -V $(ProjectDir)Shaders\shader.vert -o $(ProjectDir)Shaders\shader.vert.spv
-C:\sdk\VulkanSDK\1.3.250.1\Bin\glslangValidator.exe -V $(ProjectDir)Shaders\shader.frag -o $(ProjectDir)Shaders\shader.frag.spv</Command>
+      <Command>C:\sdk\VulkanSDK\1.3.268.0\Bin\glslangValidator.exe -V "$(ProjectDir)Shaders\shader.vert" -o "$(ProjectDir)Shaders\shader.vert.spv"
+C:\sdk\VulkanSDK\1.3.268.0\Bin\glslangValidator.exe -V "$(ProjectDir)Shaders\shader.frag" -o "$(ProjectDir)Shaders\shader.frag.spv"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,8 +110,8 @@ C:\sdk\VulkanSDK\1.3.250.1\Bin\glslangValidator.exe -V $(ProjectDir)Shaders\shad
       <EnableUAC>false</EnableUAC>
     </Link>
     <PreBuildEvent>
-      <Command>C:\sdk\VulkanSDK\1.3.250.1\Bin\glslangValidator.exe -V $(ProjectDir)Shaders\shader.vert -o $(ProjectDir)Shaders\shader.vert.spv
-C:\sdk\VulkanSDK\1.3.250.1\Bin\glslangValidator.exe -V $(ProjectDir)Shaders\shader.frag -o $(ProjectDir)Shaders\shader.frag.spv</Command>
+      <Command>C:\sdk\VulkanSDK\1.3.268.0\Bin\glslangValidator.exe -V "$(ProjectDir)Shaders\shader.vert" -o "$(ProjectDir)Shaders\shader.vert.spv"
+C:\sdk\VulkanSDK\1.3.268.0\Bin\glslangValidator.exe -V "$(ProjectDir)Shaders\shader.frag" -o "$(ProjectDir)Shaders\shader.frag.spv"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -136,8 +136,8 @@ C:\sdk\VulkanSDK\1.3.250.1\Bin\glslangValidator.exe -V $(ProjectDir)Shaders\shad
       <AdditionalIncludeDirectories>$(ProjectDir)Ressources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PreBuildEvent>
-      <Command>C:\sdk\VulkanSDK\1.3.250.1\Bin\glslangValidator.exe -V $(ProjectDir)Shaders\shader.vert -o $(ProjectDir)Shaders\shader.vert.spv
-C:\sdk\VulkanSDK\1.3.250.1\Bin\glslangValidator.exe -V $(ProjectDir)Shaders\shader.frag -o $(ProjectDir)Shaders\shader.frag.spv</Command>
+      <Command>C:\sdk\VulkanSDK\1.3.268.0\Bin\glslangValidator.exe -V "$(ProjectDir)Shaders\shader.vert" -o "$(ProjectDir)Shaders\shader.vert.spv"
+C:\sdk\VulkanSDK\1.3.268.0\Bin\glslangValidator.exe -V "$(ProjectDir)Shaders\shader.frag" -o "$(ProjectDir)Shaders\shader.frag.spv"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -166,8 +166,8 @@ C:\sdk\VulkanSDK\1.3.250.1\Bin\glslangValidator.exe -V $(ProjectDir)Shaders\shad
       <AdditionalIncludeDirectories>$(ProjectDir)Ressources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PreBuildEvent>
-      <Command>C:\sdk\VulkanSDK\1.3.250.1\Bin\glslangValidator.exe -V $(ProjectDir)Shaders\shader.vert -o $(ProjectDir)Shaders\shader.vert.spv
-C:\sdk\VulkanSDK\1.3.250.1\Bin\glslangValidator.exe -V $(ProjectDir)Shaders\shader.frag -o $(ProjectDir)Shaders\shader.frag.spv</Command>
+      <Command>C:\sdk\VulkanSDK\1.3.268.0\Bin\glslangValidator.exe -V "$(ProjectDir)Shaders\shader.vert" -o "$(ProjectDir)Shaders\shader.vert.spv"
+C:\sdk\VulkanSDK\1.3.268.0\Bin\glslangValidator.exe -V "$(ProjectDir)Shaders\shader.frag" -o "$(ProjectDir)Shaders\shader.frag.spv"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -274,7 +274,6 @@ C:\sdk\VulkanSDK\1.3.250.1\Bin\glslangValidator.exe -V $(ProjectDir)Shaders\shad
     <ClCompile Include="Components\PointLight.cpp" />
     <ClCompile Include="Input\InputKeyButton.cpp" />
     <ClCompile Include="Input\InputMouseButton.cpp" />
-    <ClCompile Include="Rendering\Materials\Material.cpp" />
     <ClCompile Include="Rendering\Descriptors\DescriptorWriter.cpp" />
     <ClCompile Include="Rendering\Descriptors\DescriptorPool.cpp" />
     <ClCompile Include="Rendering\Descriptors\DescriptorSetLayout.cpp" />
